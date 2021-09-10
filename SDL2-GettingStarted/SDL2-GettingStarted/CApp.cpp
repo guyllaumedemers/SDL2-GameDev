@@ -1,5 +1,4 @@
 #include "CApp.h"
-#include <string>
 
 bool CApp::OnInit()
 {
@@ -218,9 +217,11 @@ void CApp::OnLButtonDown(uint16_t mX, uint16_t mY)
 
 	if (fplayer) {
 		Grid[id] = GRID_TYPE_X;
+		++counter;
 	}
 	else {
 		Grid[id] = GRID_TYPE_O;
+		++counter;
 	}
 	CheckGameStatus();
 	fplayer = !fplayer;

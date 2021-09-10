@@ -5,6 +5,7 @@
 #undef main
 #include <iostream>
 #include <vector>
+#include <string>
 #include "CEvent.h"
 #include "CSurface.h"
 
