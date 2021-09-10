@@ -1,4 +1,5 @@
 #include "CApp.h"
+#include <string>
 
 bool CApp::OnInit()
 {
@@ -108,16 +109,50 @@ int CApp::OnExecute()
 
 void CApp::CheckGameStatus()
 {
+	std::string result = fplayer ? "Player 1 has won" : "Player 2 has won";
 	// TODO
 	if (HasCompleteRow(GRID_TYPE_X)) {
-		std::cout << "Row is True";
-		OnExit();
+		OnRender();								// small hack to display the last valid tile, shouldnt be calling OnRender here
+		PopupMsg(result);
+	}
+	else if (HasCompleteRow(GRID_TYPE_O)) {
+		OnRender();
+		PopupMsg(result);
+	}
+	else if (HasCompleteColumn(GRID_TYPE_X)) {
+		OnRender();
+		PopupMsg(result);
+	}
+	else if (HasCompleteColumn(GRID_TYPE_O)) {
+		OnRender();
+		PopupMsg(result);
+	}
+	else if (HasCompleteDiagonal(GRID_TYPE_X)) {
+		OnRender();
+		PopupMsg(result);
+	}
+	else if (HasCompleteDiagonal(GRID_TYPE_O)) {
+		OnRender();
+		PopupMsg(result);
+	}
+	else if (counter >= (ROW * COL)) {
+		OnRender();
+		PopupMsg("Draw");
 	}
 }
 
-void CApp::Draw()
+void CApp::PopupMsg(const std::string& result)		// can take an lvalue and an rvalue
 {
-
+	std::cout << result << std::endl;
+	std::cout << "Rematch? [Y/N] : ";
+	char c = NULL;
+	std::cin >> c;
+	if (std::toupper(c) == 'Y') {
+		ResetGame();
+	}
+	else {
+		OnExit();
+	}
 }
 
 bool CApp::HasCompleteRow(int type)
@@ -145,12 +180,12 @@ bool CApp::HasCompleteRow(int type)
 	return false;
 }
 
-bool CApp::HasCompleteColumn()
+bool CApp::HasCompleteColumn(int type)
 {
 	return false;
 }
 
-bool CApp::HasCompleteDiagonal()
+bool CApp::HasCompleteDiagonal(int type)
 {
 	return false;
 }
@@ -187,6 +222,6 @@ void CApp::OnLButtonDown(uint16_t mX, uint16_t mY)
 	else {
 		Grid[id] = GRID_TYPE_O;
 	}
-	fplayer = !fplayer;
 	CheckGameStatus();
+	fplayer = !fplayer;
 }

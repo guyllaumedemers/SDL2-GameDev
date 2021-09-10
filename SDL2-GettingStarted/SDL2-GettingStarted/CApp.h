@@ -55,13 +55,13 @@ public:
 private:
 	void CheckGameStatus();
 
-	void Draw();
+	void PopupMsg(const std::string& result);
 
 	bool HasCompleteRow(int type);
 
-	bool HasCompleteColumn();
+	bool HasCompleteColumn(int type);
 
-	bool HasCompleteDiagonal();
+	bool HasCompleteDiagonal(int type);
 
 	void ResetGame();
 
