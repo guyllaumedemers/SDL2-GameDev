@@ -206,6 +206,45 @@ bool CApp::HasCompleteColumn(int type)
 
 bool CApp::HasCompleteDiagonal(int type)
 {
+	int m = NULL, n = NULL;
+	int count = 0;
+	while (m < ROW) {
+		if (Grid[m + (n * COL)] == GRID_TYPE_NONE) {
+			break;
+		}
+		else if (Grid[m + (n * COL)] != type) {
+			break;
+		}
+		else {
+			++count;
+		}
+		++n;
+		++m;
+	}
+	if (count >= ROW) {
+		return true;
+	}
+	else {
+		count = 0;
+	}
+	// Do inverse process
+	m = ROW - 1, n = NULL;
+	while (m >= 0) {
+		if (Grid[m + (n * COL)] == GRID_TYPE_NONE) {
+			break;
+		}
+		else if (Grid[m + (n * COL)] != type) {
+			break;
+		}
+		else {
+			++count;
+		}
+		++n;
+		--m;
+	}
+	if (count >= ROW) {
+		return true;
+	}
 	return false;
 }
 
