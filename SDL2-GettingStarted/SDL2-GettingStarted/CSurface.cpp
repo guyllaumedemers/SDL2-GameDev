@@ -40,7 +40,7 @@ bool CSurface::OnDraw(SDL_Surface* src, SDL_Surface* dest, uint16_t x, uint16_t 
 	return SDL_BlitSurface(src, NULL, dest, &destRect);
 }
 
-bool CSurface::OnDraw(SDL_Surface* src, SDL_Surface* dest, uint16_t x, uint16_t y, uint16_t x2, uint16_t y2, uint16_t w, uint16_t h)
+bool CSurface::OnDraw(SDL_Surface* src, SDL_Surface* dest, uint16_t destX, uint16_t destY, uint16_t srcX, uint16_t srxY, uint16_t w, uint16_t h)
 {
 	if (src == nullptr || dest == nullptr) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s Surfaces were not loaded - SDL", "[GameSurface]");
@@ -48,32 +48,27 @@ bool CSurface::OnDraw(SDL_Surface* src, SDL_Surface* dest, uint16_t x, uint16_t 
 	}
 
 	SDL_Rect destRect;
-	destRect.x = x;
-	destRect.y = y;
+	destRect.x = destX;
+	destRect.y = destY;
 
 	SDL_Rect srcRect;
-	srcRect.x = x2;
-	srcRect.y = y2;
+	srcRect.x = srcX;
+	srcRect.y = srxY;
 	srcRect.w = w;
 	srcRect.h = h;
 
 	return SDL_BlitSurface(src, &srcRect, dest, &destRect);
 }
 
-void CSurface::Set(SDL_Surface* next)	// this would be better with move semantics, currently has two pointer pointing at the same adress in memory
+void CSurface::Set(SDL_Surface* next)
 {
 	if (next == NULL) {
 		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s pointer is NULL", "[GameSurface]");
 		return;
 	}
 	else {
-		if (surface == nullptr) {
-			surface = new SDL_Surface(*next);
-		}
-		else {
-			SDL_FreeSurface(surface);
-			surface = next;
-		}
+		SDL_FreeSurface(surface);
+		surface = next;
 		return;
 	}
 }

@@ -19,6 +19,7 @@ public:
 	static SDL_Surface* OnLoad(SDL_Window* window, const char* File);
 	static bool OnDraw(SDL_Surface* src, SDL_Surface* dest, uint16_t x, uint16_t y);
 	static bool OnDraw(SDL_Surface* src, SDL_Surface* dest, uint16_t x, uint16_t y, uint16_t x2, uint16_t y2, uint16_t w, uint16_t h);
+	// Functions
 	void Set(SDL_Surface* next);
 	SDL_Surface* Get();
 };

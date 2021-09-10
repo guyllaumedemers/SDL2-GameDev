@@ -2,32 +2,37 @@
 
 bool CApp::OnInit()
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
-		return false;
-	}
-	else if (SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, SDL_WINDOW_RESIZABLE, &window, &ren) < 0) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't create window and renderer: %s", SDL_GetError());
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s SDL_Init failed - SDL : %s", "[GameApp]", SDL_GetError());
 		return false;
 	}
 	else if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0) {
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL_image: %s", SDL_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s IMG_Init failed - SDL : %s", "[GameApp]", SDL_GetError());
 		return false;
 	}
-	else if (surfaces.size() != 3 ||
+	else if (SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, NULL, &window, &ren) != 0) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s window or renderer were not initialize properly - SDL : %s", "[GameApp]", SDL_GetError());
+		return false;
+	}
+	else if (surfaces.size() != FILES) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s vector was not initialize properly - SDL : %s", "[GameApp]", SDL_GetError());
+		return false;
+	}
+	else if (
 		CSurface::OnLoad(window, "res/TicTacToe_Board.png") == NULL ||
-		CSurface::OnLoad(window, "res/TicTacToe_O.png") == NULL ||
-		CSurface::OnLoad(window, "res/TicTacToe_X.png") == NULL)
+		CSurface::OnLoad(window, "res/TicTacToe_X.png") == NULL ||
+		CSurface::OnLoad(window, "res/TicTacToe_O.png") == NULL)
 	{
-		// Error handled inside the CSurface::OnLoad call
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s file not found - SDL : %s", "[GameApp]", SDL_GetError());
 		return false;
 	}
 	else {
-		surfaces[0]->Set(CSurface::OnLoad(window, "res/TicTacToe_Board.png"));
-		surfaces[1]->Set(CSurface::OnLoad(window, "res/TicTacToe_O.png"));
-		surfaces[2]->Set(CSurface::OnLoad(window, "res/TicTacToe_X.png"));
-		GridReset();
-		fplayer = true;
+		// Load all surfaces
+		surfaces[0].Set(CSurface::OnLoad(window, "res/TicTacToe_Board.png"));
+		surfaces[1].Set(CSurface::OnLoad(window, "res/TicTacToe_X.png"));
+		surfaces[2].Set(CSurface::OnLoad(window, "res/TicTacToe_O.png"));
+		// Initialize Game Values
+		ResetGame();
 		return true;
 	}
 }
@@ -39,31 +44,28 @@ void CApp::OnEvent(SDL_Event* Event)
 
 void CApp::OnLoop()
 {
-	if (OnCompletion()) {
-		isRunning = false;
-		std::cout << (fplayer ? "Player 1" : "Player 2") << " Win" << std::endl;
-	}
 }
 
 void CApp::OnRender()
 {
-	CSurface::OnDraw(surfaces[0]->Get(), SDL_GetWindowSurface(window), NULL, NULL, NULL, NULL, WIDTH, HEIGHT);
-	for (int i = 0; i < sizeof(Grid) / sizeof(*Grid); ++i) {
-		int x = i % 3;
-		int y = i / 3;						// should be rounding down
+	for (int i = 0; i < (sizeof(Grid) / sizeof(*Grid)); ++i) {
+		// TODO
+		int x = (i % COL) * (WIDTH / COL);
+		int y = (i / ROW) * (HEIGHT / ROW);
 
 		if (Grid[i] == GRID_TYPE_X) {
-			CSurface::OnDraw(surfaces[1]->Get(), SDL_GetWindowSurface(window), x * WIDTH / 3, y * HEIGHT / 3);
+			CSurface::OnDraw(surfaces[1].Get(), SDL_GetWindowSurface(window), x, y);
 		}
 		else if (Grid[i] == GRID_TYPE_O) {
-			CSurface::OnDraw(surfaces[2]->Get(), SDL_GetWindowSurface(window), x * WIDTH / 3, y * HEIGHT / 3);		// img size were set in photoshop
+			CSurface::OnDraw(surfaces[2].Get(), SDL_GetWindowSurface(window), x, y);
 		}
 	}
-	SDL_UpdateWindowSurface(window);		// update the render loop to handle double buffering
+	SDL_UpdateWindowSurface(window);
 }
 
 void CApp::OnCleanup()
 {
+	surfaces.clear();
 	SDL_DestroyRenderer(ren);
 	ren = NULL;
 	SDL_DestroyWindow(window);
@@ -71,18 +73,15 @@ void CApp::OnCleanup()
 	SDL_Quit();
 }
 
-CApp::CApp() : isRunning(true), window(nullptr), ren(nullptr), Grid(), fplayer(true)
+CApp::CApp() : isRunning(true), window(nullptr), ren(nullptr), Grid(), fplayer(true), counter(0)
 {
-	for (int i = 0; i < 3; ++i) {
-		surfaces.push_back(new CSurface());
+	for (int i = 0; i < FILES; ++i) {
+		surfaces.push_back(CSurface());
 	}
 }
 
 CApp::~CApp()
 {
-	for (auto i : surfaces) {
-		delete i;
-	}
 	surfaces.clear();
 }
 
@@ -108,35 +107,44 @@ int CApp::OnExecute()
 	return 0;
 }
 
-bool CApp::OnCompletion()
+void CApp::CheckGameStatus()
 {
-	// Check Row Type
+	// TODO
+}
 
-	// Check Columns Type
+void CApp::Draw()
+{
 
-	// Check Diagonal Type
+}
 
+bool CApp::HasCompleteRow()
+{
 	return false;
 }
 
-void CApp::GridReset()
+bool CApp::HasCompleteColumn()
 {
-	for (auto i : Grid) {
-		i = GRID_TYPE_NONE;
-	}
+	return false;
 }
 
-void CApp::SetGridCell(int id, int type)
+bool CApp::HasCompleteDiagonal()
 {
-	if (id < 0 || id > sizeof(Grid) / sizeof(*Grid)) {
-		throw std::out_of_range("id outside array range");
+	return false;
+}
+
+void CApp::ResetGame()
+{
+	// Game Values
+	fplayer = true;
+	counter = 0;
+
+	// Grid Values
+	for (int i = 0; i < (sizeof(Grid) / sizeof(*Grid)); ++i) {
+		Grid[i] = GRID_TYPE_NONE;
 	}
-	else if (type < 0 || type > GRID_TYPE_O) {
-		throw std::out_of_range("type outside enum range");
-	}
-	else {
-		Grid[id] = type;
-	}
+
+	// Grid Display
+	CSurface::OnDraw(surfaces[0].Get(), SDL_GetWindowSurface(window), NULL, NULL);
 }
 
 void CApp::OnExit()
@@ -146,20 +154,15 @@ void CApp::OnExit()
 
 void CApp::OnLButtonDown(uint16_t mX, uint16_t mY)
 {
-	int id = mX / (WIDTH / 3);
-	id += mY / (HEIGHT / 3) * 3;
-
-	if (Grid[id] != GRID_TYPE_NONE) {
-		std::cout << "Invalid cell" << std::endl;
-		return;
-	}
+	// TODO
+	int id = (mX / (WIDTH / COL));
+	id += ((mY / (HEIGHT / ROW)) * 3);
 
 	if (fplayer) {
 		Grid[id] = GRID_TYPE_X;
-		fplayer = !fplayer;
 	}
 	else {
 		Grid[id] = GRID_TYPE_O;
-		fplayer = !fplayer;
 	}
+	fplayer = !fplayer;
 }

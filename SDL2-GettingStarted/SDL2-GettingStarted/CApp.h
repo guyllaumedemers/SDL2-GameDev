@@ -10,6 +10,9 @@
 
 #define WIDTH 600
 #define HEIGHT 600
+#define ROW 3
+#define COL 3
+#define FILES 3
 
 class CApp : public CEvent
 {
@@ -18,10 +21,11 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* ren;
 
-	std::vector<CSurface*> surfaces;
+	std::vector<CSurface> surfaces;
 	int Grid[9];
 
 	bool fplayer;
+	int counter;
 
 	enum {
 		GRID_TYPE_NONE = 0,
@@ -48,12 +52,20 @@ public:
 	// Functions
 	int OnExecute();
 
-	bool OnCompletion();
+private:
+	void CheckGameStatus();
 
-	void GridReset();
+	void Draw();
 
-	void SetGridCell(int id, int type);
+	bool HasCompleteRow();
 
+	bool HasCompleteColumn();
+
+	bool HasCompleteDiagonal();
+
+	void ResetGame();
+
+public:
 	// Function Override
 	void OnExit();
 
