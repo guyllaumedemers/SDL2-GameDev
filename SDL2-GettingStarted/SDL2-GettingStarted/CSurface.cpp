@@ -6,7 +6,7 @@ CSurface::CSurface() : surface(nullptr)
 
 CSurface::~CSurface()
 {
-	delete surface;
+	SDL_FreeSurface(surface);
 }
 
 SDL_Surface* CSurface::OnLoad(SDL_Window* window, const char* File)
@@ -67,7 +67,7 @@ void CSurface::Set(SDL_Surface* next)
 		return;
 	}
 	else {
-		SDL_FreeSurface(surface);
+		//SDL_FreeSurface(surface);
 		surface = next;
 		return;
 	}

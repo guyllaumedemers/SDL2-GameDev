@@ -82,7 +82,6 @@ CApp::CApp() : isRunning(true), window(nullptr), ren(nullptr), Grid(), fplayer(t
 
 CApp::~CApp()
 {
-	surfaces.clear();
 }
 
 int CApp::OnExecute()
@@ -110,6 +109,10 @@ int CApp::OnExecute()
 void CApp::CheckGameStatus()
 {
 	// TODO
+	if (HasCompleteRow(GRID_TYPE_X)) {
+		std::cout << "Row is True";
+		OnExit();
+	}
 }
 
 void CApp::Draw()
@@ -117,8 +120,28 @@ void CApp::Draw()
 
 }
 
-bool CApp::HasCompleteRow()
+bool CApp::HasCompleteRow(int type)
 {
+	int i = NULL, j = NULL;
+	while (i < ROW) {
+		int count = 0;
+		while (j < COL) {
+			if (Grid[j + (i * COL)] == GRID_TYPE_NONE) {
+				break;
+			}
+			else if (Grid[j + (i * COL)] != type) {
+				break;
+			}
+			else {
+				++count;
+			}
+			++j;
+		}
+		if (count >= ROW) {
+			return true;
+		}
+		++i;
+	}
 	return false;
 }
 
@@ -165,4 +188,5 @@ void CApp::OnLButtonDown(uint16_t mX, uint16_t mY)
 		Grid[id] = GRID_TYPE_O;
 	}
 	fplayer = !fplayer;
+	CheckGameStatus();
 }

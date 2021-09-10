@@ -57,7 +57,7 @@ private:
 
 	void Draw();
 
-	bool HasCompleteRow();
+	bool HasCompleteRow(int type);
 
 	bool HasCompleteColumn();
 
