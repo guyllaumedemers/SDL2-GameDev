@@ -181,6 +181,26 @@ bool CApp::HasCompleteRow(int type)
 
 bool CApp::HasCompleteColumn(int type)
 {
+	int k = NULL, l = NULL;
+	while (k < COL) {
+		int count = 0;
+		while (l < ROW) {
+			if (Grid[k + (l * ROW)] == GRID_TYPE_NONE) {
+				break;
+			}
+			else if (Grid[k + (l * ROW)] != type) {
+				break;
+			}
+			else {
+				++count;
+			}
+			if (count >= COL) {
+				return true;
+			}
+			++l;
+		}
+		++k;
+	}
 	return false;
 }
 
