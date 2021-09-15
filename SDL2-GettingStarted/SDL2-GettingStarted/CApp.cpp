@@ -49,7 +49,6 @@ void CApp::OnLoop()
 void CApp::OnRender()
 {
 	for (int i = 0; i < (sizeof(Grid) / sizeof(*Grid)); ++i) {
-		// TODO
 		int x = (i % COL) * (WIDTH / COL);
 		int y = (i / ROW) * (HEIGHT / ROW);
 
@@ -109,7 +108,7 @@ int CApp::OnExecute()
 void CApp::CheckGameStatus()
 {
 	std::string result = fplayer ? "Player 1 has won" : "Player 2 has won";
-	// TODO
+
 	if (HasCompleteRow(GRID_TYPE_X)) {
 		OnRender();								// small hack to display the last valid tile, shouldnt be calling OnRender here
 		PopupMsg(result);
@@ -270,7 +269,6 @@ void CApp::OnExit()
 
 void CApp::OnLButtonDown(uint16_t mX, uint16_t mY)
 {
-	// TODO
 	int id = (mX / (WIDTH / COL));
 	id += ((mY / (HEIGHT / ROW)) * 3);
 
