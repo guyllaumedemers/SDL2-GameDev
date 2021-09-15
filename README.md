@@ -13,7 +13,7 @@ NOTE : This project is broken down into multiples folders, each representing a s
 
 ## Content
 
-*  GettingStarted -> Tic-Tac-Toe (WIP - Missing Win Condition)
+*  GettingStarted -> Tic-Tac-Toe
 
 ```
 NOTE : Scripts created by myself can be found here.
