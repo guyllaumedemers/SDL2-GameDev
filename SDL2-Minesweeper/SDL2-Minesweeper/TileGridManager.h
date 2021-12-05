@@ -17,10 +17,17 @@ public:
 
 	TileState m_State;
 
+	~Tile();
+
 	bool hasBomb();
 
 	void updateState(const TileState& next);
 };
+
+Tile::~Tile() {
+	delete m_Texture;
+	m_Texture = nullptr;
+}
 
 bool Tile::hasBomb() {
 	return  (m_State == TileState::hasBomb);
@@ -35,6 +42,8 @@ class TileGridManager
 private:
 	static Tile** m_Grid;
 public:
+	~TileGridManager();
+
 	static void initalize2dArray(const unsigned short int& n, const unsigned short int& m);
 
 	static unsigned short int getGridIndexAtMousePosition(const unsigned short& x, const unsigned short& y);
