@@ -113,6 +113,8 @@ void GameManager::renderFrame()
 void GameManager::clear()
 {
 	m_Timer = nullptr;
+	SDL_DestroyTexture(m_Texture);
+	m_Texture = nullptr;
 	SDL_FreeSurface(m_SurfaceDisplay);
 	m_SurfaceDisplay = nullptr;
 	SDL_DestroyRenderer(m_Renderer);
