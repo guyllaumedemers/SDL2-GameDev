@@ -21,7 +21,7 @@ private:
 public:
 	~DifficultyController();
 
-	static void setDifficulty(DifficultyEnum selection);
+	static void setDifficulty(const DifficultyEnum& selection);
 
 	static Difficulty* getDifficulty();
 };

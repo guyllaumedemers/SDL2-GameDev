@@ -8,7 +8,7 @@ DifficultyController::~DifficultyController()
 	m_CurrentDifficulty = nullptr;
 }
 
-void DifficultyController::setDifficulty(DifficultyEnum selection)
+void DifficultyController::setDifficulty(const DifficultyEnum& selection)
 {
 	switch (selection) {
 	case DifficultyEnum::beginner:

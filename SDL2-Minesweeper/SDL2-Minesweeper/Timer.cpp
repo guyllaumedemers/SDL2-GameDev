@@ -2,7 +2,7 @@
 #include <time.h>
 #include <iomanip>
 
-Timer::Timer(double maxTime)
+Timer::Timer(const double& maxTime)
 {
 	m_ResetTime = maxTime;
 	m_StartTic = clock();
@@ -20,7 +20,7 @@ bool Timer::run()
 	return false;
 }
 
-void Timer::RegisterToTimerCallback(EventHandler myEvent)
+void Timer::RegisterToTimerCallback(const EventHandler& myEvent)
 {
 	m_EventHandler = myEvent;
 }

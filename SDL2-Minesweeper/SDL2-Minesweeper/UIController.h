@@ -3,6 +3,6 @@
 class UIController
 {
 public:
-	static void UpdateTimerView(double time);
+	static void UpdateTimerView(const double& time);
 };
 

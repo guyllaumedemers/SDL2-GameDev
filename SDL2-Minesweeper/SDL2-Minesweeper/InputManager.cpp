@@ -21,5 +21,5 @@ void InputManager::getInputEvent(SDL_Event& myEvent)
 
 void InputManager::getMouseClickPos(unsigned short int &x, unsigned short int& y)
 {
-	return 0;
+
 }

@@ -40,7 +40,7 @@ private:
 
 public:
 
-	static void setIsRunning(bool value);
+	static void setIsRunning(const bool& value);
 
 	static int onExecute();
 };

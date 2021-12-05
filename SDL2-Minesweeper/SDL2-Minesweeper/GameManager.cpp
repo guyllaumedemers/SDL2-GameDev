@@ -143,7 +143,7 @@ int GameManager::onExecute()
 	return 0;
 }
 
-void GameManager::setIsRunning(bool value)
+void GameManager::setIsRunning(const bool& value)
 {
 	m_IsRunning = value;
 }

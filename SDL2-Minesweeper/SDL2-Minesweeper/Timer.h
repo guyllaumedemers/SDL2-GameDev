@@ -17,13 +17,13 @@ private:
 
 public:
 
-	Timer(double maxTime);
+	Timer(const double& maxTime);
 
 	~Timer();
 
 	bool run();
 
-	void RegisterToTimerCallback(EventHandler myEvent);
+	void RegisterToTimerCallback(const EventHandler& myEvent);
 
 	void onTimerCallback();
 

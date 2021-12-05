@@ -1,5 +1,5 @@
 #include "UIController.h"
 
-void UIController::UpdateTimerView(double time)
+void UIController::UpdateTimerView(const double& time)
 {
 }
