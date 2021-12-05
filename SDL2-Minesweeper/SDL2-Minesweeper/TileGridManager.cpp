@@ -1,5 +1,7 @@
 #include "TileGridManager.h"
 
+Tile** TileGridManager::m_Grid = nullptr;
+
 void TileGridManager::initalize2dArray(const unsigned short int& n, const unsigned short int& m)
 {
 	m_Grid = new Tile * [n];
