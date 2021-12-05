@@ -144,17 +144,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DifficultyController.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="UIController.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DifficultyController.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UIController.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

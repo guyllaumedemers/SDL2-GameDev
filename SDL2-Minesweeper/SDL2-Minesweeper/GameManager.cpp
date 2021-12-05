@@ -74,7 +74,7 @@ void GameManager::initializeGame()
 		exit(EXIT_FAILURE);
 	}
 
-	m_Timer->RegisterToTimerCallback([]() {});
+	m_Timer->RegisterToTimerCallback([]() {std::cout << "Time is up" << std::endl; });
 }
 
 void GameManager::getInputEvents()
@@ -93,9 +93,14 @@ void GameManager::runGameLogic()
 		}
 		else {
 			m_Timer->onTimerCallback();
+			delete m_Timer;
 			m_Timer = nullptr;
 		}
 	}
+
+	unsigned short int x, y;
+	InputManager::getMouseClickPos(x, y);
+
 }
 
 void GameManager::renderFrame()
@@ -112,6 +117,7 @@ void GameManager::renderFrame()
 
 void GameManager::clear()
 {
+	delete m_Timer;
 	m_Timer = nullptr;
 	SDL_DestroyTexture(m_Texture);
 	m_Texture = nullptr;

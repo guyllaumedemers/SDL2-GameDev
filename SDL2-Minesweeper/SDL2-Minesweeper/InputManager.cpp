@@ -18,3 +18,8 @@ void InputManager::getInputEvent(SDL_Event& myEvent)
 		break;
 	}
 }
+
+void InputManager::getMouseClickPos(unsigned short int &x, unsigned short int& y)
+{
+	return 0;
+}

@@ -9,7 +9,7 @@ class Timer
 {
 private:
 
-	EventHandler eventHandler;
+	EventHandler m_EventHandler;
 
 	std::clock_t m_StartTic;
 

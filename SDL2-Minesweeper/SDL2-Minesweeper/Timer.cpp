@@ -22,13 +22,13 @@ bool Timer::run()
 
 void Timer::RegisterToTimerCallback(EventHandler myEvent)
 {
-	eventHandler = myEvent;
+	m_EventHandler = myEvent;
 }
 
 void Timer::onTimerCallback()
 {
-	if (eventHandler != nullptr) {
-		eventHandler();
+	if (m_EventHandler != nullptr) {
+		m_EventHandler();
 	}
 }
 
