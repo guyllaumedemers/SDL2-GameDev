@@ -21,3 +21,8 @@ unsigned short int TileGridManager::getGridIndexAtMousePosition(const unsigned s
 {
 	return 0;
 }
+
+Tile* TileGridManager::getGridAtIndex(const unsigned short int index)
+{
+	return nullptr;
+}

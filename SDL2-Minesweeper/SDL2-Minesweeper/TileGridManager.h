@@ -41,11 +41,15 @@ class TileGridManager
 {
 private:
 	static Tile** m_Grid;
+
 public:
+
 	~TileGridManager();
 
 	static void initalize2dArray(const unsigned short int& n, const unsigned short int& m);
 
 	static unsigned short int getGridIndexAtMousePosition(const unsigned short& x, const unsigned short& y);
+
+	static Tile* getGridAtIndex(const unsigned short int index);
 };
 
