@@ -1,5 +1,7 @@
 #pragma once
 #include <SDL.h>
+#include <thread>
+#include <chrono>
 
 #define COLUMNS 640
 #define ROWS 480

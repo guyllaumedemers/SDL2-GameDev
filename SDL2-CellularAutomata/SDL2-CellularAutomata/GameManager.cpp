@@ -53,13 +53,22 @@ void GameManager::onRun()
 			}
 		}
 		onDraw();
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
 	}
 }
 
 void GameManager::onDraw()
 {
+	SDL_SetRenderDrawColor(m_Renderer, 0.0f, 0.0f, 0.0f, 0.0f);
+	// clear the screen
+	SDL_RenderClear(m_Renderer);
+	// fill the color buffer
+	SDL_SetRenderDrawColor(m_Renderer, 255.0f, 0.0f, 0.0f, 255.0f);
 	// run automata rendering logic in-between
 	CellularAutomata::onUpdate(m_Renderer);
+	// render the back buffer frame to the front buffer frame
+	SDL_RenderPresent(m_Renderer);
 }
 
 int GameManager::onExecute()
