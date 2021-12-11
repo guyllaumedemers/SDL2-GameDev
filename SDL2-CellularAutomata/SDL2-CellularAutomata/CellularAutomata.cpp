@@ -47,10 +47,9 @@ void CellularAutomata::onUpdate(SDL_Renderer* ren)
 
 void CellularAutomata::onNeighborsUpdate()
 {
-	Point* temp = &s_NodeArr[PIXELSIZE][PIXELSIZE];
-
-	bool* result = &s_BoolArr[PIXELSIZE][PIXELSIZE];
+	Point* temp = &s_NodeArr[1][1];
 	int count = 0;
+	bool* result = &s_BoolArr[1][1];
 
 	for (int i = PIXELSIZE; i < ((PPR * PIXELSIZE) - PIXELSIZE); i += PIXELSIZE) {
 		for (int j = PIXELSIZE; j < ((PPC * PIXELSIZE) - PIXELSIZE); j += PIXELSIZE) {
