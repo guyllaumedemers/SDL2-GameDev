@@ -14,6 +14,10 @@ void CellularAutomata::onInitialize(SDL_Renderer* ren)
 		SDL_Log("Point Arrray is not initialized : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
+	else if (s_BoolArr == nullptr) {
+		SDL_Log("Bool Arrray is not initialized : %s", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
 
 	int x, y = 0;
 	Point* temp = &s_NodeArr[0][0];
@@ -49,12 +53,14 @@ void CellularAutomata::onNeighborsUpdate()
 {
 	bool* result = nullptr;
 	Point* temp = nullptr;
+
 	int count = 0;
 
 	for (int i = 1; i < PPR - 1; ++i) {
 		for (int j = 1; j < PPC - 1; ++j) {
-			temp = &s_NodeArr[i][j];
+
 			result = &s_BoolArr[i][j];
+			temp = &s_NodeArr[i][j];
 
 			count =
 				s_NodeArr[i - 1][j].m_isAlive +
@@ -66,7 +72,6 @@ void CellularAutomata::onNeighborsUpdate()
 				s_NodeArr[i + 1][j - 1].m_isAlive +
 				s_NodeArr[i + 1][j + 1].m_isAlive;
 
-			//std::cout << count << std::endl;
 			if ((*temp).m_isAlive) {
 				(*result) = (count == 2 || count == 3);
 			}
@@ -86,8 +91,8 @@ void CellularAutomata::onRender(SDL_Renderer* ren)
 	bool* result = &s_BoolArr[0][0];
 	Point* temp = &s_NodeArr[0][0];
 
-	for (int i = 0; i < (PPR * PIXELSIZE); i += PIXELSIZE) {
-		for (int j = 0; j < (PPC * PIXELSIZE); j += PIXELSIZE) {
+	for (int i = 0; i < PPR; ++i) {
+		for (int j = 0; j < PPC; ++j) {
 
 			if ((*result)) {
 				SDL_RenderFillRect(ren, (*temp).m_Rect);
