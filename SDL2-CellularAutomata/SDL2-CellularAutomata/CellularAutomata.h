@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #include <SDL.h>
 #include "GameManager.h"
 
@@ -21,7 +22,7 @@ private:
 
 	static Point s_NodeArr[][PPC];
 
-	static bool s_StateArr[][PPC];
+	static bool s_BoolArr[][PPC];
 
 	static int s_RandomnessFactor;
 
