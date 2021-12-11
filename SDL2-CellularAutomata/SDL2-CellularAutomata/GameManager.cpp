@@ -60,11 +60,11 @@ void GameManager::onRun()
 
 void GameManager::onDraw()
 {
-	SDL_SetRenderDrawColor(m_Renderer, 0.0f, 0.0f, 0.0f, 0.0f);
+	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
 	// clear the screen
 	SDL_RenderClear(m_Renderer);
 	// fill the color buffer
-	SDL_SetRenderDrawColor(m_Renderer, 255.0f, 0.0f, 0.0f, 255.0f);
+	SDL_SetRenderDrawColor(m_Renderer, 255, 0, 0, 255);
 	// run automata rendering logic in-between
 	CellularAutomata::onUpdate(m_Renderer);
 	// render the back buffer frame to the front buffer frame
@@ -87,7 +87,6 @@ int GameManager::onExecute()
 
 void GameManager::onClear()
 {
-	CellularAutomata::onClear();
 	SDL_DestroyRenderer(m_Renderer);
 	m_Renderer = nullptr;
 	SDL_DestroyWindow(m_Window);

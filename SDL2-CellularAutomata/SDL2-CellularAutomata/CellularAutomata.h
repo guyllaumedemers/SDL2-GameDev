@@ -1,24 +1,29 @@
 #pragma once
 #include <SDL.h>
+#include "GameManager.h"
 
 struct Point {
 	SDL_Rect* m_Rect;
 	bool m_isAlive;
+
+	Point() {
+		m_Rect = nullptr;
+		m_isAlive = false;
+	}
+	~Point() {
+		delete m_Rect;
+	}
 };
 
 class CellularAutomata
 {
 private:
 
-	static Point** s_NodeArr;
+	static Point s_NodeArr[][PPC];
 
-	static bool** s_StateArr;
+	static bool s_StateArr[][PPC];
 
-	static int s_XOffset;
-
-	static int s_YOffset;
-
-	static int s_Population;
+	static int s_RandomnessFactor;
 
 public:
 
@@ -29,7 +34,5 @@ public:
 	static void onNeighborsUpdate();
 
 	static void onRender(SDL_Renderer* ren);
-
-	static void onClear();
 };
 

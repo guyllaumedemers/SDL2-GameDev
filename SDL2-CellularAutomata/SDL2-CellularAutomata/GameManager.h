@@ -5,6 +5,9 @@
 
 #define COLUMNS 640
 #define ROWS 480
+#define PIXELSIZE 4
+#define PPC (COLUMNS/PIXELSIZE)
+#define PPR (ROWS/PIXELSIZE)
 
 class GameManager
 {
