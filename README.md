@@ -13,14 +13,10 @@ NOTE : This project is broken down into multiples folders, each representing a s
 
 ## Content
 
-*  GettingStarted -> Tic-Tac-Toe
-
-```
-NOTE : Scripts created by myself can be found here.
-```
-
-* [SDL2-GettingStarted/..](https://github.com/guyllaumedemers/SDL2-GameDev/tree/master/SDL2-GettingStarted/SDL2-GettingStarted) : Tic-Tac-Toe
+* Tic-Tac-Toe
+* GameOfLife & Cellular Automata
+* MineSweeper (*WIP)
 
 ## Resources
 
-💬 References are given from : [sdltutorials.com](http://www.sdltutorials.com/sdl-tutorial-tic-tac-toe) and migrated for SDL2
+💬 References are given from : [sdltutorials.com](http://www.sdltutorials.com/sdl-tutorial-tic-tac-toe) and migrated for SDL2 APIs. More references on other subjects can be found [Automata theory : wiki](https://en.wikipedia.org/wiki/Cellular_automaton) and obviously explaination by the [G.O.A.T](https://www.youtube.com/watch?v=E7CxMHsYzSs&t=499s&ab_channel=javidx9)
