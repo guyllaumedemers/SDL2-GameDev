@@ -18,10 +18,10 @@ void CellularAutomata::onInitialize(SDL_Renderer* ren)
 	int x, y = 0;
 	Point* temp = &s_NodeArr[0][0];
 
-	for (int i = 0; i < (PPR * PIXELSIZE); i += PIXELSIZE) {
-		for (int j = 0; j < (PPC * PIXELSIZE); j += PIXELSIZE) {
-			x = j;
-			y = i;
+	for (int i = 0; i < PPR; ++i) {
+		for (int j = 0; j < PPC; ++j) {
+			x = j * PIXELSIZE;
+			y = i * PIXELSIZE;
 
 			(*temp).m_Rect = new SDL_Rect{
 				x,
@@ -47,22 +47,25 @@ void CellularAutomata::onUpdate(SDL_Renderer* ren)
 
 void CellularAutomata::onNeighborsUpdate()
 {
-	Point* temp = &s_NodeArr[1][1];
+	bool* result = nullptr;
+	Point* temp = nullptr;
 	int count = 0;
-	bool* result = &s_BoolArr[1][1];
 
-	for (int i = PIXELSIZE; i < ((PPR * PIXELSIZE) - PIXELSIZE); i += PIXELSIZE) {
-		for (int j = PIXELSIZE; j < ((PPC * PIXELSIZE) - PIXELSIZE); j += PIXELSIZE) {
+	for (int i = 1; i < PPR - 1; ++i) {
+		for (int j = 1; j < PPC - 1; ++j) {
+			temp = &s_NodeArr[i][j];
+			result = &s_BoolArr[i][j];
 
 			count =
-				(*(temp + sizeof(Point))).m_isAlive +
-				(*(temp - sizeof(Point))).m_isAlive +
-				(*(temp + (PPR * sizeof(Point)))).m_isAlive +
-				(*(temp - (PPR * sizeof(Point)))).m_isAlive +
-				(*(temp + ((PPR * sizeof(Point))) + sizeof(Point))).m_isAlive +
-				(*(temp + ((PPR * sizeof(Point))) - sizeof(Point))).m_isAlive +
-				(*(temp - ((PPR * sizeof(Point))) + sizeof(Point))).m_isAlive +
-				(*(temp - ((PPR * sizeof(Point))) - sizeof(Point))).m_isAlive;
+				s_NodeArr[i - 1][j].m_isAlive +
+				s_NodeArr[i + 1][j].m_isAlive +
+				s_NodeArr[i - 1][j - 1].m_isAlive +
+				s_NodeArr[i - 1][j + 1].m_isAlive +
+				s_NodeArr[i][j - 1].m_isAlive +
+				s_NodeArr[i][j + 1].m_isAlive +
+				s_NodeArr[i + 1][j - 1].m_isAlive +
+				s_NodeArr[i + 1][j + 1].m_isAlive;
+
 			//std::cout << count << std::endl;
 			if ((*temp).m_isAlive) {
 				(*result) = (count == 2 || count == 3);
@@ -70,8 +73,6 @@ void CellularAutomata::onNeighborsUpdate()
 			else {
 				(*result) = (count == 3);
 			}
-			++temp;
-			++result;
 		}
 	}
 	result = nullptr;
