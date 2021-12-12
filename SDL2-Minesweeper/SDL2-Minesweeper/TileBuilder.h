@@ -4,12 +4,16 @@
 
 class TileBuilder
 {
+protected:
+
+	Tile* m_Tile = nullptr;
+
 public:
 
-	virtual void buildTile() {}
+	virtual void buildTile() = 0;
 
-	virtual void buildGraphic(SDL_Renderer* ren) {}
+	virtual void buildGraphic(SDL_Renderer* ren) = 0;
 
-	virtual Tile* GetTile() { return 0; }
+	Tile* getTile() { return m_Tile; }
 };
 

@@ -11,7 +11,7 @@ private:
 
 	static Tile** m_Map;
 
-	static Tile* createTile(SDL_Renderer* ren, TileBuilder* iBuilder);
+	static Tile* createTile(SDL_Renderer* ren);
 
 public:
 

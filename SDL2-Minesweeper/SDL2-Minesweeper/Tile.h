@@ -11,6 +11,7 @@ private:
 	TileBitMask m_Bitmask = TileBitMask::None;
 
 public:
+
 	Tile();
 
 	Tile(SDL_Texture* texture, TileBitMask bitmask);

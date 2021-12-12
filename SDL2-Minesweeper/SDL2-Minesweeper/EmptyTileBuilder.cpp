@@ -24,8 +24,3 @@ void EmptyTileBuilder::buildGraphic(SDL_Renderer* ren)
 
 	(*m_Tile).setGraphics(texture);
 }
-
-Tile* EmptyTileBuilder::getTile()
-{
-	return m_Tile;
-}

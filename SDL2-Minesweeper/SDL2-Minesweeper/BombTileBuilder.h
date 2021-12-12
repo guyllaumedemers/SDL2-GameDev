@@ -1,15 +1,14 @@
 #pragma once
-#include <SDL.h>
 #include "TileBuilder.h"
 #include "ImageLoader.h"
 
-class EmptyTileBuilder : public TileBuilder
+class BombTileBuilder : TileBuilder
 {
 public:
 
-	EmptyTileBuilder();
+	BombTileBuilder();
 
-	~EmptyTileBuilder();
+	~BombTileBuilder();
 
 	void buildTile();
 
