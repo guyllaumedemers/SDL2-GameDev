@@ -144,21 +144,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EmptyTileBuilder.h" />
+    <ClInclude Include="TileBitMask.h" />
+    <ClInclude Include="TileBuilder.h" />
     <ClInclude Include="DifficultyController.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="TileGridManager.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileMapGenerator.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UIController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DifficultyController.cpp" />
+    <ClCompile Include="EmptyTileBuilder.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="TileGridManager.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIController.cpp" />
   </ItemGroup>

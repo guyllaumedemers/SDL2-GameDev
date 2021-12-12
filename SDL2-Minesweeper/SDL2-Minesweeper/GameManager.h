@@ -22,8 +22,6 @@ private:
 
 	static SDL_Surface* m_SurfaceDisplay;
 
-	static SDL_Surface* m_ImgSurfaceDisplay;
-
 	static SDL_Texture* m_Texture;
 
 	static Timer* m_Timer;

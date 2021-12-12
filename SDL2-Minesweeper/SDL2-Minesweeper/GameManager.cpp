@@ -3,6 +3,10 @@
 #include "InputManager.h"
 #include <iostream>
 #include "UIController.h"
+#include "TileMapGenerator.h"
+#include <string>
+
+#define DEFAULTMAPSIZE 8
 
 bool GameManager::m_IsRunning = true;
 
@@ -11,8 +15,6 @@ SDL_Window* GameManager::m_Window = nullptr;
 SDL_Renderer* GameManager::m_Renderer = nullptr;
 
 SDL_Surface* GameManager::m_SurfaceDisplay = nullptr;
-
-SDL_Surface* GameManager::m_ImgSurfaceDisplay = nullptr;
 
 SDL_Texture* GameManager::m_Texture = nullptr;
 
@@ -117,6 +119,7 @@ void GameManager::renderFrame()
 
 void GameManager::clear()
 {
+	TileMapGenerator::clear();
 	delete m_Timer;
 	m_Timer = nullptr;
 	SDL_DestroyTexture(m_Texture);

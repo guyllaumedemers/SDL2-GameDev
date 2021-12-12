@@ -33,7 +33,19 @@
     <ClInclude Include="DifficultyController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TileGridManager.h">
+    <ClInclude Include="TileBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EmptyTileBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TileBitMask.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,7 +71,13 @@
     <ClCompile Include="DifficultyController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TileGridManager.cpp">
+    <ClCompile Include="TileMapGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EmptyTileBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
