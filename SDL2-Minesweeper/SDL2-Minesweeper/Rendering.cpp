@@ -47,15 +47,10 @@ void Rendering::initialize()
 	initializeIMG();
 }
 
-void Rendering::update()
+void Rendering::update(Tile** map, int arrX, int arrY)
 {
-	int rows = sizeof(TileMapGenerator::getMap()) / sizeof(TileMapGenerator::getMap()[0]);
-	int cols = sizeof(TileMapGenerator::getMap()[0]) / sizeof(Tile);
-
-	Tile* temp = &TileMapGenerator::getMap()[0][0];
-
-	for (int i = 0; i < rows; ++i) {
-		for (int j = 0; j < cols; ++j) {
+	for (int i = 0; i < arrX; ++i) {
+		for (int j = 0; j < arrY; ++j) {
 			int x = j * Tile::width;
 			int y = i * Tile::height;
 
@@ -66,13 +61,9 @@ void Rendering::update()
 				Tile::height
 			};
 
-			SDL_RenderCopy(m_Renderer, (*temp).getTexture(), NULL, &dest);
-			++temp;
+			SDL_RenderCopy(m_Renderer, map[i][j].getTexture(), NULL, &dest);
 		}
 	}
-
-	temp = nullptr;
-	delete temp;
 }
 
 void Rendering::clear()

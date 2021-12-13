@@ -23,7 +23,7 @@ public:
 
 	static void initialize();
 
-	static void update();
+	static void update(Tile** map, int arrX, int arrY);
 
 	static void clear();
 };

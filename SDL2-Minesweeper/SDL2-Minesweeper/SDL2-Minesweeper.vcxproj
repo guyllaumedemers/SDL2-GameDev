@@ -149,7 +149,6 @@
     <ClInclude Include="Rendering.h" />
     <ClInclude Include="TileBitMask.h" />
     <ClInclude Include="TileBuilder.h" />
-    <ClInclude Include="DifficultyController.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="InputManager.h" />
@@ -160,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BombTileBuilder.cpp" />
-    <ClCompile Include="DifficultyController.cpp" />
     <ClCompile Include="EmptyTileBuilder.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageLoader.cpp" />

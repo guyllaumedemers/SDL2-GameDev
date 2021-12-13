@@ -30,9 +30,6 @@
     <ClInclude Include="UIController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DifficultyController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TileBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UIController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DifficultyController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TileMapGenerator.cpp">
