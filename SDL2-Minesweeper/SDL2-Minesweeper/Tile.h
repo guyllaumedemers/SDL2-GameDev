@@ -24,5 +24,7 @@ public:
 
 	void setGraphics(SDL_Texture* texture);
 
+	SDL_Texture* getTexture();
+
 	static const int width = 20, height = 20;
 };

@@ -18,7 +18,7 @@ void GameManager::initializeGame()
 	}
 
 	Rendering::initialize();
-	TileMapGenerator::createMap(Rendering::m_Renderer, 8, 8);
+	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, 8, 8);
 }
 
 void GameManager::getInputEvents()

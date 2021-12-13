@@ -23,7 +23,7 @@ void EmptyTileBuilder::buildTile(int x, int y)
 void EmptyTileBuilder::buildGraphic(SDL_Window* window, SDL_Renderer* ren)
 {
 	SDL_Surface* windowSurface = SDL_GetWindowSurface(window);
-	SDL_Texture* texture = ImageLoader::loadGPURendering(ren, windowSurface, "SDL2-Minesweeper/Assets/CoveredTile.png");
+	SDL_Texture* texture = ImageLoader::loadGPURendering(ren, windowSurface, "../SDL2-Minesweeper/Assets/CoveredTile.png");
 
 	(*m_Tile).setGraphics(texture);
 

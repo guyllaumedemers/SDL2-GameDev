@@ -52,14 +52,12 @@ void Rendering::update()
 	int rows = sizeof(TileMapGenerator::getMap()) / sizeof(TileMapGenerator::getMap()[0]);
 	int cols = sizeof(TileMapGenerator::getMap()[0]) / sizeof(Tile);
 
-	std::printf("Rows : %d, Cols : %d", rows, cols);
-
 	Tile* temp = &TileMapGenerator::getMap()[0][0];
 
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < cols; ++j) {
-			int x = j;
-			int y = i;
+			int x = j * Tile::width;
+			int y = i * Tile::height;
 
 			SDL_Rect dest{
 				x,
@@ -68,7 +66,7 @@ void Rendering::update()
 				Tile::height
 			};
 
-			SDL_RenderCopy(m_Renderer, NULL, NULL, &dest);
+			SDL_RenderCopy(m_Renderer, (*temp).getTexture(), NULL, &dest);
 			++temp;
 		}
 	}

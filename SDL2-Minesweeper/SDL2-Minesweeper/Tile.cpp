@@ -34,3 +34,8 @@ void Tile::setBitmaskValue(TileBitMask value, bool isRemoving)
 void Tile::setGraphics(SDL_Texture* texture) {
 	m_Texture = texture;
 }
+
+SDL_Texture* Tile::getTexture()
+{
+	return m_Texture;
+}
