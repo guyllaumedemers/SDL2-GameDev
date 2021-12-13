@@ -1,6 +1,6 @@
 #include "ImageLoader.h"
 
-SDL_Surface* ImageLoader::loadCPURendering(SDL_Surface* surfaceDisplay, std::string path)
+SDL_Surface* ImageLoader::loadCPURendering(SDL_Surface* windowSurface, std::string path)
 {
 	SDL_Surface* optimizeSurface = IMG_Load(path.c_str());
 
@@ -9,7 +9,7 @@ SDL_Surface* ImageLoader::loadCPURendering(SDL_Surface* surfaceDisplay, std::str
 		exit(EXIT_FAILURE);
 	}
 
-	optimizeSurface = SDL_ConvertSurface(optimizeSurface, surfaceDisplay->format, 0);
+	optimizeSurface = SDL_ConvertSurface(optimizeSurface, windowSurface->format, 0);
 
 	if (optimizeSurface == nullptr) {
 		SDL_Log("Cannot Convert Surface : %s", SDL_GetError());
@@ -19,9 +19,9 @@ SDL_Surface* ImageLoader::loadCPURendering(SDL_Surface* surfaceDisplay, std::str
 	return optimizeSurface;
 }
 
-SDL_Texture* ImageLoader::loadGPURendering(SDL_Renderer* renderer, SDL_Surface* surfaceDisplay, std::string path)
+SDL_Texture* ImageLoader::loadGPURendering(SDL_Renderer* renderer, SDL_Surface* windowSurface, std::string path)
 {
-	SDL_Surface* optimizeSurface = loadCPURendering(surfaceDisplay, path);
+	SDL_Surface* optimizeSurface = loadCPURendering(windowSurface, path);
 	SDL_Texture* optimizeTexture = SDL_CreateTextureFromSurface(renderer, optimizeSurface);
 
 	if (optimizeTexture == nullptr) {

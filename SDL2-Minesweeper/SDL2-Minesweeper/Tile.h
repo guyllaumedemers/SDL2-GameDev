@@ -6,19 +6,23 @@ struct Tile
 {
 private:
 
-	SDL_Texture* m_Texture = nullptr;
-
 	TileBitMask m_Bitmask = TileBitMask::None;
+
+	int m_X = 0, m_Y = 0;
+
+	SDL_Texture* m_Texture = nullptr;
 
 public:
 
 	Tile();
 
-	Tile(SDL_Texture* texture, TileBitMask bitmask);
+	Tile(SDL_Texture* texture, TileBitMask bitmask, int x, int y);
 
 	~Tile();
 
 	void setBitmaskValue(TileBitMask value, bool isRemoving);
 
 	void setGraphics(SDL_Texture* texture);
+
+	static const int width = 20, height = 20;
 };

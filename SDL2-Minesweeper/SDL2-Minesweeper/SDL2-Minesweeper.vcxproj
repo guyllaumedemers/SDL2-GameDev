@@ -144,7 +144,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BombTileBuilder.h" />
     <ClInclude Include="EmptyTileBuilder.h" />
+    <ClInclude Include="Rendering.h" />
     <ClInclude Include="TileBitMask.h" />
     <ClInclude Include="TileBuilder.h" />
     <ClInclude Include="DifficultyController.h" />
@@ -157,12 +159,14 @@
     <ClInclude Include="UIController.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BombTileBuilder.cpp" />
     <ClCompile Include="DifficultyController.cpp" />
     <ClCompile Include="EmptyTileBuilder.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="Timer.cpp" />
