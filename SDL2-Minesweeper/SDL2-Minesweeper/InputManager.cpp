@@ -1,5 +1,6 @@
 #include "InputManager.h"
 #include "GameManager.h"
+#include "Rendering.h"
 
 void InputManager::getInputEvent(SDL_Event& myEvent)
 {
@@ -15,6 +16,8 @@ void InputManager::getInputEvent(SDL_Event& myEvent)
 
 			SDL_GetMouseState(&x, &y);
 			uncoverTile(x, y);
+
+			Rendering::updateTileGraphic(x, y);
 		}
 		else if (myEvent.button.button == SDL_BUTTON_RIGHT) {
 			int x = 0;
@@ -22,6 +25,8 @@ void InputManager::getInputEvent(SDL_Event& myEvent)
 
 			SDL_GetMouseState(&x, &y);
 			doFlagCheck(x, y);
+
+			Rendering::updateTileGraphic(x, y);
 		}
 		break;
 	}

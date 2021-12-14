@@ -16,7 +16,7 @@ public:
 
 	Tile();
 
-	Tile(SDL_Texture* texture, TileBitMask bitmask, int x, int y);
+	Tile(SDL_Texture* texture, TileBitMask bitmask, const int& x, const int& y);
 
 	~Tile();
 

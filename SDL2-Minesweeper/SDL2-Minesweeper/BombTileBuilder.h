@@ -2,7 +2,7 @@
 #include "TileBuilder.h"
 #include "ImageLoader.h"
 
-class BombTileBuilder : TileBuilder
+class BombTileBuilder : public TileBuilder
 {
 public:
 

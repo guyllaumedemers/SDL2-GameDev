@@ -5,7 +5,7 @@ TileBuilder* TileMapGenerator::m_TileBuilder = nullptr;
 
 Tile** TileMapGenerator::m_Map = nullptr;
 
-Tile* TileMapGenerator::createTile(SDL_Window* window, SDL_Renderer* ren, int x, int y)
+Tile* TileMapGenerator::createTile(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y)
 {
 	if (m_TileBuilder == nullptr) {
 		SDL_Log("Cannot access IBuilder instance : %s", SDL_GetError());
@@ -18,7 +18,7 @@ Tile* TileMapGenerator::createTile(SDL_Window* window, SDL_Renderer* ren, int x,
 	return (*m_TileBuilder).getTile();
 }
 
-Tile** TileMapGenerator::createMap(SDL_Window* window, SDL_Renderer* ren, int x, int y)
+Tile** TileMapGenerator::createMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y)
 {
 	m_Map = new Tile * [x];
 	m_TileBuilder = new EmptyTileBuilder();
@@ -43,6 +43,14 @@ void TileMapGenerator::clear()
 	delete m_Map;
 }
 
+void TileMapGenerator::swapBuilder(TileBuilder* ibuilder)
+{
+	m_TileBuilder = nullptr;
+	delete m_TileBuilder;
+
+	m_TileBuilder = ibuilder;
+}
+
 Tile** TileMapGenerator::getMap()
 {
 	return m_Map;
@@ -61,18 +69,18 @@ void TileMapGenerator::doFlagCheck(const int& x, const int& y)
 void TileMapGenerator::uncoverTile(const int& x, const int& y)
 {
 	Tile* temp = &m_Map[y / Tile::width][x / Tile::height];
-	TileBitMask _bitmask = (*temp).getBitmaskValue();
+	TileBitMask bitmask = (*temp).getBitmaskValue();
 
-	if ((_bitmask & TileBitMask::Flag) == TileBitMask::Flag) {
+	if ((bitmask & TileBitMask::Flag) == TileBitMask::Flag) {
 		// do nothing
 		//
 	}
-	else if ((_bitmask & TileBitMask::Bomb) == TileBitMask::Bomb) {
+	else if ((bitmask & TileBitMask::Bomb) == TileBitMask::Bomb) {
 		// hit
 		//
 	}
 	else {
-		if ((_bitmask & TileBitMask::Covered) == TileBitMask::Covered) {
+		if ((bitmask & TileBitMask::Covered) == TileBitMask::Covered) {
 			// run algorithm logic for empty neighbor dicovery
 			//
 		}

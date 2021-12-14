@@ -8,7 +8,7 @@ Tile::Tile()
 	m_Y = 0;
 }
 
-Tile::Tile(SDL_Texture* texture, TileBitMask bitmask, int x, int y)
+Tile::Tile(SDL_Texture* texture, TileBitMask bitmask, const int& x, const int& y)
 {
 	m_Texture = texture;
 	m_Bitmask = bitmask;
