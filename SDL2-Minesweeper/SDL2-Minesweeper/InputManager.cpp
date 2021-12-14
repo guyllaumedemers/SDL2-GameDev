@@ -10,16 +10,29 @@ void InputManager::getInputEvent(SDL_Event& myEvent)
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		if (myEvent.button.button == SDL_BUTTON_LEFT) {
+			int x = 0;
+			int y = 0;
 
+			SDL_GetMouseState(&x, &y);
+			uncoverTile(x, y);
 		}
 		else if (myEvent.button.button == SDL_BUTTON_RIGHT) {
+			int x = 0;
+			int y = 0;
 
+			SDL_GetMouseState(&x, &y);
+			doFlagCheck(x, y);
 		}
 		break;
 	}
 }
 
-void InputManager::getMouseClickPos(unsigned short int &x, unsigned short int& y)
+void InputManager::doFlagCheck(const int& x, const int& y)
 {
+	TileMapGenerator::doFlagCheck(x, y);
+}
 
+void InputManager::uncoverTile(const int& x, const int& y)
+{
+	TileMapGenerator::uncoverTile(x, y);
 }

@@ -20,5 +20,9 @@ public:
 	static void clear();
 
 	static Tile** getMap();
+
+	static void doFlagCheck(const int& x, const int& y);
+
+	static void uncoverTile(const int& x, const int& y);
 };
 

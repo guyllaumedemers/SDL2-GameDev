@@ -1,4 +1,5 @@
 #include "TileMapGenerator.h"
+#include <iostream>
 
 TileBuilder* TileMapGenerator::m_TileBuilder = nullptr;
 
@@ -45,4 +46,37 @@ void TileMapGenerator::clear()
 Tile** TileMapGenerator::getMap()
 {
 	return m_Map;
+}
+
+void TileMapGenerator::doFlagCheck(const int& x, const int& y)
+{
+	Tile* temp = &m_Map[y / Tile::width][x / Tile::height];
+
+	(*temp).setBitmaskValue(TileBitMask::Flag, ((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag);
+
+	temp = nullptr;
+	delete temp;
+}
+
+void TileMapGenerator::uncoverTile(const int& x, const int& y)
+{
+	Tile* temp = &m_Map[y / Tile::width][x / Tile::height];
+
+	if ((*temp).getBitmaskValue() == TileBitMask::Flag) {
+		// do nothing
+		//
+	}
+	else if ((*temp).getBitmaskValue() == TileBitMask::Bomb) {
+		// hit
+		//
+	}
+	else {
+		if ((*temp).getBitmaskValue() == TileBitMask::Covered) {
+			// run algorithm logic for empty neighbor dicovery
+			//
+		}
+	}
+
+	temp = nullptr;
+	delete temp;
 }

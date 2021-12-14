@@ -13,7 +13,7 @@ void Rendering::initializeWindow()
 		SDL_WINDOWPOS_CENTERED,
 		WINDOW_WIDTH,
 		WINDOW_HEIGHT,
-		0
+		SDL_WINDOW_RESIZABLE
 	);
 
 	if (m_Window == nullptr) {
@@ -47,8 +47,14 @@ void Rendering::initialize()
 	initializeIMG();
 }
 
+void Rendering::setWindowSize(int x, int y)
+{
+	SDL_SetWindowSize(m_Window, Tile::width * x, Tile::height * y);
+}
+
 void Rendering::update(Tile** map, int arrX, int arrY)
 {
+	SDL_RenderClear(Rendering::m_Renderer);
 	for (int i = 0; i < arrX; ++i) {
 		for (int j = 0; j < arrY; ++j) {
 			int x = j * Tile::width;
@@ -64,6 +70,7 @@ void Rendering::update(Tile** map, int arrX, int arrY)
 			SDL_RenderCopy(m_Renderer, map[i][j].getTexture(), NULL, &dest);
 		}
 	}
+	SDL_RenderPresent(Rendering::m_Renderer);
 }
 
 void Rendering::clear()

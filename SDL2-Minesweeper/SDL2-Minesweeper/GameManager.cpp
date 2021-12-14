@@ -7,7 +7,8 @@
 #include <iostream>
 #include <string>
 
-#define GRIDSIZE 8
+#define GRIDCOLUMNS 16
+#define GRIDROWS 16
 
 bool GameManager::m_IsRunning = true;
 
@@ -20,7 +21,8 @@ void GameManager::initializeGame()
 	}
 
 	Rendering::initialize();
-	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, GRIDSIZE, GRIDSIZE);
+	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, GRIDROWS, GRIDCOLUMNS);
+	Rendering::setWindowSize(GRIDCOLUMNS, GRIDROWS);
 }
 
 void GameManager::getInputEvents()
@@ -34,15 +36,12 @@ void GameManager::getInputEvents()
 
 void GameManager::runGameLogic()
 {
-	unsigned short int x, y;
-	InputManager::getMouseClickPos(x, y);
+
 }
 
 void GameManager::renderFrame()
 {
-	SDL_RenderClear(Rendering::m_Renderer);
-	Rendering::update(TileMapGenerator::getMap(), GRIDSIZE, GRIDSIZE);
-	SDL_RenderPresent(Rendering::m_Renderer);
+	Rendering::update(TileMapGenerator::getMap(), GRIDROWS, GRIDCOLUMNS);
 }
 
 void GameManager::clear()

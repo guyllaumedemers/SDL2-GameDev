@@ -22,6 +22,8 @@ public:
 
 	void setBitmaskValue(TileBitMask value, bool isRemoving);
 
+	TileBitMask getBitmaskValue();
+
 	void setGraphics(SDL_Texture* texture);
 
 	SDL_Texture* getTexture();

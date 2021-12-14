@@ -23,6 +23,8 @@ public:
 
 	static void initialize();
 
+	static void setWindowSize(int x, int y);
+
 	static void update(Tile** map, int arrX, int arrY);
 
 	static void clear();
