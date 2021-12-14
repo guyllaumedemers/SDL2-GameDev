@@ -61,17 +61,18 @@ void TileMapGenerator::doFlagCheck(const int& x, const int& y)
 void TileMapGenerator::uncoverTile(const int& x, const int& y)
 {
 	Tile* temp = &m_Map[y / Tile::width][x / Tile::height];
+	TileBitMask _bitmask = (*temp).getBitmaskValue();
 
-	if ((*temp).getBitmaskValue() == TileBitMask::Flag) {
+	if ((_bitmask & TileBitMask::Flag) == TileBitMask::Flag) {
 		// do nothing
 		//
 	}
-	else if ((*temp).getBitmaskValue() == TileBitMask::Bomb) {
+	else if ((_bitmask & TileBitMask::Bomb) == TileBitMask::Bomb) {
 		// hit
 		//
 	}
 	else {
-		if ((*temp).getBitmaskValue() == TileBitMask::Covered) {
+		if ((_bitmask & TileBitMask::Covered) == TileBitMask::Covered) {
 			// run algorithm logic for empty neighbor dicovery
 			//
 		}
