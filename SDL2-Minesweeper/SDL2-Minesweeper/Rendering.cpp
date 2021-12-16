@@ -24,7 +24,7 @@ void Rendering::initializeWindow()
 
 void Rendering::initializeRendering()
 {
-	m_Renderer = SDL_CreateRenderer(m_Window, -1, 0);
+	m_Renderer = SDL_CreateRenderer(m_Window, -1, SDL_RENDERER_ACCELERATED);
 
 	if (m_Renderer == nullptr) {
 		SDL_Log("Cannot initalize SDL_Renderer : %s", SDL_GetError());
@@ -72,14 +72,13 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 
 			SDL_SetRenderTarget(m_Renderer, target);
 
-			SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
-			SDL_SetTextureBlendMode(target, SDL_BLENDMODE_BLEND);
 			SDL_RenderClear(m_Renderer);
 			SDL_RenderCopy(m_Renderer, image_1, NULL, NULL);
 
 			if ((map[i][j].getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
 				SDL_Texture* image_2 = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png");
 
+				SDL_SetTextureBlendMode(image_2, SDL_BLENDMODE_ADD);
 				SDL_RenderCopy(m_Renderer, image_2, NULL, NULL);
 			}
 
