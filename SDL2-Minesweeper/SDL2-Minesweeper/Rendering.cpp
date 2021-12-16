@@ -78,7 +78,6 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 			if ((map[i][j].getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
 				SDL_Texture* image_2 = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png");
 
-				SDL_SetTextureBlendMode(image_2, SDL_BLENDMODE_ADD);
 				SDL_RenderCopy(m_Renderer, image_2, NULL, NULL);
 			}
 
