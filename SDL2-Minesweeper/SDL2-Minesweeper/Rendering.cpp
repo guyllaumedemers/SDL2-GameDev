@@ -1,4 +1,5 @@
 #include "Rendering.h"
+#include <iostream>
 
 SDL_Window* Rendering::m_Window = nullptr;
 
@@ -39,28 +40,6 @@ void Rendering::initializeIMG()
 	}
 }
 
-void Rendering::addGraphicLayer(Tile* tile, std::string path)
-{
-	SDL_Texture* dest = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_TARGET, Tile::width, Tile::height);
-
-	SDL_Texture* src = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), path);
-
-	SDL_SetRenderTarget(m_Renderer, dest);
-	SDL_SetTextureBlendMode(src, SDL_BLENDMODE_MOD);
-
-	SDL_RenderCopy(m_Renderer, (*tile).getTexture(), NULL, NULL);
-	SDL_RenderCopy(m_Renderer, src, NULL, NULL);
-
-	SDL_SetRenderTarget(m_Renderer, NULL);
-
-	SDL_RenderPresent(m_Renderer);
-
-	(*tile).setGraphics(dest);
-
-	SDL_DestroyTexture(src);
-	src = nullptr;
-}
-
 void Rendering::initialize()
 {
 	initializeWindow();
@@ -73,42 +52,9 @@ void Rendering::setWindowSize(const int& x, const int& y)
 	SDL_SetWindowSize(m_Window, Tile::width * x, Tile::height * y);
 }
 
-void Rendering::updateTileGraphic(const int& x, const int& y)
-{
-	Tile* temp = &TileMapGenerator::getMap()[y / Tile::width][x / Tile::height];
-	TileBitMask bitmask = (*temp).getBitmaskValue();
-
-	if ((bitmask & TileBitMask::Uncovered) == TileBitMask::Uncovered) {
-
-		// do nothing
-	}
-	else if ((bitmask & TileBitMask::Covered) == TileBitMask::Covered) {
-
-		if ((bitmask & TileBitMask::Flag) == TileBitMask::Flag) {
-
-			// need a way to update properly the graphics for unchecking
-
-			addGraphicLayer(temp, "../SDL2-Minesweeper/Assets/Flag.png");
-		}
-		else if ((bitmask & TileBitMask::Bomb) == TileBitMask::Bomb) {
-
-			addGraphicLayer(temp, "../SDL2-Minesweeper/Assets/Bomb.png");
-		}
-		else {
-
-			// swap to uncover
-
-			// add number of bomb neighbors
-		}
-	}
-
-	temp = nullptr;
-	delete temp;
-}
-
 void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 {
-	SDL_RenderClear(Rendering::m_Renderer);
+	SDL_RenderClear(m_Renderer);
 	for (int i = 0; i < arrX; ++i) {
 		for (int j = 0; j < arrY; ++j) {
 			int x = j * Tile::width;
@@ -121,10 +67,32 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 				Tile::height
 			};
 
+			if ((map[i][j].getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
+				SDL_Texture* image_1 = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/CoveredTile.png");
+				SDL_Texture* image_2 = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png");
+
+				SDL_Texture* target = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_TARGET, Tile::width, Tile::height);
+				SDL_SetRenderTarget(m_Renderer, target);
+
+				SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
+				SDL_RenderClear(m_Renderer);
+
+				SDL_RenderCopy(m_Renderer, image_1, NULL, &dest);
+				SDL_RenderCopy(m_Renderer, image_2, NULL, &dest);
+
+				SDL_SetRenderTarget(m_Renderer, NULL);
+				map[i][j].setGraphics(target);
+
+				SDL_DestroyTexture(image_1);
+				image_1 = nullptr;
+				SDL_DestroyTexture(image_2);
+				image_2 = nullptr;
+			}
+
 			SDL_RenderCopy(m_Renderer, map[i][j].getTexture(), NULL, &dest);
 		}
 	}
-	SDL_RenderPresent(Rendering::m_Renderer);
+	SDL_RenderPresent(m_Renderer);
 }
 
 void Rendering::clear()

@@ -3,6 +3,7 @@
 BombTileBuilder::BombTileBuilder()
 {
 	m_Tile = nullptr;
+	m_Texture = nullptr;
 }
 
 BombTileBuilder::~BombTileBuilder()
@@ -23,9 +24,11 @@ void BombTileBuilder::buildTile(int x, int y)
 void BombTileBuilder::buildGraphic(SDL_Window* window, SDL_Renderer* ren)
 {
 	SDL_Surface* windowSurface = SDL_GetWindowSurface(window);
-	SDL_Texture* texture = ImageLoader::loadGPURendering(ren, windowSurface, "SDL2-Minesweeper/Assets/Bomb.png");
+	if (m_Texture == nullptr) {
+		m_Texture = ImageLoader::loadGPURendering(ren, windowSurface, "SDL2-Minesweeper/Assets/Bomb.png");
+	}
 
-	(*m_Tile).setGraphics(texture);
+	(*m_Tile).setGraphics(m_Texture);
 
 	SDL_FreeSurface(windowSurface);
 	windowSurface = nullptr;

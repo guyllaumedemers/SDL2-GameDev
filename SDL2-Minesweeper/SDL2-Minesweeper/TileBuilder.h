@@ -8,6 +8,8 @@ protected:
 
 	Tile* m_Tile = nullptr;
 
+	SDL_Texture* m_Texture = nullptr;
+
 public:
 
 	virtual void buildTile(int x, int y) = 0;

@@ -30,6 +30,6 @@ SDL_Texture* ImageLoader::loadGPURendering(SDL_Renderer* renderer, SDL_Surface* 
 	}
 
 	SDL_FreeSurface(optimizeSurface);
-
+	optimizeSurface = nullptr;
 	return optimizeTexture;
 }

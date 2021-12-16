@@ -44,3 +44,13 @@ SDL_Texture* Tile::getTexture()
 {
 	return m_Texture;
 }
+
+int Tile::getX()
+{
+	return m_X;
+}
+
+int Tile::getY()
+{
+	return m_Y;
+}

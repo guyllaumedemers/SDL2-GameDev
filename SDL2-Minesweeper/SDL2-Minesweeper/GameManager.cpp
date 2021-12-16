@@ -15,14 +15,14 @@ bool GameManager::m_IsRunning = true;
 void GameManager::initializeGame()
 {
 	SDL_SetMainReady();
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		SDL_Log("Cannot initalize SDL : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 
 	Rendering::initialize();
-	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, GRIDROWS, GRIDCOLUMNS);
 	Rendering::setWindowSize(GRIDCOLUMNS, GRIDROWS);
+	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, GRIDROWS, GRIDCOLUMNS);
 }
 
 void GameManager::getInputEvents()
@@ -36,7 +36,6 @@ void GameManager::getInputEvents()
 
 void GameManager::runGameLogic()
 {
-
 }
 
 void GameManager::renderFrame()

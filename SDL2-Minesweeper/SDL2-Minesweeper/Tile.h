@@ -28,5 +28,9 @@ public:
 
 	SDL_Texture* getTexture();
 
+	int getX();
+
+	int getY();
+
 	static const int width = 20, height = 20;
 };

@@ -1,8 +1,10 @@
 #include "EmptyTileBuilder.h"
+#include <iostream>
 
 EmptyTileBuilder::EmptyTileBuilder()
 {
 	m_Tile = nullptr;
+	m_Texture = nullptr;
 }
 
 EmptyTileBuilder::~EmptyTileBuilder()
@@ -23,9 +25,11 @@ void EmptyTileBuilder::buildTile(int x, int y)
 void EmptyTileBuilder::buildGraphic(SDL_Window* window, SDL_Renderer* ren)
 {
 	SDL_Surface* windowSurface = SDL_GetWindowSurface(window);
-	SDL_Texture* texture = ImageLoader::loadGPURendering(ren, windowSurface, "../SDL2-Minesweeper/Assets/CoveredTile.png");
+	if (m_Texture == nullptr) {
+		m_Texture = ImageLoader::loadGPURendering(ren, windowSurface, "../SDL2-Minesweeper/Assets/CoveredTile.png");
+	}
 
-	(*m_Tile).setGraphics(texture);
+	(*m_Tile).setGraphics(m_Texture);
 
 	SDL_FreeSurface(windowSurface);
 	windowSurface = nullptr;
