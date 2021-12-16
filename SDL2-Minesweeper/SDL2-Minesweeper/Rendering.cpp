@@ -81,7 +81,8 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 				SDL_RenderCopy(m_Renderer, image_2, NULL, &dest);
 
 				SDL_SetRenderTarget(m_Renderer, NULL);
-				map[i][j].setGraphics(target);
+				SDL_RenderCopy(m_Renderer, target, NULL, &dest);
+				//map[i][j].setGraphics(target);
 
 				SDL_DestroyTexture(image_1);
 				image_1 = nullptr;
@@ -89,7 +90,7 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 				image_2 = nullptr;
 			}
 
-			SDL_RenderCopy(m_Renderer, map[i][j].getTexture(), NULL, &dest);
+			//SDL_RenderCopy(m_Renderer, map[i][j].getTexture(), NULL, &dest);
 		}
 	}
 	SDL_RenderPresent(m_Renderer);
