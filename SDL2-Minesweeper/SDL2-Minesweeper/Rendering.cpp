@@ -67,24 +67,24 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 				Tile::height
 			};
 
+			SDL_Texture* target = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_TARGET, Tile::width, Tile::height);
+			SDL_Texture* image_1 = map[i][j].getTexture();
+
+			SDL_SetRenderTarget(m_Renderer, target);
+
+			SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
+			SDL_SetTextureBlendMode(target, SDL_BLENDMODE_BLEND);
+			SDL_RenderClear(m_Renderer);
+			SDL_RenderCopy(m_Renderer, image_1, NULL, NULL);
+
 			if ((map[i][j].getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
-				SDL_Texture* image_1 = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/CoveredTile.png");
 				SDL_Texture* image_2 = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png");
 
-				SDL_Texture* target = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_TARGET, Tile::width, Tile::height);
-				SDL_SetRenderTarget(m_Renderer, target);
-
-				SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
-				SDL_RenderClear(m_Renderer);
-
-				SDL_RenderCopy(m_Renderer, image_1, NULL, NULL);
 				SDL_RenderCopy(m_Renderer, image_2, NULL, NULL);
-
-				SDL_SetRenderTarget(m_Renderer, NULL);
-				SDL_RenderCopy(m_Renderer, target, NULL, &dest);
 			}
 
-			//SDL_RenderCopy(m_Renderer, map[i][j].getTexture(), NULL, &dest);
+			SDL_SetRenderTarget(m_Renderer, NULL);
+			SDL_RenderCopy(m_Renderer, target, NULL, &dest);
 		}
 	}
 	SDL_RenderPresent(m_Renderer);
