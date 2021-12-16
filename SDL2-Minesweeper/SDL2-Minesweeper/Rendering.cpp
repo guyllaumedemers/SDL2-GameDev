@@ -77,17 +77,11 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 				SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
 				SDL_RenderClear(m_Renderer);
 
-				SDL_RenderCopy(m_Renderer, image_1, NULL, &dest);
-				SDL_RenderCopy(m_Renderer, image_2, NULL, &dest);
+				SDL_RenderCopy(m_Renderer, image_1, NULL, NULL);
+				SDL_RenderCopy(m_Renderer, image_2, NULL, NULL);
 
 				SDL_SetRenderTarget(m_Renderer, NULL);
 				SDL_RenderCopy(m_Renderer, target, NULL, &dest);
-				//map[i][j].setGraphics(target);
-
-				SDL_DestroyTexture(image_1);
-				image_1 = nullptr;
-				SDL_DestroyTexture(image_2);
-				image_2 = nullptr;
 			}
 
 			//SDL_RenderCopy(m_Renderer, map[i][j].getTexture(), NULL, &dest);
