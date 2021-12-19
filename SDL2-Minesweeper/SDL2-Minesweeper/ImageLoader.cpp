@@ -9,7 +9,7 @@ SDL_Surface* ImageLoader::loadCPURendering(SDL_Surface* windowSurface, std::stri
 		exit(EXIT_FAILURE);
 	}
 
-	optimizeSurface = SDL_ConvertSurface(optimizeSurface, windowSurface->format, 0);
+	optimizeSurface = SDL_ConvertSurface(optimizeSurface, (*windowSurface).format, 0);
 
 	if (optimizeSurface == nullptr) {
 		SDL_Log("Cannot Convert Surface : %s", SDL_GetError());
@@ -21,15 +21,12 @@ SDL_Surface* ImageLoader::loadCPURendering(SDL_Surface* windowSurface, std::stri
 
 SDL_Texture* ImageLoader::loadGPURendering(SDL_Renderer* renderer, SDL_Surface* windowSurface, std::string path)
 {
-	SDL_Surface* optimizeSurface = loadCPURendering(windowSurface, path);
-	SDL_Texture* optimizeTexture = SDL_CreateTextureFromSurface(renderer, optimizeSurface);
+	SDL_Texture* optimizeTexture = IMG_LoadTexture(renderer, path.c_str());
 
 	if (optimizeTexture == nullptr) {
 		SDL_Log("Cannot load Texture : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 
-	SDL_FreeSurface(optimizeSurface);
-	optimizeSurface = nullptr;
 	return optimizeTexture;
 }
