@@ -22,9 +22,5 @@ public:
 	static void swapBuilder(TileBuilder* ibuilder);
 
 	static Tile** getMap();
-
-	static void doFlagCheck(const int& x, const int& y);
-
-	static void uncoverTile(const int& x, const int& y);
 };
 

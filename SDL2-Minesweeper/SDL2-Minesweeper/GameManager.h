@@ -1,7 +1,14 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <iostream>
+#include <string>
 #include <functional>
+#include "ImageLoader.h"
+#include "InputManager.h"
+#include "UIController.h"
+#include "TileMapGenerator.h"
+#include "Rendering.h"
 #include "Difficulty.h"
 #include "Mode.h"
 #include "Timer.h"
@@ -29,11 +36,19 @@ private:
 
 	static void clear();
 
+	static bool canPlaceFlag();
+
 public:
 
 	static void setIsRunning(const bool& value);
 
 	static void setDifficulty(Mode mode);
+
+	static void doFlagCheck(Tile** map, const int& x, const int& y);
+
+	static void updateFlagCount(const bool& value);
+
+	static void uncoverTile(Tile** map, const int& x, const int& y);
 
 	static int onExecute();
 };

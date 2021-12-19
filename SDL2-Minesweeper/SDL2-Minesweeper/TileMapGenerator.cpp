@@ -1,3 +1,4 @@
+#include "GameManager.h"
 #include "TileMapGenerator.h"
 #include <iostream>
 
@@ -54,24 +55,4 @@ void TileMapGenerator::swapBuilder(TileBuilder* ibuilder)
 Tile** TileMapGenerator::getMap()
 {
 	return m_Map;
-}
-
-void TileMapGenerator::doFlagCheck(const int& x, const int& y)
-{
-	Tile* temp = &m_Map[y / Tile::width][x / Tile::height];
-
-	(*temp).setBitmaskValue(TileBitMask::Flag, ((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag);
-
-	temp = nullptr;
-	delete temp;
-}
-
-void TileMapGenerator::uncoverTile(const int& x, const int& y)
-{
-	Tile* temp = &m_Map[y / Tile::width][x / Tile::height];
-
-	// run the algorithm for searching neighbors
-
-	temp = nullptr;
-	delete temp;
 }

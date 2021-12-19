@@ -2,16 +2,15 @@
 #include <SDL.h>
 #include <functional>
 #include "TileMapGenerator.h"
+#include "GameManager.h"
+#include "Rendering.h"
 
 typedef std::function<void(Uint8)> Action;
 
 class InputManager
 {
 public:
+
 	static void getInputEvent(SDL_Event& myEvent);
-
-	static void doFlagCheck(const int& x, const int& y);
-
-	static void uncoverTile(const int& x, const int& y);
 };
 

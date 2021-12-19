@@ -1,18 +1,10 @@
 #include "GameManager.h"
-#include "ImageLoader.h"
-#include "InputManager.h"
-#include "UIController.h"
-#include "TileMapGenerator.h"
-#include "Rendering.h"
-#include "Difficulty.h"
-#include <iostream>
-#include <string>
 
 bool GameManager::m_IsRunning = true;
 
-int GameManager::m_FlagsLeft = 0;
+int GameManager::m_FlagsLeft = -1;
 
-Difficulty* GameManager::m_Difficulty;
+Difficulty* GameManager::m_Difficulty = nullptr;
 
 void GameManager::initializeGame()
 {
@@ -79,6 +71,54 @@ int GameManager::onExecute()
 void GameManager::setDifficulty(Mode mode)
 {
 	m_Difficulty = new Difficulty(mode);
+}
+
+bool GameManager::canPlaceFlag()
+{
+	return m_FlagsLeft > 0;
+}
+
+void GameManager::updateFlagCount(const bool& value)
+{
+	if (value) {
+		m_FlagsLeft -= 1;
+	}
+	else {
+		m_FlagsLeft += 1;
+	}
+}
+
+void GameManager::doFlagCheck(Tile** map, const int& x, const int& y)
+{
+	Tile* temp = &map[y / Tile::width][x / Tile::height];
+	bool hasFlagMask = (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag);
+
+	if (!canPlaceFlag()) {
+
+		if (hasFlagMask) {
+
+			(*temp).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
+			updateFlagCount(!hasFlagMask);
+		}
+	}
+	else {
+
+		(*temp).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
+		updateFlagCount(!hasFlagMask);
+	}
+
+	temp = nullptr;
+	delete temp;
+}
+
+void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
+{
+	Tile* temp = &map[y / Tile::width][x / Tile::height];
+
+	// run the algorithm for searching neighbors
+
+	temp = nullptr;
+	delete temp;
 }
 
 void GameManager::setIsRunning(const bool& value)
