@@ -72,6 +72,7 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 			SDL_Texture* target = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Tile::width, Tile::height);
 			SDL_Texture* dstRGBA = (*tile).getTexture();
 
+			// should handle blending mode here but instead is done inside photoshop
 			SDL_SetRenderTarget(m_Renderer, target);
 
 			SDL_RenderClear(m_Renderer);

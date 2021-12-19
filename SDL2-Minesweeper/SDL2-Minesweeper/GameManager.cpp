@@ -4,6 +4,7 @@
 #include "UIController.h"
 #include "TileMapGenerator.h"
 #include "Rendering.h"
+#include "Difficulty.h"
 #include <iostream>
 #include <string>
 
@@ -22,7 +23,8 @@ void GameManager::initializeGame()
 
 	Rendering::initialize();
 	Rendering::setWindowSize(GRIDCOLUMNS, GRIDROWS);
-	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, GRIDROWS, GRIDCOLUMNS);
+	Difficulty dif(Mode::medium);
+	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, dif.m_Width, dif.m_Height);
 }
 
 void GameManager::getInputEvents()
