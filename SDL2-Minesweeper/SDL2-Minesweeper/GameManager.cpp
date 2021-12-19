@@ -8,10 +8,11 @@
 #include <iostream>
 #include <string>
 
-#define GRIDCOLUMNS 16
-#define GRIDROWS 16
-
 bool GameManager::m_IsRunning = true;
+
+int GameManager::m_FlagsLeft = 0;
+
+Difficulty* GameManager::m_Difficulty;
 
 void GameManager::initializeGame()
 {
@@ -21,10 +22,19 @@ void GameManager::initializeGame()
 		exit(EXIT_FAILURE);
 	}
 
+	setDifficulty(Mode::beginner);
+
+	if (m_Difficulty == nullptr) {
+		SDL_Log("Difficulty was not initialize : %s", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+
+	m_FlagsLeft = (*m_Difficulty).m_Flags;
+
 	Rendering::initialize();
-	Rendering::setWindowSize(GRIDCOLUMNS, GRIDROWS);
-	Difficulty dif(Mode::medium);
-	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, dif.m_Width, dif.m_Height);
+	Rendering::setWindowSize((*m_Difficulty).m_Width, (*m_Difficulty).m_Height);
+
+	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Width, (*m_Difficulty).m_Height);
 }
 
 void GameManager::getInputEvents()
@@ -42,13 +52,15 @@ void GameManager::runGameLogic()
 
 void GameManager::renderFrame()
 {
-	Rendering::update(TileMapGenerator::getMap(), GRIDROWS, GRIDCOLUMNS);
+	Rendering::update(TileMapGenerator::getMap(), (*m_Difficulty).m_Width, (*m_Difficulty).m_Height);
 }
 
 void GameManager::clear()
 {
 	TileMapGenerator::clear();
 	Rendering::clear();
+	delete m_Difficulty;
+	m_Difficulty = nullptr;
 	SDL_Quit();
 }
 
@@ -62,6 +74,11 @@ int GameManager::onExecute()
 	}
 	clear();
 	return 0;
+}
+
+void GameManager::setDifficulty(Mode mode)
+{
+	m_Difficulty = new Difficulty(mode);
 }
 
 void GameManager::setIsRunning(const bool& value)

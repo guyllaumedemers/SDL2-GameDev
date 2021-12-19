@@ -1,10 +1,5 @@
 #pragma once
-
-enum class Mode {
-	beginner,
-	medium,
-	hard
-};
+#include "Mode.h"
 
 struct Difficulty
 {

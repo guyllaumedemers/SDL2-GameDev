@@ -147,6 +147,7 @@
     <ClInclude Include="BombTileBuilder.h" />
     <ClInclude Include="Difficulty.h" />
     <ClInclude Include="EmptyTileBuilder.h" />
+    <ClInclude Include="Mode.h" />
     <ClInclude Include="Rendering.h" />
     <ClInclude Include="TileBitMask.h" />
     <ClInclude Include="TileBuilder.h" />
