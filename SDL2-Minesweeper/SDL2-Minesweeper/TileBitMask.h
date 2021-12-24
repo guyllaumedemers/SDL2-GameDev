@@ -6,7 +6,8 @@ enum class TileBitMask {
 	Flag = 2,
 	Bomb = 4,
 	Covered = 8,
-	Uncovered = 16
+	Uncovered = 16,
+	Numbered = 32
 };
 
 inline TileBitMask operator|(const TileBitMask& lhs, const TileBitMask& rhs) {

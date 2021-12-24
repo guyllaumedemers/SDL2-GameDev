@@ -4,17 +4,16 @@
 #include <iostream>
 #include <string>
 #include <functional>
+#include <queue>
 #include "ImageLoader.h"
 #include "InputManager.h"
 #include "UIController.h"
+#include "Tile.h"
 #include "TileMapGenerator.h"
 #include "Rendering.h"
 #include "Difficulty.h"
 #include "Mode.h"
 #include "Timer.h"
-
-// Hint :	SDL_Surface is use for software rendering *CPU and is stored in system RAM which is less efficient than using the GPU
-//			while SDL_Texture is use for hardware rendering *GPU and is store in the GPU Ram
 
 class GameManager
 {
@@ -37,6 +36,8 @@ private:
 	static void clear();
 
 	static bool canPlaceFlag();
+
+	static int checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue);
 
 public:
 

@@ -10,6 +10,8 @@ private:
 
 	int m_X = 0, m_Y = 0;
 
+	int m_Value = 0;
+
 	SDL_Texture* m_Texture = nullptr;
 
 public:
@@ -31,6 +33,10 @@ public:
 	int getX();
 
 	int getY();
+
+	int getValue();
+
+	void setValue(const int& val);
 
 	static const int width = 20, height = 20;
 };

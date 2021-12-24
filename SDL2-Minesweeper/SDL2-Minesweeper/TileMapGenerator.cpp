@@ -38,18 +38,17 @@ Tile** TileMapGenerator::createMap(SDL_Window* window, SDL_Renderer* ren, const 
 	return m_Map;
 }
 
-void TileMapGenerator::clear()
+void TileMapGenerator::clear(const int& row)
 {
 	delete m_TileBuilder;
-	delete m_Map;
-}
-
-void TileMapGenerator::swapBuilder(TileBuilder* ibuilder)
-{
 	m_TileBuilder = nullptr;
-	delete m_TileBuilder;
 
-	m_TileBuilder = ibuilder;
+	for (int i = 0; i < row; ++i) {
+		delete[] m_Map[i];
+	}
+
+	delete m_Map;
+	m_Map = nullptr;
 }
 
 Tile** TileMapGenerator::getMap()

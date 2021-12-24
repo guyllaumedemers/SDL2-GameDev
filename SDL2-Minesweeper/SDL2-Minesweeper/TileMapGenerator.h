@@ -17,9 +17,7 @@ public:
 
 	static Tile** createMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y);
 
-	static void clear();
-
-	static void swapBuilder(TileBuilder* ibuilder);
+	static void clear(const int& row);
 
 	static Tile** getMap();
 };

@@ -18,7 +18,8 @@ Tile::Tile(SDL_Texture* texture, TileBitMask bitmask, const int& x, const int& y
 
 Tile::~Tile()
 {
-	delete m_Texture;
+	SDL_DestroyTexture(m_Texture);
+	m_Texture = nullptr;
 }
 
 void Tile::setBitmaskValue(TileBitMask value, bool isRemoving)
@@ -53,4 +54,14 @@ int Tile::getX()
 int Tile::getY()
 {
 	return m_Y;
+}
+
+int Tile::getValue()
+{
+	return m_Value;
+}
+
+void Tile::setValue(const int& val)
+{
+	m_Value = val;
 }

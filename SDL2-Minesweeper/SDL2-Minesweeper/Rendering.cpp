@@ -1,5 +1,4 @@
 #include "Rendering.h"
-#include <iostream>
 
 SDL_Window* Rendering::m_Window = nullptr;
 
@@ -72,14 +71,24 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 			SDL_Texture* target = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Tile::width, Tile::height);
 			SDL_Texture* dstRGBA = (*tile).getTexture();
 
-			// should handle blending mode here but instead is done inside photoshop
 			SDL_SetRenderTarget(m_Renderer, target);
 
 			SDL_RenderClear(m_Renderer);
 			SDL_RenderCopy(m_Renderer, dstRGBA, NULL, NULL);
 
+			SDL_Texture* srcRGBA = nullptr;
+
 			if (((*tile).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
-				SDL_Texture* srcRGBA = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png");
+				srcRGBA = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png");
+				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
+				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
+			}
+			else if (((*tile).getBitmaskValue() & TileBitMask::Numbered) == TileBitMask::Numbered) {
+				char buffer[50];
+				sprintf_s(buffer, "../SDL2-Minesweeper/Assets/%d.png", (*tile).getValue());
+
+				srcRGBA = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), buffer);
+				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
 				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
 			}
 
@@ -88,6 +97,9 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 
 			SDL_DestroyTexture(target);
 			target = nullptr;
+
+			SDL_DestroyTexture(srcRGBA);
+			srcRGBA = nullptr;
 		}
 	}
 	SDL_RenderPresent(m_Renderer);

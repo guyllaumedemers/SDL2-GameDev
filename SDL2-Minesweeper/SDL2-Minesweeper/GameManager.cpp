@@ -49,7 +49,7 @@ void GameManager::renderFrame()
 
 void GameManager::clear()
 {
-	TileMapGenerator::clear();
+	TileMapGenerator::clear((*m_Difficulty).m_Height);
 	Rendering::clear();
 	delete m_Difficulty;
 	m_Difficulty = nullptr;
@@ -76,6 +76,20 @@ void GameManager::setDifficulty(Mode mode)
 bool GameManager::canPlaceFlag()
 {
 	return m_FlagsLeft > 0;
+}
+
+int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue)
+{
+	if (x < 0 || x >= (**map).height || y < 0 || y >= (**map).width) {
+		return 0;
+	}
+	else if ((map[x][y].getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+		return 1;
+	}
+	else if ((map[x][y].getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty) {
+		queue.push(&map[x][y]);
+	}
+	return 0;
 }
 
 void GameManager::updateFlagCount(const bool& value)
@@ -115,7 +129,38 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 {
 	Tile* temp = &map[y / Tile::width][x / Tile::height];
 
-	// run the algorithm for searching neighbors
+	if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+		// early exit, you lost
+		//
+		return;
+	}
+
+	std::queue<Tile*> neighbors;
+	neighbors.push(temp);
+
+	while (!neighbors.empty()) {
+
+		temp = neighbors.front();
+		int x = (*temp).getX();
+		int y = (*temp).getY();
+
+		int value =
+			checkNeighbor(map, x + 1, y, neighbors) +
+			checkNeighbor(map, x - 1, y, neighbors) +
+			checkNeighbor(map, x, y + 1, neighbors) +
+			checkNeighbor(map, x, y - 1, neighbors) +
+			checkNeighbor(map, x + 1, y + 1, neighbors) +
+			checkNeighbor(map, x - 1, y + 1, neighbors) +
+			checkNeighbor(map, x + 1, y - 1, neighbors) +
+			checkNeighbor(map, x - 1, y - 1, neighbors);
+
+		if (value > 0) {
+			(*temp).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
+			(*temp).setBitmaskValue(TileBitMask::Uncovered, false);
+		}
+
+		neighbors.pop();
+	}
 
 	temp = nullptr;
 	delete temp;
