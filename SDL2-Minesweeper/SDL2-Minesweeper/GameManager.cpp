@@ -80,8 +80,7 @@ bool GameManager::canPlaceFlag()
 
 int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
 {
-	int min = 1;
-	if (x < min || x >= (**map).height - min || y < min || y >= (**map).width - min) {
+	if (x < 0 || x >= (**map).height - 1 || y < 0 || y >= (**map).width - 1) {
 		return 0;
 	}
 	else if ((map[x][y].getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
@@ -147,8 +146,12 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 	std::queue<Tile*> neighbors;
 	neighbors.push(temp);
 
+	char buffer[50];
+	sprintf_s(buffer, "%c%c", x, y);
+	memoizationMap.insert(std::pair(std::string(buffer), &map[x][y]));
+	//int cpt = 0;
 	while (!neighbors.empty()) {
-
+		//std::cout << cpt++ << std::endl;
 		temp = neighbors.front();
 		int x = (*temp).getX();
 		int y = (*temp).getY();
