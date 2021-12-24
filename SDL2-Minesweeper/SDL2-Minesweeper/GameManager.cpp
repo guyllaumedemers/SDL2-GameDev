@@ -78,16 +78,24 @@ bool GameManager::canPlaceFlag()
 	return m_FlagsLeft > 0;
 }
 
-int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue)
+int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
 {
-	if (x < 0 || x >= (**map).height || y < 0 || y >= (**map).width) {
+	int min = 1;
+	if (x < min || x >= (**map).height - min || y < min || y >= (**map).width - min) {
 		return 0;
 	}
 	else if ((map[x][y].getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
 		return 1;
 	}
 	else if ((map[x][y].getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty) {
-		queue.push(&map[x][y]);
+
+		char buffer[50];
+		sprintf_s(buffer, "%c%c", x, y);
+
+		if (memoizationMap.find(std::string(buffer)) == memoizationMap.end()) {
+			queue.push(&map[x][y]);
+			memoizationMap.insert(std::pair(std::string(buffer), &map[x][y]));
+		}
 	}
 	return 0;
 }
@@ -135,6 +143,7 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 		return;
 	}
 
+	std::unordered_map<std::string, Tile*> memoizationMap;
 	std::queue<Tile*> neighbors;
 	neighbors.push(temp);
 
@@ -145,25 +154,28 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 		int y = (*temp).getY();
 
 		int value =
-			checkNeighbor(map, x + 1, y, neighbors) +
-			checkNeighbor(map, x - 1, y, neighbors) +
-			checkNeighbor(map, x, y + 1, neighbors) +
-			checkNeighbor(map, x, y - 1, neighbors) +
-			checkNeighbor(map, x + 1, y + 1, neighbors) +
-			checkNeighbor(map, x - 1, y + 1, neighbors) +
-			checkNeighbor(map, x + 1, y - 1, neighbors) +
-			checkNeighbor(map, x - 1, y - 1, neighbors);
+			checkNeighbor(map, x + 1, y, neighbors, memoizationMap) +
+			checkNeighbor(map, x - 1, y, neighbors, memoizationMap) +
+			checkNeighbor(map, x, y + 1, neighbors, memoizationMap) +
+			checkNeighbor(map, x, y - 1, neighbors, memoizationMap) +
+			checkNeighbor(map, x + 1, y + 1, neighbors, memoizationMap) +
+			checkNeighbor(map, x - 1, y + 1, neighbors, memoizationMap) +
+			checkNeighbor(map, x + 1, y - 1, neighbors, memoizationMap) +
+			checkNeighbor(map, x - 1, y - 1, neighbors, memoizationMap);
 
 		if (value > 0) {
+			(*temp).setBitmaskValue(TileBitMask::Empty, true);
 			(*temp).setBitmaskValue(TileBitMask::Numbered, false);
 			(*temp).setValue(value);
 		}
 
-		(*temp).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
+		(*temp).setBitmaskValue(TileBitMask::Covered, true);
 		(*temp).setBitmaskValue(TileBitMask::Uncovered, false);
 
 		neighbors.pop();
 	}
+
+	memoizationMap.clear();
 
 	temp = nullptr;
 	delete temp;

@@ -5,6 +5,7 @@
 #include <string>
 #include <functional>
 #include <queue>
+#include <unordered_map>
 #include "ImageLoader.h"
 #include "InputManager.h"
 #include "UIController.h"
@@ -37,7 +38,7 @@ private:
 
 	static bool canPlaceFlag();
 
-	static int checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue);
+	static int checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
 
 public:
 
