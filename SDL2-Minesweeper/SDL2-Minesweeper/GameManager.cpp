@@ -155,6 +155,7 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 			checkNeighbor(map, x - 1, y - 1, neighbors);
 
 		if (value > 0) {
+			(*temp).setBitmaskValue(TileBitMask::Numbered, false);
 			(*temp).setValue(value);
 		}
 
