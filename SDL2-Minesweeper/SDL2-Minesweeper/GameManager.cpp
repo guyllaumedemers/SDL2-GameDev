@@ -90,21 +90,24 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 		sprintf_s(buffer, "%c%c", x, y);
 
 		if (memoizationMap.find(buffer) != memoizationMap.end()) {
+			temp = nullptr;
+			delete temp;
 			return 0;
 		}
 
 		if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+			temp = nullptr;
+			delete temp;
 			return 1;
 		}
 		else {
 			if (((*temp).getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty) {
-				queue.push(temp);
+				queue.push(&(*temp));
 			}
+			temp = nullptr;
+			delete temp;
 			return 0;
 		}
-
-		temp = nullptr;
-		delete temp;
 	}
 }
 
@@ -120,7 +123,7 @@ void GameManager::updateFlagCount(const bool& value)
 
 void GameManager::doFlagCheck(Tile** map, const int& x, const int& y)
 {
-	Tile* temp = &map[y / Tile::width][x / Tile::height];
+	Tile* temp = &map[y / Tile::height][x / Tile::width];
 	bool hasFlagMask = (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag);
 
 	if (!canPlaceFlag()) {
@@ -136,23 +139,24 @@ void GameManager::doFlagCheck(Tile** map, const int& x, const int& y)
 		(*temp).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
 		updateFlagCount(!hasFlagMask);
 	}
-
+	//std::cout << (y / Tile::height) << (x / Tile::width) << std::endl;
 	temp = nullptr;
 	delete temp;
 }
 
 void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 {
-	Tile* temp = &map[y / Tile::width][x / Tile::height];
+	Tile* temp = &map[y / Tile::height][x / Tile::width];
+	std::cout << (y / Tile::height) << (x / Tile::width) << std::endl;
 
 	if (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
-		// do nothing
-		//
+		temp = nullptr;
+		delete temp;
 		return;
 	}
 	else if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
-		// early exit, you lost
-		//
+		temp = nullptr;
+		delete temp;
 		return;
 	}
 	else {

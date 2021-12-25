@@ -32,8 +32,10 @@ Tile** TileMapGenerator::createMap(SDL_Window* window, SDL_Renderer* ren, const 
 			// 
 			// amt of bombs are set depending on the level
 			//
-			m_Map[i][j] = *createTile(window, ren, j, i);
+			m_Map[i][j] = *createTile(window, ren, i, j);
+			std::cout << i << j << " ";
 		}
+		std::cout << std::endl;
 	}
 
 	return m_Map;
