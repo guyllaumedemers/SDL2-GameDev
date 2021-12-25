@@ -28,14 +28,11 @@ Tile** TileMapGenerator::createMap(SDL_Window* window, SDL_Renderer* ren, const 
 		m_Map[i] = new Tile[y];
 
 		for (int j = 0; j < y; ++j) {
-			// once in a while the Builder needs to swap his reference to create bomb
-			// 
-			// amt of bombs are set depending on the level
-			//
+
 			m_Map[i][j] = *createTile(window, ren, i, j);
-			std::cout << i << j << " ";
+			//std::cout << i << j << " ";
 		}
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
 
 	return m_Map;

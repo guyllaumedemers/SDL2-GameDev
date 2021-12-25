@@ -125,24 +125,32 @@ void GameManager::updateFlagCount(const bool& value)
 void GameManager::doFlagCheck(Tile** map, const int& x, const int& y)
 {
 	Tile* temp = &map[y / Tile::height][x / Tile::width];
-	bool hasFlagMask = (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag);
 
-	if (!canPlaceFlag()) {
+	if (((*temp).getBitmaskValue() & TileBitMask::Uncovered) == TileBitMask::Uncovered) {
+		temp = nullptr;
+		delete temp;
+		return;
+	}
+	else {
+		bool hasFlagMask = (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag);
 
-		if (hasFlagMask) {
+		if (!canPlaceFlag()) {
+
+			if (hasFlagMask) {
+
+				(*temp).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
+				updateFlagCount(!hasFlagMask);
+			}
+		}
+		else {
 
 			(*temp).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
 			updateFlagCount(!hasFlagMask);
 		}
+		//std::cout << (y / Tile::height) << (x / Tile::width) << std::endl;
+		temp = nullptr;
+		delete temp;
 	}
-	else {
-
-		(*temp).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
-		updateFlagCount(!hasFlagMask);
-	}
-	//std::cout << (y / Tile::height) << (x / Tile::width) << std::endl;
-	temp = nullptr;
-	delete temp;
 }
 
 void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
@@ -164,6 +172,7 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 
 		std::unordered_map<std::string, Tile*> memoizationMap;
 		std::queue<Tile*> neighbors;
+
 		neighbors.push(temp);
 
 		char buffer[50];
