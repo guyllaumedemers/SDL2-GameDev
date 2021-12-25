@@ -35,6 +35,7 @@ Tile** TileMapGenerator::createMap(SDL_Window* window, SDL_Renderer* ren, const 
 			m_Map[i][j] = *createTile(window, ren, j, i);
 		}
 	}
+
 	return m_Map;
 }
 
