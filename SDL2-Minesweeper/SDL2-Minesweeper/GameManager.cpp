@@ -83,19 +83,24 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 	if (x < 0 || x >= (*m_Difficulty).m_Height || y < 0 || y >= (*m_Difficulty).m_Width) {
 		return 0;
 	}
-	else if ((map[x][y].getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
-		return 1;
-	}
-	else if ((map[x][y].getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty) {
+	else {
 		char buffer[50];
 		sprintf_s(buffer, "%c%c", x, y);
 
-		if (memoizationMap.find(std::string(buffer)) == memoizationMap.end()) {
-			queue.push(&map[x][y]);
+		if (memoizationMap.find(std::string(buffer)) != memoizationMap.end()) {
+			return 0;
+		}
+		else {
+			if ((map[x][y].getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+				return 1;
+			}
+			else if ((map[x][y].getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty) {
+				queue.push(&map[x][y]);
+			}
 			memoizationMap.insert(std::pair(std::string(buffer), &map[x][y]));
+			return 0;
 		}
 	}
-	return 0;
 }
 
 void GameManager::updateFlagCount(const bool& value)
