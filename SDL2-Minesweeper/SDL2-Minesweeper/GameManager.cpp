@@ -103,6 +103,7 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 		else {
 			if (((*temp).getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty) {
 				queue.push(&(*temp));
+				memoizationMap.insert(std::pair(std::string(buffer), &(*temp)));
 			}
 			temp = nullptr;
 			delete temp;
@@ -147,7 +148,7 @@ void GameManager::doFlagCheck(Tile** map, const int& x, const int& y)
 void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 {
 	Tile* temp = &map[y / Tile::height][x / Tile::width];
-	std::cout << (y / Tile::height) << (x / Tile::width) << std::endl;
+	//std::cout << (y / Tile::height) << (x / Tile::width) << std::endl;
 
 	if (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
 		temp = nullptr;
@@ -164,6 +165,11 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 		std::unordered_map<std::string, Tile*> memoizationMap;
 		std::queue<Tile*> neighbors;
 		neighbors.push(temp);
+
+		char buffer[50];
+		sprintf_s(buffer, "%d%d", x, y);
+
+		memoizationMap.insert(std::pair(std::string(buffer), &(*temp)));
 
 		while (!neighbors.empty()) {
 
@@ -194,10 +200,6 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 			SDL_Texture* texture = ImageLoader::loadGPURendering(Rendering::m_Renderer, SDL_GetWindowSurface(Rendering::m_Window), "../SDL2-Minesweeper/Assets/UncoveredTile.png");
 			(*temp).setGraphics(texture);
 
-			char buffer[50];
-			sprintf_s(buffer, "%d%d", x, y);
-
-			memoizationMap.insert(std::pair(std::string(buffer), &(*temp)));
 			neighbors.pop();
 		}
 
