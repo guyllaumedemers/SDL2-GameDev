@@ -14,7 +14,7 @@ void GameManager::initializeGame()
 		exit(EXIT_FAILURE);
 	}
 
-	setDifficulty(Mode::beginner);
+	setDifficulty(Mode::hard);
 
 	if (m_Difficulty == nullptr) {
 		SDL_Log("Difficulty was not initialize : %s", SDL_GetError());
@@ -26,7 +26,7 @@ void GameManager::initializeGame()
 	Rendering::initialize();
 	Rendering::setWindowSize((*m_Difficulty).m_Width, (*m_Difficulty).m_Height);
 
-	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Width, (*m_Difficulty).m_Height);
+	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
 }
 
 void GameManager::getInputEvents()
@@ -44,7 +44,7 @@ void GameManager::runGameLogic()
 
 void GameManager::renderFrame()
 {
-	Rendering::update(TileMapGenerator::getMap(), (*m_Difficulty).m_Width, (*m_Difficulty).m_Height);
+	Rendering::update(TileMapGenerator::getMap(), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
 }
 
 void GameManager::clear()
@@ -80,14 +80,13 @@ bool GameManager::canPlaceFlag()
 
 int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
 {
-	if (x < 0 || x >= (**map).height - 1 || y < 0 || y >= (**map).width - 1) {
+	if (x < 0 || x >= (**map).height || y < 0 || y >= (**map).width) {
 		return 0;
 	}
 	else if ((map[x][y].getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
 		return 1;
 	}
 	else if ((map[x][y].getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty) {
-
 		char buffer[50];
 		sprintf_s(buffer, "%c%c", x, y);
 
@@ -127,7 +126,7 @@ void GameManager::doFlagCheck(Tile** map, const int& x, const int& y)
 		(*temp).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
 		updateFlagCount(!hasFlagMask);
 	}
-
+	std::cout << (*temp).getX() << (*temp).getY() << std::endl;
 	temp = nullptr;
 	delete temp;
 }
