@@ -6,6 +6,7 @@ Tile::Tile()
 	m_Bitmask = TileBitMask::None;
 	m_X = 0;
 	m_Y = 0;
+	m_Value = 0;
 }
 
 Tile::Tile(SDL_Texture* texture, TileBitMask bitmask, const int& x, const int& y)
@@ -14,6 +15,7 @@ Tile::Tile(SDL_Texture* texture, TileBitMask bitmask, const int& x, const int& y
 	m_Bitmask = bitmask;
 	m_X = x;
 	m_Y = y;
+	m_Value = 0;
 }
 
 Tile::~Tile()
