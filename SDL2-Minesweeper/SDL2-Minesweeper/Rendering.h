@@ -4,8 +4,6 @@
 #include <SDL_image.h>
 #include <string>
 #include "TileMapGenerator.h"
-#include "EmptyTileBuilder.h"
-#include "BombTileBuilder.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600

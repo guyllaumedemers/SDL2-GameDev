@@ -1,6 +1,4 @@
-#include "GameManager.h"
 #include "TileMapGenerator.h"
-#include <iostream>
 
 TileBuilder* TileMapGenerator::m_TileBuilder = nullptr;
 

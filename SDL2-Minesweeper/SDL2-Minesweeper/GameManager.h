@@ -48,7 +48,7 @@ public:
 
 	static void doFlagCheck(Tile** map, const int& x, const int& y);
 
-	static void updateFlagCount(const bool& value);
+	static void removeOrAddFlagFromCount(const bool& value);
 
 	static void uncoverTile(Tile** map, const int& x, const int& y);
 

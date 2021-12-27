@@ -1,7 +1,9 @@
 #pragma once
-#include "TileBuilder.h"
-#include "EmptyTileBuilder.h"
+#include <iostream>
 #include "Tile.h"
+#include "TileBuilder.h"
+#include "BombTileBuilder.h"
+#include "EmptyTileBuilder.h"
 
 class TileMapGenerator
 {
