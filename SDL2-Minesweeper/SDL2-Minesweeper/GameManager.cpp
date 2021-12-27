@@ -101,9 +101,14 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 			return 1;
 		}
 		else {
-			if (((*temp).getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty) {
+			int isValidMove =
+				(((*temp).getBitmaskValue() & TileBitMask::Covered) == TileBitMask::Covered) +
+				(((*temp).getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty);
+
+			if (isValidMove > 1) {
+
+				memoizationMap.insert(std::pair(buffer, &(*temp)));
 				queue.push(&(*temp));
-				memoizationMap.insert(std::pair(std::string(buffer), &(*temp)));
 			}
 			temp = nullptr;
 			delete temp;
@@ -149,8 +154,7 @@ void GameManager::doFlagCheck(Tile** map, const int& x, const int& y)
 			(*temp).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
 			removeOrAddFlagFromCount(!hasFlagMask);
 		}
-		//std::cout << (y / Tile::height) << (x / Tile::width) << std::endl;
-		//std::cout << (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) << std::endl;
+
 		temp = nullptr;
 		delete temp;
 	}
@@ -159,7 +163,6 @@ void GameManager::doFlagCheck(Tile** map, const int& x, const int& y)
 void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 {
 	Tile* temp = &map[y / Tile::height][x / Tile::width];
-	//std::cout << (y / Tile::height) << (x / Tile::width) << std::endl;
 
 	int isValidMove =
 		(((*temp).getBitmaskValue() & TileBitMask::Uncovered) == TileBitMask::Uncovered) +
@@ -180,12 +183,12 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 		std::unordered_map<std::string, Tile*> memoizationMap;
 		std::queue<Tile*> neighbors;
 
-		neighbors.push(temp);
+		neighbors.push(&(*temp));
 
 		char buffer[50];
 		sprintf_s(buffer, "%d%d", (*temp).getX(), (*temp).getY());
 
-		memoizationMap.insert(std::pair(std::string(buffer), &(*temp)));
+		memoizationMap.insert(std::pair(buffer, &(*temp)));
 
 		while (!neighbors.empty()) {
 
@@ -204,13 +207,13 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 				checkNeighbor(map, x - 1, y - 1, neighbors, memoizationMap);
 
 			if (value > 0) {
-				(*temp).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
 				(*temp).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
+				(*temp).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
 				(*temp).setValue(value);
 			}
 			else {
-				(*temp).setBitmaskValue(TileBitMask::Covered, true);
 				(*temp).setBitmaskValue(TileBitMask::Uncovered, false);
+				(*temp).setBitmaskValue(TileBitMask::Covered, true);
 			}
 
 			SDL_Texture* texture = ImageLoader::loadGPURendering(Rendering::m_Renderer, SDL_GetWindowSurface(Rendering::m_Window), "../SDL2-Minesweeper/Assets/UncoveredTile.png");
@@ -218,7 +221,7 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 
 			neighbors.pop();
 		}
-
+		std::cout << memoizationMap.size() << std::endl;
 		memoizationMap.clear();
 	}
 

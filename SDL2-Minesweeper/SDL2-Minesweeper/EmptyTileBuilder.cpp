@@ -10,6 +10,7 @@ EmptyTileBuilder::EmptyTileBuilder()
 EmptyTileBuilder::~EmptyTileBuilder()
 {
 	delete m_Tile;
+	m_Tile = nullptr;
 }
 
 void EmptyTileBuilder::buildTile(int x, int y)

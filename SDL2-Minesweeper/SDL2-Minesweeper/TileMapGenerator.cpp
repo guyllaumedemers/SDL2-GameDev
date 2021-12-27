@@ -28,10 +28,11 @@ Tile** TileMapGenerator::createMap(SDL_Window* window, SDL_Renderer* ren, const 
 		for (int j = 0; j < y; ++j) {
 
 			m_Map[i][j] = *createTile(window, ren, i, j);
-			//std::cout << i << j << " ";
 		}
-		//std::cout << std::endl;
 	}
+
+	delete m_TileBuilder;
+	m_TileBuilder = nullptr;
 
 	return m_Map;
 }
