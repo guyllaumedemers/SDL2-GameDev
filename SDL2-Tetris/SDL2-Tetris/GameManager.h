@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "Rendering.h"
 #include "Timer.h"
+#include <vector>
 
 #define GRIDWITDH 12
 #define GRIDHEIGHT 24
@@ -19,7 +20,11 @@ private:
 
 	static bool m_IsRunning;
 
-	static Timer* m_Timer;
+	static Timer* m_TetrominoeGenerationIntervalTimer;
+
+	static Timer* m_TetrominoeTranslationIntervalTimer;
+
+	static std::vector<Tetrominoe*> m_Tetrominoes;
 
 	static void initialize();
 
@@ -34,6 +39,10 @@ private:
 	static void generateTetrominoes();
 
 	static int checkForCompleteAlignment(bool** map, const int& row, const int& col);
+
+	static void updateTetrominoesPosition();
+
+	static bool checkForCollision(const Tetrominoe& tetrominoe);
 
 public:
 
