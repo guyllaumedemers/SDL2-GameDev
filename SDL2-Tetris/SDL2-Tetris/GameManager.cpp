@@ -27,7 +27,7 @@ void GameManager::getInputs()
 void GameManager::runGameLogic()
 {
 	generateTetrominoes();
-	checkForCompleteAlignment(TileMapGenerator::getMap());
+	checkForCompleteAlignment(TileMapGenerator::getMap(), GRIDHEIGHT, GRIDWITDH);
 }
 
 void GameManager::renderFrame()
@@ -49,9 +49,27 @@ void GameManager::generateTetrominoes()
 	}
 }
 
-int GameManager::checkForCompleteAlignment(bool** map)
+int GameManager::checkForCompleteAlignment(bool** map, const int& row, const int& col)
 {
-	return 0;
+	bool* temp = &map[row - 1][col - 1];
+
+	int rowCount = 0;
+	for (int i = row - 1; i >= 0; --i) {
+		int colCount = 0;
+
+		for (int j = col - 1; j >= 0; --j) {
+			if ((*temp)) {
+				++colCount;
+			}
+			--temp;
+		}
+		if (colCount >= col) {
+			++rowCount;
+		}
+	}
+	temp = nullptr;
+	delete temp;
+	return rowCount;
 }
 
 void GameManager::setIsRunning(const bool& value)

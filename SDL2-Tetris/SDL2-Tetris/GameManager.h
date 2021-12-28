@@ -33,7 +33,7 @@ private:
 
 	static void generateTetrominoes();
 
-	static int checkForCompleteAlignment(bool** map);
+	static int checkForCompleteAlignment(bool** map, const int& row, const int& col);
 
 public:
 
