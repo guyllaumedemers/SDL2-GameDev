@@ -1,5 +1,9 @@
 #include "Tile.h"
 
+const int Tile::width = 20;
+
+const int Tile::height = 20;
+
 Tile::Tile()
 {
 	m_Texture = nullptr;

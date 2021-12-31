@@ -4,11 +4,19 @@
 
 struct Tile
 {
+public:
+
+	static const int width;
+
+	static const int height;
+
 private:
 
 	TileBitMask m_Bitmask = TileBitMask::None;
 
-	int m_X = 0, m_Y = 0;
+	int m_X = 0;
+
+	int m_Y = 0;
 
 	int m_Value = 0;
 
@@ -37,6 +45,4 @@ public:
 	int getValue();
 
 	void setValue(const int& val);
-
-	static const int width = 20, height = 20;
 };

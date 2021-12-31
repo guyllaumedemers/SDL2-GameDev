@@ -17,10 +17,14 @@ public:
 
 	static Tile* createTile(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y);
 
-	static Tile** createMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y);
+	static Tile** createEmptyMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y);
+
+	static Tile** createBombMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y, int nbBombs);
 
 	static void clear(const int& row);
 
 	static Tile** getMap();
+
+	static void setTileBuilder(TileBuilder* builder);
 };
 

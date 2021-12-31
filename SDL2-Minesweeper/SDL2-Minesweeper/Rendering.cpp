@@ -56,6 +56,7 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 	SDL_RenderClear(m_Renderer);
 	for (int i = 0; i < arrX; ++i) {
 		for (int j = 0; j < arrY; ++j) {
+
 			int x = j * Tile::width;
 			int y = i * Tile::height;
 
@@ -92,14 +93,26 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
 			}
 
+			if (((*tile).getBitmaskValue() & (TileBitMask::Uncovered | TileBitMask::Bomb)) == (TileBitMask::Uncovered | TileBitMask::Bomb)) {
+				srcRGBA = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Bomb.png");
+				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
+				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
+			}
+
 			SDL_SetRenderTarget(m_Renderer, NULL);
 			SDL_RenderCopy(m_Renderer, target, NULL, &dest);
 
 			SDL_DestroyTexture(target);
 			target = nullptr;
 
+			dstRGBA = nullptr;
+			//SDL_DestroyTexture(dstRGBA);
+
 			SDL_DestroyTexture(srcRGBA);
 			srcRGBA = nullptr;
+
+			tile = nullptr;
+			delete tile;
 		}
 	}
 	SDL_RenderPresent(m_Renderer);

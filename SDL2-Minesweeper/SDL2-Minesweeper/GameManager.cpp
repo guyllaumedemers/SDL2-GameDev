@@ -26,7 +26,11 @@ void GameManager::initializeGame()
 	Rendering::initialize();
 	Rendering::setWindowSize((*m_Difficulty).m_Width, (*m_Difficulty).m_Height);
 
-	TileMapGenerator::createMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
+	TileMapGenerator::setTileBuilder(new EmptyTileBuilder());
+	TileMapGenerator::createEmptyMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
+
+	TileMapGenerator::setTileBuilder(new BombTileBuilder());
+	TileMapGenerator::createBombMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
 }
 
 void GameManager::getInputEvents()
@@ -78,7 +82,7 @@ bool GameManager::canPlaceFlag()
 	return m_FlagsLeft > 0;
 }
 
-int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
+int GameManager::checkNeighbor(Tile** map, const int x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
 {
 	if (x < 0 || x >= (*m_Difficulty).m_Height || y < 0 || y >= (*m_Difficulty).m_Width) {
 		return 0;
@@ -107,7 +111,7 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 
 			if (isValidMove > 1) {
 
-				memoizationMap.insert(std::pair(buffer, &(*temp)));
+				memoizationMap.insert(std::make_pair(buffer, &(*temp)));
 				queue.push(&(*temp));
 			}
 			temp = nullptr;
@@ -173,6 +177,8 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 		if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
 			// you lost
 			//
+			(*temp).setBitmaskValue(TileBitMask::Uncovered, false);
+			(*temp).setBitmaskValue(TileBitMask::Covered, true);
 		}
 		temp = nullptr;
 		delete temp;
@@ -188,7 +194,7 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 		char buffer[50];
 		sprintf_s(buffer, "%d%d", (*temp).getX(), (*temp).getY());
 
-		memoizationMap.insert(std::pair(buffer, &(*temp)));
+		memoizationMap.insert(std::make_pair(buffer, &(*temp)));
 
 		while (!neighbors.empty()) {
 
@@ -218,6 +224,9 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 
 			SDL_Texture* texture = ImageLoader::loadGPURendering(Rendering::m_Renderer, SDL_GetWindowSurface(Rendering::m_Window), "../SDL2-Minesweeper/Assets/UncoveredTile.png");
 			(*temp).setGraphics(texture);
+
+			texture = nullptr;
+			SDL_DestroyTexture(texture);
 
 			neighbors.pop();
 		}

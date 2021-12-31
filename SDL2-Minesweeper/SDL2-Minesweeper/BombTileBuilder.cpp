@@ -8,7 +8,6 @@ BombTileBuilder::BombTileBuilder()
 
 BombTileBuilder::~BombTileBuilder()
 {
-	delete m_Tile;
 }
 
 void BombTileBuilder::buildTile(int x, int y)
@@ -24,11 +23,14 @@ void BombTileBuilder::buildTile(int x, int y)
 void BombTileBuilder::buildGraphic(SDL_Window* window, SDL_Renderer* ren)
 {
 	SDL_Surface* windowSurface = SDL_GetWindowSurface(window);
-	if (m_Texture == nullptr) {
-		m_Texture = ImageLoader::loadGPURendering(ren, windowSurface, "SDL2-Minesweeper/Assets/Bomb.png");
-	}
 
-	(*m_Tile).setGraphics(m_Texture);
+	SDL_Texture* texture = ImageLoader::loadGPURendering(ren, windowSurface, "../SDL2-Minesweeper/Assets/CoveredTile.png");
+	if (texture != nullptr) {
+
+		(*m_Tile).setGraphics(texture);
+	}
+	texture = nullptr;
+	SDL_DestroyTexture(texture);
 
 	SDL_FreeSurface(windowSurface);
 	windowSurface = nullptr;
