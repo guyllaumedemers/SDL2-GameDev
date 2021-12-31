@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <iostream>
 #include "Tile.h"
 
 class TileBuilder
@@ -13,9 +14,8 @@ protected:
 public:
 
 	virtual ~TileBuilder() {
-		// dont delete the reference the pointer is targeting otherwise the map will 
-		m_Tile = nullptr;
 		delete m_Tile;
+		m_Tile = nullptr;
 		SDL_DestroyTexture(m_Texture);
 		m_Texture = nullptr;
 	};

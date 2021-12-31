@@ -106,7 +106,7 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 			target = nullptr;
 
 			dstRGBA = nullptr;
-			//SDL_DestroyTexture(dstRGBA);
+			SDL_DestroyTexture(dstRGBA);
 
 			SDL_DestroyTexture(srcRGBA);
 			srcRGBA = nullptr;

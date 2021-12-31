@@ -174,7 +174,7 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 		(((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb);
 
 	if (isValidMove > 0) {
-		if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+		if (isValidMove == 1 && ((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
 			// you lost
 			//
 			(*temp).setBitmaskValue(TileBitMask::Uncovered, false);
@@ -230,7 +230,7 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 
 			neighbors.pop();
 		}
-		std::cout << memoizationMap.size() << std::endl;
+		//std::cout << memoizationMap.size() << std::endl;
 		memoizationMap.clear();
 	}
 
