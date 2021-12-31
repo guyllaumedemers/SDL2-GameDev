@@ -1,5 +1,4 @@
 #include "EmptyTileBuilder.h"
-#include "Rendering.h"
 
 EmptyTileBuilder::EmptyTileBuilder(SDL_Texture* texture)
 {
@@ -9,7 +8,7 @@ EmptyTileBuilder::EmptyTileBuilder(SDL_Texture* texture)
 
 void EmptyTileBuilder::buildTile(int x, int y)
 {
-	m_Tile = new Tile(
+	m_Tile = DBG_NEW Tile(
 		nullptr,
 		TileBitMask::Empty | TileBitMask::Covered,
 		x,

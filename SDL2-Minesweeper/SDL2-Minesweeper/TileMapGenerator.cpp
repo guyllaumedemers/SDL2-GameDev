@@ -1,4 +1,5 @@
 #include "TileMapGenerator.h"
+#include "Main.cpp"
 
 TileBuilder* TileMapGenerator::m_TileBuilder = nullptr;
 
@@ -14,10 +15,10 @@ Tile* TileMapGenerator::createTile(const int& x, const int& y)
 
 Tile** TileMapGenerator::createEmptyMap(const int& x, const int& y)
 {
-	m_Map = new Tile * [x];
+	m_Map = DBG_NEW Tile * [x];
 
 	for (int i = 0; i < x; ++i) {
-		m_Map[i] = new Tile[y];
+		m_Map[i] = DBG_NEW Tile[y];
 
 		for (int j = 0; j < y; ++j) {
 

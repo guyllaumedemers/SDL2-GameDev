@@ -27,10 +27,10 @@ void GameManager::initializeGame()
 
 	SDL_Texture* texture = Rendering::getTextureFromKey("Covered");
 
-	TileMapGenerator::setTileBuilder(new EmptyTileBuilder(texture));
+	TileMapGenerator::setTileBuilder(DBG_NEW EmptyTileBuilder(texture));
 	TileMapGenerator::createEmptyMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
 
-	TileMapGenerator::setTileBuilder(new BombTileBuilder(texture));
+	TileMapGenerator::setTileBuilder(DBG_NEW BombTileBuilder(texture));
 	TileMapGenerator::createBombMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
 
 	texture = nullptr;
@@ -77,7 +77,7 @@ int GameManager::onExecute()
 
 void GameManager::setDifficulty(Mode mode)
 {
-	m_Difficulty = new Difficulty(mode);
+	m_Difficulty = DBG_NEW Difficulty(mode);
 }
 
 bool GameManager::canPlaceFlag()
@@ -210,7 +210,7 @@ void GameManager::uncoverTile(Tile** map, Tile* currentTile)
 			(*currentTile).setGraphics(Rendering::getTextureFromKey("Uncovered"));
 			neighbors.pop();
 		}
-		std::cout << memoizationMap.size() << std::endl;
+		//std::cout << memoizationMap.size() << std::endl;
 		memoizationMap.clear();
 	}
 }

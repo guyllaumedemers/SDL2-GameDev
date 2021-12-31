@@ -1,5 +1,4 @@
 #include "BombTileBuilder.h"
-#include "Rendering.h"
 
 BombTileBuilder::BombTileBuilder(SDL_Texture* texture)
 {
@@ -9,7 +8,7 @@ BombTileBuilder::BombTileBuilder(SDL_Texture* texture)
 
 void BombTileBuilder::buildTile(int x, int y)
 {
-	m_Tile = new Tile(
+	m_Tile = DBG_NEW Tile(
 		nullptr,
 		TileBitMask::Covered | TileBitMask::Bomb,
 		x,
