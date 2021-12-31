@@ -1,20 +1,12 @@
 #pragma once
 #include <SDL.h>
-#include <SDL_image.h>
-#include <iostream>
 #include <string>
-#include <functional>
-#include <queue>
 #include <unordered_map>
-#include "ImageLoader.h"
-#include "InputManager.h"
-#include "UIController.h"
-#include "Tile.h"
+#include <queue>
 #include "TileMapGenerator.h"
-#include "Rendering.h"
 #include "Difficulty.h"
-#include "Mode.h"
-#include "Timer.h"
+#include "Rendering.h"
+#include "InputManager.h"
 
 class GameManager
 {

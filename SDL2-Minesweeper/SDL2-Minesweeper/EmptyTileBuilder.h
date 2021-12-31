@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include "TileBuilder.h"
-#include "ImageLoader.h"
 
 class EmptyTileBuilder : public TileBuilder
 {

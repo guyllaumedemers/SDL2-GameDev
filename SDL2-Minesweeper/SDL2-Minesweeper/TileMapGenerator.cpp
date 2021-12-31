@@ -61,7 +61,7 @@ void TileMapGenerator::clear(const int& row)
 		m_Map[i] = nullptr;
 	}
 
-	delete m_Map;
+	delete[] m_Map;
 	m_Map = nullptr;
 }
 

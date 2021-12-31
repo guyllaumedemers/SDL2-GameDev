@@ -1,5 +1,4 @@
 #include "EmptyTileBuilder.h"
-#include <iostream>
 
 EmptyTileBuilder::EmptyTileBuilder()
 {

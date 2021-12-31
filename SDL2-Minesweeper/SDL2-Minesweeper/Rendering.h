@@ -1,9 +1,5 @@
 #pragma once
-#pragma once
-#include <SDL.h>
-#include <SDL_image.h>
-#include <string>
-#include "TileMapGenerator.h"
+#include "GameManager.h"
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600

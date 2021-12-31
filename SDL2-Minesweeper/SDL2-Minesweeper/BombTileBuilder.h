@@ -1,6 +1,5 @@
 #pragma once
 #include "TileBuilder.h"
-#include "ImageLoader.h"
 
 class BombTileBuilder : public TileBuilder
 {

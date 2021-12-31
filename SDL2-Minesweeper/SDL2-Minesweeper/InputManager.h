@@ -1,9 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <functional>
-#include "TileMapGenerator.h"
 #include "GameManager.h"
-#include "Rendering.h"
 
 typedef std::function<void(Uint8)> Action;
 
