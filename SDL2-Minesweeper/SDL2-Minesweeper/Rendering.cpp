@@ -4,6 +4,8 @@ SDL_Window* Rendering::m_Window = nullptr;
 
 SDL_Renderer* Rendering::m_Renderer = nullptr;
 
+std::unordered_map<std::string, SDL_Texture*> Rendering::m_Textures;
+
 void Rendering::initializeWindow(const int& width, const int& height)
 {
 	m_Window = SDL_CreateWindow(
@@ -31,6 +33,22 @@ void Rendering::initializeRendering()
 	}
 }
 
+void Rendering::intializeTextures()
+{
+	m_Textures.insert(std::make_pair("Flag", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png")));
+	m_Textures.insert(std::make_pair("Bomb", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Bomb.png")));
+
+	for (int i = 1; i <= 8; ++i) {
+		char buffer[50];
+		sprintf_s(buffer, "../SDL2-Minesweeper/Assets/%d.png", i);
+		m_Textures.insert(std::make_pair("Number_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), buffer)));
+	}
+
+	m_Textures.insert(std::make_pair("Cover", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/CoveredTile.png")));
+	m_Textures.insert(std::make_pair("Uncover", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
+	m_Textures.insert(std::make_pair("Hit", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/TileHit.png")));
+}
+
 void Rendering::initializeIMG()
 {
 	if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0) {
@@ -43,6 +61,7 @@ void Rendering::initialize(const int& width, const int& height)
 {
 	initializeWindow(width, height);
 	initializeRendering();
+	intializeTextures();
 	initializeIMG();
 }
 
@@ -80,21 +99,23 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 			SDL_Texture* srcRGBA = nullptr;
 
 			if (((*tile).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
-				srcRGBA = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png");
+
+				srcRGBA = m_Textures["Flag"];
 				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
 				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
 			}
 			else if (((*tile).getBitmaskValue() & TileBitMask::Numbered) == TileBitMask::Numbered) {
 				char buffer[50];
-				sprintf_s(buffer, "../SDL2-Minesweeper/Assets/%d.png", (*tile).getValue());
+				sprintf_s(buffer, "Number_%d", (*tile).getValue());
 
-				srcRGBA = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), buffer);
+				srcRGBA = m_Textures[buffer];
 				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
 				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
 			}
 
 			if (((*tile).getBitmaskValue() & (TileBitMask::Uncovered | TileBitMask::Bomb)) == (TileBitMask::Uncovered | TileBitMask::Bomb)) {
-				srcRGBA = ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Bomb.png");
+
+				srcRGBA = m_Textures["Bomb"];
 				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
 				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
 			}
@@ -104,12 +125,6 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 
 			SDL_DestroyTexture(target);
 			target = nullptr;
-
-			dstRGBA = nullptr;
-			SDL_DestroyTexture(dstRGBA);
-
-			SDL_DestroyTexture(srcRGBA);
-			srcRGBA = nullptr;
 
 			tile = nullptr;
 			delete tile;

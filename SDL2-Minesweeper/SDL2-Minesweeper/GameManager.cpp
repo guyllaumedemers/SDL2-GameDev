@@ -28,8 +28,8 @@ void GameManager::initializeGame()
 	TileMapGenerator::setTileBuilder(new EmptyTileBuilder());
 	TileMapGenerator::createEmptyMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
 
-	//TileMapGenerator::setTileBuilder(new BombTileBuilder());
-	//TileMapGenerator::createBombMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
+	TileMapGenerator::setTileBuilder(new BombTileBuilder());
+	TileMapGenerator::createBombMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
 }
 
 void GameManager::getInputEvents()

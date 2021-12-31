@@ -22,8 +22,8 @@ Tile** TileMapGenerator::createEmptyMap(SDL_Window* window, SDL_Renderer* ren, c
 	m_Map = new Tile * [x];
 
 	for (int i = 0; i < x; ++i) {
-
 		m_Map[i] = new Tile[y];
+
 		for (int j = 0; j < y; ++j) {
 
 			m_Map[i][j] = *createTile(window, ren, i, j);

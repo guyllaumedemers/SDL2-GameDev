@@ -5,9 +5,13 @@ class Rendering
 {
 private:
 
+	static std::unordered_map<std::string, SDL_Texture*> m_Textures;
+
 	static void initializeWindow(const int& width, const int& height);
 
 	static void initializeRendering();
+
+	static void intializeTextures();
 
 	static void initializeIMG();
 
