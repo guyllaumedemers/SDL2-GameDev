@@ -1,14 +1,11 @@
 #pragma once
-#include <SDL.h>
 #include "TileBuilder.h"
 
 class EmptyTileBuilder : public TileBuilder
 {
 public:
 
-	EmptyTileBuilder();
-
-	~EmptyTileBuilder();
+	EmptyTileBuilder(SDL_Texture* texture);
 
 	void buildTile(int x, int y) override;
 };

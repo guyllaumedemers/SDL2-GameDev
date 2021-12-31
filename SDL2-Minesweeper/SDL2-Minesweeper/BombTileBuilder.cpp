@@ -1,13 +1,10 @@
 #include "BombTileBuilder.h"
+#include "Rendering.h"
 
-BombTileBuilder::BombTileBuilder()
+BombTileBuilder::BombTileBuilder(SDL_Texture* texture)
 {
+	m_Texture = texture;
 	m_Tile = nullptr;
-	m_Texture = nullptr;
-}
-
-BombTileBuilder::~BombTileBuilder()
-{
 }
 
 void BombTileBuilder::buildTile(int x, int y)

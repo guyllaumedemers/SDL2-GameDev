@@ -1,7 +1,4 @@
 #pragma once
-#include <SDL.h>
-#include <iostream>
-#include "Tile.h"
 #include "EmptyTileBuilder.h"
 #include "BombTileBuilder.h"
 
@@ -15,11 +12,11 @@ private:
 
 public:
 
-	static Tile* createTile(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y);
+	static Tile* createTile(const int& x, const int& y);
 
-	static Tile** createEmptyMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y);
+	static Tile** createEmptyMap(const int& x, const int& y);
 
-	static Tile** createBombMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y, int nbBombs);
+	static Tile** createBombMap(const int& x, const int& y, int nbBombs);
 
 	static void clear(const int& row);
 

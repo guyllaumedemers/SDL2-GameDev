@@ -1,13 +1,10 @@
 #include "EmptyTileBuilder.h"
+#include "Rendering.h"
 
-EmptyTileBuilder::EmptyTileBuilder()
+EmptyTileBuilder::EmptyTileBuilder(SDL_Texture* texture)
 {
+	m_Texture = texture;
 	m_Tile = nullptr;
-	m_Texture = nullptr;
-}
-
-EmptyTileBuilder::~EmptyTileBuilder()
-{
 }
 
 void EmptyTileBuilder::buildTile(int x, int y)

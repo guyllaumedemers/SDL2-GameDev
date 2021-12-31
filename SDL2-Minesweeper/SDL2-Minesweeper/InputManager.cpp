@@ -1,6 +1,6 @@
 #include "InputManager.h"
 
-void InputManager::getInputEvent(SDL_Event& myEvent)
+void InputManager::getInputEvent(SDL_Event& myEvent, Tile** map)
 {
 	switch (myEvent.type)
 	{
@@ -13,14 +13,14 @@ void InputManager::getInputEvent(SDL_Event& myEvent)
 			int y = 0;
 
 			SDL_GetMouseState(&x, &y);
-			GameManager::uncoverTile(TileMapGenerator::getMap(), x, y);
+			GameManager::uncoverTile(map, &map[y / Tile::height][x / Tile::width]);
 		}
 		else if (myEvent.button.button == SDL_BUTTON_RIGHT) {
 			int x = 0;
 			int y = 0;
 
 			SDL_GetMouseState(&x, &y);
-			GameManager::doFlagCheck(TileMapGenerator::getMap(), x, y);
+			GameManager::doFlagCheck(&map[y / Tile::height][x / Tile::width]);
 		}
 		break;
 	}

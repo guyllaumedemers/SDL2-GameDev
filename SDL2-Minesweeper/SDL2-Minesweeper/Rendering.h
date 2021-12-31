@@ -1,5 +1,7 @@
 #pragma once
-#include "GameManager.h"
+#include <unordered_map>
+#include "ImageLoader.h"
+#include "TileMapGenerator.h"
 
 class Rendering
 {
@@ -28,5 +30,7 @@ public:
 	static void update(Tile** map, const int& arrX, const int& arrY);
 
 	static void clear();
+
+	static SDL_Texture* getTextureFromKey(std::string key);
 };
 

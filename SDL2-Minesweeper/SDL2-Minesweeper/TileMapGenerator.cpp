@@ -4,20 +4,15 @@ TileBuilder* TileMapGenerator::m_TileBuilder = nullptr;
 
 Tile** TileMapGenerator::m_Map = nullptr;
 
-Tile* TileMapGenerator::createTile(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y)
+Tile* TileMapGenerator::createTile(const int& x, const int& y)
 {
-	if (m_TileBuilder == nullptr) {
-		SDL_Log("Cannot access IBuilder instance : %s", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-
 	(*m_TileBuilder).buildTile(x, y);
-	(*m_TileBuilder).buildGraphic(window, ren);
+	(*m_TileBuilder).buildGraphic();
 
 	return (*m_TileBuilder).getTile();
 }
 
-Tile** TileMapGenerator::createEmptyMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y)
+Tile** TileMapGenerator::createEmptyMap(const int& x, const int& y)
 {
 	m_Map = new Tile * [x];
 
@@ -26,13 +21,13 @@ Tile** TileMapGenerator::createEmptyMap(SDL_Window* window, SDL_Renderer* ren, c
 
 		for (int j = 0; j < y; ++j) {
 
-			m_Map[i][j] = *createTile(window, ren, i, j);
+			m_Map[i][j] = *createTile(i, j);
 		}
 	}
 	return m_Map;
 }
 
-Tile** TileMapGenerator::createBombMap(SDL_Window* window, SDL_Renderer* ren, const int& x, const int& y, int nbBombs)
+Tile** TileMapGenerator::createBombMap(const int& x, const int& y, int nbBombs)
 {
 	int mod = (x * y) / nbBombs;
 
@@ -45,7 +40,7 @@ Tile** TileMapGenerator::createBombMap(SDL_Window* window, SDL_Renderer* ren, co
 			col = rand() % y;
 		}
 
-		m_Map[row][col] = *createTile(window, ren, row, col);
+		m_Map[row][col] = *createTile(row, col);
 		--nbBombs;
 	}
 	return m_Map;
@@ -53,9 +48,6 @@ Tile** TileMapGenerator::createBombMap(SDL_Window* window, SDL_Renderer* ren, co
 
 void TileMapGenerator::clear(const int& row)
 {
-	delete m_TileBuilder;
-	m_TileBuilder = nullptr;
-
 	for (int i = 0; i < row; ++i) {
 		delete[] m_Map[i];
 		m_Map[i] = nullptr;
@@ -72,8 +64,5 @@ Tile** TileMapGenerator::getMap()
 
 void TileMapGenerator::setTileBuilder(TileBuilder* builder)
 {
-	delete m_TileBuilder;
-	m_TileBuilder = nullptr;
-
 	m_TileBuilder = builder;
 }

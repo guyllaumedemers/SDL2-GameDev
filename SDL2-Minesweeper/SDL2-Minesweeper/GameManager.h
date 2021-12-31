@@ -1,9 +1,13 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_image.h>
+#include <ctime>
+#include <iostream>
 #include <string>
 #include <unordered_map>
 #include <queue>
-#include "TileMapGenerator.h"
+#include <functional>
+
 #include "Difficulty.h"
 #include "Rendering.h"
 #include "InputManager.h"
@@ -38,11 +42,11 @@ public:
 
 	static void setDifficulty(Mode mode);
 
-	static void doFlagCheck(Tile** map, const int& x, const int& y);
+	static void doFlagCheck(Tile* tile);
 
 	static void removeOrAddFlagFromCount(const bool& value);
 
-	static void uncoverTile(Tile** map, const int& x, const int& y);
+	static void uncoverTile(Tile** map, Tile* currentTile);
 
 	static int onExecute();
 };

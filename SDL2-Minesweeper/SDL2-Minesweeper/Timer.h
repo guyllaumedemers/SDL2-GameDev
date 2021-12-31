@@ -1,7 +1,5 @@
 #pragma once
-#include <ctime>
-#include <iostream>
-#include <functional>
+#include "GameManager.h"
 
 typedef std::function<void()> EventHandler;
 

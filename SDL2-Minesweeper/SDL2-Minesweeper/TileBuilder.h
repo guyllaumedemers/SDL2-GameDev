@@ -1,14 +1,13 @@
 #pragma once
 #include "Tile.h"
-#include "ImageLoader.h"
 
 class TileBuilder
 {
 protected:
 
-	Tile* m_Tile = nullptr;
-
 	SDL_Texture* m_Texture = nullptr;
+
+	Tile* m_Tile = nullptr;
 
 public:
 
@@ -17,26 +16,17 @@ public:
 		m_Tile = nullptr;
 		SDL_DestroyTexture(m_Texture);
 		m_Texture = nullptr;
-	};
+	}
 
 	virtual void buildTile(int x, int y) = 0;
 
-	virtual void buildGraphic(SDL_Window* window, SDL_Renderer* ren)
-	{
-		SDL_Surface* windowSurface = SDL_GetWindowSurface(window);
+	virtual void buildGraphic() {
+		if (m_Texture != nullptr) {
 
-		SDL_Texture* texture = ImageLoader::loadGPURendering(ren, windowSurface, "../SDL2-Minesweeper/Assets/CoveredTile.png");
-		if (texture != nullptr) {
-
-			(*m_Tile).setGraphics(texture);
+			(*m_Tile).setGraphics(m_Texture);
 		}
-		texture = nullptr;
-		SDL_DestroyTexture(texture);
-
-		SDL_FreeSurface(windowSurface);
-		windowSurface = nullptr;
 	};
 
-	Tile* getTile() { return m_Tile; }
+	virtual Tile* getTile() { return m_Tile; };
 };
 

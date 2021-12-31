@@ -44,8 +44,8 @@ void Rendering::intializeTextures()
 		m_Textures.insert(std::make_pair("Number_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), buffer)));
 	}
 
-	m_Textures.insert(std::make_pair("Cover", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/CoveredTile.png")));
-	m_Textures.insert(std::make_pair("Uncover", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
+	m_Textures.insert(std::make_pair("Covered", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/CoveredTile.png")));
+	m_Textures.insert(std::make_pair("Uncovered", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
 	m_Textures.insert(std::make_pair("Hit", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/TileHit.png")));
 }
 
@@ -133,4 +133,12 @@ void Rendering::clear()
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
 	IMG_Quit();
+}
+
+SDL_Texture* Rendering::getTextureFromKey(std::string key)
+{
+	if (m_Textures.find(key) != m_Textures.end()) {
+		return m_Textures[key];
+	}
+	return nullptr;
 }
