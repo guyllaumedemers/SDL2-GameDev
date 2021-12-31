@@ -23,14 +23,13 @@ void GameManager::initializeGame()
 
 	m_FlagsLeft = (*m_Difficulty).m_Flags;
 
-	Rendering::initialize();
-	Rendering::setWindowSize((*m_Difficulty).m_Width, (*m_Difficulty).m_Height);
+	Rendering::initialize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::width);
 
 	TileMapGenerator::setTileBuilder(new EmptyTileBuilder());
 	TileMapGenerator::createEmptyMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
 
-	TileMapGenerator::setTileBuilder(new BombTileBuilder());
-	TileMapGenerator::createBombMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
+	//TileMapGenerator::setTileBuilder(new BombTileBuilder());
+	//TileMapGenerator::createBombMap(Rendering::m_Window, Rendering::m_Renderer, (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
 }
 
 void GameManager::getInputEvents()
@@ -230,7 +229,7 @@ void GameManager::uncoverTile(Tile** map, const int& x, const int& y)
 
 			neighbors.pop();
 		}
-		//std::cout << memoizationMap.size() << std::endl;
+		std::cout << memoizationMap.size() << std::endl;
 		memoizationMap.clear();
 	}
 

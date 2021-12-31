@@ -1,14 +1,11 @@
 #pragma once
 #include "GameManager.h"
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-
 class Rendering
 {
 private:
 
-	static void initializeWindow();
+	static void initializeWindow(const int& width, const int& height);
 
 	static void initializeRendering();
 
@@ -20,7 +17,7 @@ public:
 
 	static SDL_Renderer* m_Renderer;
 
-	static void initialize();
+	static void initialize(const int& width, const int& height);
 
 	static void setWindowSize(const int& x, const int& y);
 

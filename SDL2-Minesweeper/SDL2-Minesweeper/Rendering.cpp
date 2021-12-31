@@ -4,15 +4,15 @@ SDL_Window* Rendering::m_Window = nullptr;
 
 SDL_Renderer* Rendering::m_Renderer = nullptr;
 
-void Rendering::initializeWindow()
+void Rendering::initializeWindow(const int& width, const int& height)
 {
 	m_Window = SDL_CreateWindow(
 		"Minesweeper",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		WINDOW_WIDTH,
-		WINDOW_HEIGHT,
-		SDL_WINDOW_RESIZABLE
+		width,
+		height,
+		0
 	);
 
 	if (m_Window == nullptr) {
@@ -39,9 +39,9 @@ void Rendering::initializeIMG()
 	}
 }
 
-void Rendering::initialize()
+void Rendering::initialize(const int& width, const int& height)
 {
-	initializeWindow();
+	initializeWindow(width, height);
 	initializeRendering();
 	initializeIMG();
 }
