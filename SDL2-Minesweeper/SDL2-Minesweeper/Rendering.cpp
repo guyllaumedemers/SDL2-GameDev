@@ -89,35 +89,28 @@ void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 			Tile* tile = &map[i][j];
 
 			SDL_Texture* target = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Tile::width, Tile::height);
-			SDL_Texture* dstRGBA = (*tile).getTexture();
-
 			SDL_SetRenderTarget(m_Renderer, target);
 
 			SDL_RenderClear(m_Renderer);
-			SDL_RenderCopy(m_Renderer, dstRGBA, NULL, NULL);
-
-			SDL_Texture* srcRGBA = nullptr;
+			SDL_RenderCopy(m_Renderer, (*tile).getTexture(), NULL, NULL);
 
 			if (((*tile).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
 
-				srcRGBA = m_Textures["Flag"];
-				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
-				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
+				SDL_SetTextureBlendMode(m_Textures["Flag"], SDL_BLENDMODE_BLEND);
+				SDL_RenderCopy(m_Renderer, m_Textures["Flag"], NULL, NULL);
 			}
 			else if (((*tile).getBitmaskValue() & TileBitMask::Numbered) == TileBitMask::Numbered) {
+
 				char buffer[50];
 				sprintf_s(buffer, "Number_%d", (*tile).getValue());
-
-				srcRGBA = m_Textures[buffer];
-				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
-				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
+				SDL_SetTextureBlendMode(m_Textures[buffer], SDL_BLENDMODE_BLEND);
+				SDL_RenderCopy(m_Renderer, m_Textures[buffer], NULL, NULL);
 			}
 
 			if (((*tile).getBitmaskValue() & (TileBitMask::Uncovered | TileBitMask::Bomb)) == (TileBitMask::Uncovered | TileBitMask::Bomb)) {
 
-				srcRGBA = m_Textures["Bomb"];
-				SDL_SetTextureBlendMode(srcRGBA, SDL_BLENDMODE_BLEND);
-				SDL_RenderCopy(m_Renderer, srcRGBA, NULL, NULL);
+				SDL_SetTextureBlendMode(m_Textures["Bomb"], SDL_BLENDMODE_BLEND);
+				SDL_RenderCopy(m_Renderer, m_Textures["Bomb"], NULL, NULL);
 			}
 
 			SDL_SetRenderTarget(m_Renderer, NULL);
