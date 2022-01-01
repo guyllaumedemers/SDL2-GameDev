@@ -220,8 +220,6 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 				continue;
 			}
 
-			// I have to add the inital pointer to the edge lookup table to have a initial reference to whose the smallest Y value, X value
-
 			int value =
 				checkNeighbor(map, x + 1, y, neighbors, memoizationMap) +
 				checkNeighbor(map, x - 1, y, neighbors, memoizationMap) +
