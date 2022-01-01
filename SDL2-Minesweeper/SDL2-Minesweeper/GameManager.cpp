@@ -83,7 +83,7 @@ bool GameManager::canPlaceFlag()
 	return m_FlagsLeft > 0;
 }
 
-int GameManager::checkNeighbor(Tile** map, const int x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
+int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
 {
 	if (x < 0 || x >= (*m_Difficulty).m_Height || y < 0 || y >= (*m_Difficulty).m_Width) {
 		return 0;
@@ -91,7 +91,7 @@ int GameManager::checkNeighbor(Tile** map, const int x, const int& y, std::queue
 	else {
 		std::unique_ptr<Tile*> temp = std::make_unique<Tile*>(&map[x][y]);
 		char buffer[50];
-		sprintf_s(buffer, "%d%d", map[x][y].getX(), map[x][y].getY());
+		sprintf_s(buffer, "%p%p", (**temp).getX(), (**temp).getY());
 
 		if (memoizationMap.find(buffer) != memoizationMap.end()) {
 			return 0;
@@ -176,7 +176,7 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 		neighbors.push(&(*current));
 
 		char buffer[50];
-		sprintf_s(buffer, "%d%d", (*current).getX(), (*current).getY());
+		sprintf_s(buffer, "%p%p", (*current).getX(), (*current).getY());
 
 		memoizationMap.insert(std::make_pair(buffer, &(*current)));
 
