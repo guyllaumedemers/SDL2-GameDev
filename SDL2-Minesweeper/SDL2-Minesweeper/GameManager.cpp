@@ -91,7 +91,7 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 	else {
 		std::unique_ptr<Tile*> temp = std::make_unique<Tile*>(&map[x][y]);
 		char buffer[50];
-		sprintf_s(buffer, "%p%p", (**temp).getX(), (**temp).getY());
+		sprintf_s(buffer, "%p", *temp);
 
 		if (memoizationMap.find(buffer) != memoizationMap.end()) {
 			return 0;
@@ -176,7 +176,7 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 		neighbors.push(&(*current));
 
 		char buffer[50];
-		sprintf_s(buffer, "%p%p", (*current).getX(), (*current).getY());
+		sprintf_s(buffer, "%p", current);
 
 		memoizationMap.insert(std::make_pair(buffer, &(*current)));
 
@@ -209,7 +209,7 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 			(*current).setGraphics(Rendering::getTextureFromKey("Uncovered"));
 			neighbors.pop();
 		}
-		std::cout << memoizationMap.size() << std::endl;
+
 		memoizationMap.clear();
 	}
 }
