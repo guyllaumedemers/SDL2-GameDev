@@ -3,15 +3,26 @@
 EmptyTileBuilder::EmptyTileBuilder(SDL_Texture* texture)
 {
 	m_Texture = texture;
-	m_Tile = nullptr;
 }
 
-void EmptyTileBuilder::buildTile(int x, int y)
+EmptyTileBuilder::~EmptyTileBuilder()
 {
-	m_Tile = DBG_NEW Tile(
+	m_Texture = nullptr;
+}
+
+Tile EmptyTileBuilder::buildTile(int x, int y)
+{
+	return Tile(
 		nullptr,
 		TileBitMask::Empty | TileBitMask::Covered,
 		x,
 		y
 	);
+}
+
+void EmptyTileBuilder::buildGraphic(Tile& tile)
+{
+	if (m_Texture != nullptr) {
+		tile.setGraphics(m_Texture);
+	}
 }

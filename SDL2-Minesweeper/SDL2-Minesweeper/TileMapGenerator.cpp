@@ -1,16 +1,15 @@
 #include "TileMapGenerator.h"
 #include "Main.cpp"
 
-TileBuilder* TileMapGenerator::m_TileBuilder = nullptr;
+TileBuilder* TileMapGenerator::m_TileBuilder;
 
 Tile** TileMapGenerator::m_Map = nullptr;
 
-Tile* TileMapGenerator::createTile(const int& x, const int& y)
+Tile TileMapGenerator::createTile(const int& x, const int& y)
 {
-	(*m_TileBuilder).buildTile(x, y);
-	(*m_TileBuilder).buildGraphic();
-
-	return (*m_TileBuilder).getTile();
+	Tile temp = (*m_TileBuilder).buildTile(x, y);
+	(*m_TileBuilder).buildGraphic(temp);
+	return temp;
 }
 
 Tile** TileMapGenerator::createEmptyMap(const int& x, const int& y)
@@ -22,7 +21,7 @@ Tile** TileMapGenerator::createEmptyMap(const int& x, const int& y)
 
 		for (int j = 0; j < y; ++j) {
 
-			m_Map[i][j] = *createTile(i, j);
+			m_Map[i][j] = createTile(i, j);
 		}
 	}
 	return m_Map;
@@ -41,7 +40,7 @@ Tile** TileMapGenerator::createBombMap(const int& x, const int& y, int nbBombs)
 			col = rand() % y;
 		}
 
-		m_Map[row][col] = *createTile(row, col);
+		m_Map[row][col] = createTile(row, col);
 		--nbBombs;
 	}
 	return m_Map;
@@ -63,7 +62,19 @@ Tile** TileMapGenerator::getMap()
 	return m_Map;
 }
 
-void TileMapGenerator::setTileBuilder(TileBuilder* builder)
+void TileMapGenerator::setBuilder(TileBuilder* builder)
 {
+	resetBuilder();
 	m_TileBuilder = builder;
+}
+
+void TileMapGenerator::resetBuilder()
+{
+	delete m_TileBuilder;
+	m_TileBuilder = nullptr;
+}
+
+void TileMapGenerator::destroyBuilder()
+{
+	resetBuilder();
 }

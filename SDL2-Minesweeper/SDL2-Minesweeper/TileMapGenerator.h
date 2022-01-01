@@ -1,4 +1,5 @@
 #pragma once
+#include "TileBuilder.h"
 #include "EmptyTileBuilder.h"
 #include "BombTileBuilder.h"
 
@@ -10,9 +11,11 @@ private:
 
 	static Tile** m_Map;
 
+	static void resetBuilder();
+
 public:
 
-	static Tile* createTile(const int& x, const int& y);
+	static Tile createTile(const int& x, const int& y);
 
 	static Tile** createEmptyMap(const int& x, const int& y);
 
@@ -22,6 +25,8 @@ public:
 
 	static Tile** getMap();
 
-	static void setTileBuilder(TileBuilder* builder);
+	static void setBuilder(TileBuilder* builder);
+
+	static void destroyBuilder();
 };
 

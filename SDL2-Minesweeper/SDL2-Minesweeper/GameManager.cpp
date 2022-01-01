@@ -25,15 +25,13 @@ void GameManager::initializeGame()
 
 	Rendering::initialize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::width);
 
-	SDL_Texture* texture = Rendering::getTextureFromKey("Covered");
-
-	TileMapGenerator::setTileBuilder(DBG_NEW EmptyTileBuilder(texture));
+	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));
 	TileMapGenerator::createEmptyMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
 
-	TileMapGenerator::setTileBuilder(DBG_NEW BombTileBuilder(texture));
+	TileMapGenerator::setBuilder(DBG_NEW BombTileBuilder(Rendering::getTextureFromKey("Covered")));
 	TileMapGenerator::createBombMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
 
-	texture = nullptr;
+	TileMapGenerator::destroyBuilder();
 }
 
 void GameManager::getInputEvents()

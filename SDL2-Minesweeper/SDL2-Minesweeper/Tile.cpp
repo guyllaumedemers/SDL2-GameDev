@@ -24,7 +24,6 @@ Tile::Tile(SDL_Texture* texture, TileBitMask bitmask, const int& x, const int& y
 
 Tile::~Tile()
 {
-	SDL_DestroyTexture(m_Texture);
 	m_Texture = nullptr;
 }
 

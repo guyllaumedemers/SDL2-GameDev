@@ -3,15 +3,26 @@
 BombTileBuilder::BombTileBuilder(SDL_Texture* texture)
 {
 	m_Texture = texture;
-	m_Tile = nullptr;
 }
 
-void BombTileBuilder::buildTile(int x, int y)
+BombTileBuilder::~BombTileBuilder()
 {
-	m_Tile = DBG_NEW Tile(
+	m_Texture = nullptr;
+}
+
+Tile BombTileBuilder::buildTile(int x, int y)
+{
+	return Tile(
 		nullptr,
 		TileBitMask::Covered | TileBitMask::Bomb,
 		x,
 		y
 	);
+}
+
+void BombTileBuilder::buildGraphic(Tile& tile)
+{
+	if (m_Texture != nullptr) {
+		tile.setGraphics(m_Texture);
+	}
 }
