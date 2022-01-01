@@ -85,8 +85,6 @@ bool GameManager::canPlaceFlag()
 
 bool GameManager::isInsideBounds(Tile** map, const int& x, const int& y, std::unordered_map<std::string, Tile*>& edgeMap)
 {
-	std::unique_ptr<Tile*> temp = std::make_unique<Tile*>(&map[x][y]);
-
 	if (edgeMap.empty()) {
 		return true;
 	}
@@ -238,6 +236,11 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 				(*current).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
 				(*current).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
 				(*current).setValue(value);
+
+				if (edgeLookup.empty()) {
+					(*current).setGraphics(Rendering::getTextureFromKey("Uncovered"));
+					break;
+				}
 			}
 			else {
 				(*current).setBitmaskValue(TileBitMask::Uncovered, false);
