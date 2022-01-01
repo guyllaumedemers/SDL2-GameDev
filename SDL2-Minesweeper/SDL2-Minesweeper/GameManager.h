@@ -34,6 +34,8 @@ private:
 
 	static bool canPlaceFlag();
 
+	static bool isInsideBounds(Tile** map, const int& x, const int& y, std::unordered_map<std::string, Tile*>& edgeMap);
+
 	static int checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
 
 public:

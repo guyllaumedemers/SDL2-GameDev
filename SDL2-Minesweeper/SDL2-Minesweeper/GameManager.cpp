@@ -83,6 +83,36 @@ bool GameManager::canPlaceFlag()
 	return m_FlagsLeft > 0;
 }
 
+bool GameManager::isInsideBounds(Tile** map, const int& x, const int& y, std::unordered_map<std::string, Tile*>& edgeMap)
+{
+	std::unique_ptr<Tile*> temp = std::make_unique<Tile*>(&map[x][y]);
+
+	if (edgeMap.empty()) {
+		return true;
+	}
+	else {
+		int smallestX = INT_MAX;
+		int smallestY = INT_MAX;
+		int biggestX = INT_MIN;
+		int biggestY = INT_MIN;
+
+		for (const auto& it : edgeMap) {
+			int x = (*it.second).getX();
+			int y = (*it.second).getY();
+
+			if (x < smallestX) smallestX = x;
+			if (y < smallestY) smallestY = y;
+			if (x > biggestX) biggestX = x;
+			if (y > biggestY) biggestY = y;
+		}
+
+		if (x > biggestX + 1 || x < smallestX - 1 || y > biggestY + 1 || y < smallestY - 1) {
+			return false;
+		}
+		return true;
+	}
+}
+
 int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
 {
 	if (x < 0 || x >= (*m_Difficulty).m_Height || y < 0 || y >= (*m_Difficulty).m_Width) {
@@ -171,6 +201,7 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 	else {
 
 		std::unordered_map<std::string, Tile*> memoizationMap;
+		std::unordered_map<std::string, Tile*> edgeLookup;
 		std::queue<Tile*> neighbors;
 
 		neighbors.push(&(*current));
@@ -185,6 +216,13 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 			current = neighbors.front();
 			int x = (*current).getX();
 			int y = (*current).getY();
+
+			if (!isInsideBounds(map, x, y, edgeLookup)) {
+				neighbors.pop();
+				continue;
+			}
+
+			// I have to add the inital pointer to the edge lookup table to have a initial reference to whose the smallest Y value, X value
 
 			int value =
 				checkNeighbor(map, x + 1, y, neighbors, memoizationMap) +
@@ -204,6 +242,9 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 			else {
 				(*current).setBitmaskValue(TileBitMask::Uncovered, false);
 				(*current).setBitmaskValue(TileBitMask::Covered, true);
+
+				sprintf_s(buffer, "%p", current);
+				edgeLookup.insert(std::make_pair(buffer, current));
 			}
 
 			(*current).setGraphics(Rendering::getTextureFromKey("Uncovered"));
