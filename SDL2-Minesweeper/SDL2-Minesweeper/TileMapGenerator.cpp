@@ -1,7 +1,6 @@
 #include "TileMapGenerator.h"
-#include "Main.cpp"
 
-TileBuilder* TileMapGenerator::m_TileBuilder;
+TileBuilder* TileMapGenerator::m_TileBuilder = nullptr;
 
 Tile** TileMapGenerator::m_Map = nullptr;
 
@@ -17,10 +16,9 @@ Tile** TileMapGenerator::createEmptyMap(const int& x, const int& y)
 	m_Map = DBG_NEW Tile * [x];
 
 	for (int i = 0; i < x; ++i) {
+
 		m_Map[i] = DBG_NEW Tile[y];
-
 		for (int j = 0; j < y; ++j) {
-
 			m_Map[i][j] = createTile(i, j);
 		}
 	}
@@ -29,8 +27,6 @@ Tile** TileMapGenerator::createEmptyMap(const int& x, const int& y)
 
 Tile** TileMapGenerator::createBombMap(const int& x, const int& y, int nbBombs)
 {
-	int mod = (x * y) / nbBombs;
-
 	while (nbBombs > 0) {
 		int row = rand() % x;
 		int col = rand() % y;
