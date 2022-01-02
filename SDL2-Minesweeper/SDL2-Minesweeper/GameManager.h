@@ -33,31 +33,45 @@ private:
 
 	static void clear();
 
-	static bool canPlaceFlag();
-
 	static bool checkBitMaskEquality(Tile* tile, TileBitMask bitmask);
 
 	static bool isValidMove(Tile* tile);
 
-	static bool isInsideBounds(Tile** map, const int& x, const int& y, std::unordered_map<std::string, Tile*>& edgeMap);
-
-	static int checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
-
-	static int checkNeighborWithoutConstraint(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
-
-	static void showMap(Tile** map, Tile* tile);
+	static bool isBomb(Tile* tile, const int& isValidMove);
 
 	static void resetFirstMove();
 
-public:
+	static void processInvalidMove(Tile** map, Tile* clicked, const int& isInvalid);
 
-	static void setIsRunning(const bool& value);
+	static void processValidMoveInsideBoundaries(Tile** map, Tile* clicked);
+
+	static bool isInsideBounds(Tile** map, Tile* current, std::unordered_map<std::string, Tile*>& edgeMap);
+
+	static int checkAllNeighbors(Tile** map, Tile* current, std::queue<Tile*>& neighbors, std::unordered_map<std::string, Tile*>& memoizationMap);
+
+	static int checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
+
+	static void processValidMoveResult(Tile* current, const int& result, std::unordered_map<std::string, Tile*>& edgeMap, const bool& isHandlingEdges);
+
+	static void updateProcessedTileGraphic(Tile* current, std::string key);
+
+	static void processAllTiles(Tile** map, Tile* clicked);
+
+	static int checkAllNeighborsWithoutConstraint(Tile** map, Tile* current, std::queue<Tile*>& neighbors, std::unordered_map<std::string, Tile*>& memoizationMap);
+
+	static int checkNeighborWithoutConstraint(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
+
+public:
 
 	static void setDifficulty(Mode mode);
 
-	static void doFlagCheck(Tile* tile);
+	static void setIsRunning(const bool& value);
 
-	static void uncoverTile(Tile** map, Tile* currentTile);
+	static Tile* getTileAtPositionClicked(Tile** map, const int& screenPosX, const int& screenPosY);
+
+	static Tile* updateTileAtPositionClicked(Tile** map, Tile* clicked);
+
+	static Tile* updateFlagAtPositionClicked(Tile* clicked);
 
 	static int onExecute();
 };

@@ -63,26 +63,70 @@ void GameManager::clear()
 	SDL_Quit();
 }
 
-int GameManager::onExecute()
-{
-	initializeGame();
-	while (m_IsRunning) {
-		getInputEvents();
-		runGameLogic();
-		renderFrame();
-	}
-	clear();
-	return 0;
-}
-
 void GameManager::setDifficulty(Mode mode)
 {
 	m_Difficulty = DBG_NEW Difficulty(mode);
 }
 
-bool GameManager::canPlaceFlag()
+void GameManager::setIsRunning(const bool& value)
 {
-	return m_FlagsLeft > 0;
+	m_IsRunning = value;
+}
+
+Tile* GameManager::getTileAtPositionClicked(Tile** map, const int& screenPosX, const int& screenPosY)
+{
+	return &map[(screenPosY / Tile::height)][screenPosX / Tile::width];
+}
+
+Tile* GameManager::updateTileAtPositionClicked(Tile** map, Tile* clicked)
+{
+	int isInvalid = isValidMove(clicked);
+
+	if (isInvalid > 0) {
+		processInvalidMove(map, clicked, isInvalid);
+		return nullptr;
+	}
+	else {
+		if (m_IsFirstMove) {
+			m_IsFirstMove = false;
+		}
+		processValidMoveInsideBoundaries(map, clicked);
+	}
+	return nullptr;
+}
+
+Tile* GameManager::updateFlagAtPositionClicked(Tile* clicked)
+{
+	if (checkBitMaskEquality(clicked, TileBitMask::Uncovered)) {
+		return nullptr;
+	}
+	else {
+		bool hasFlagMask = checkBitMaskEquality(clicked, TileBitMask::Flag);
+		bool canPlaceFlag = m_FlagsLeft > 0;
+
+		if (!canPlaceFlag) {
+
+			if (hasFlagMask) {
+
+				(*clicked).removeBitMaskValue(TileBitMask::Flag);
+				(*clicked).addBitMaskValue(TileBitMask::Empty);
+				m_FlagsLeft += 1;
+			}
+		}
+		else {
+			if (hasFlagMask) {
+				(*clicked).removeBitMaskValue(TileBitMask::Flag);
+				(*clicked).addBitMaskValue(TileBitMask::Empty);
+				m_FlagsLeft += 1;
+			}
+			else {
+				(*clicked).removeBitMaskValue(TileBitMask::Empty);
+				(*clicked).addBitMaskValue(TileBitMask::Flag);
+				m_FlagsLeft -= 1;
+			}
+		}
+	}
+	return clicked;
 }
 
 bool GameManager::checkBitMaskEquality(Tile* tile, TileBitMask bitmask)
@@ -93,17 +137,81 @@ bool GameManager::checkBitMaskEquality(Tile* tile, TileBitMask bitmask)
 bool GameManager::isValidMove(Tile* tile)
 {
 	return
-		(((*tile).getBitmaskValue() & TileBitMask::Uncovered) == TileBitMask::Uncovered) +
-		(((*tile).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) +
-		(((*tile).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb);;
+		checkBitMaskEquality(tile, TileBitMask::Uncovered) +
+		checkBitMaskEquality(tile, TileBitMask::Flag) +
+		checkBitMaskEquality(tile, TileBitMask::Bomb);
 }
 
-bool GameManager::isInsideBounds(Tile** map, const int& x, const int& y, std::unordered_map<std::string, Tile*>& edgeMap)
+bool GameManager::isBomb(Tile* tile, const int& isValidMove)
+{
+	return (isValidMove == 1) && checkBitMaskEquality(tile, TileBitMask::Bomb | TileBitMask::Covered);
+}
+
+void GameManager::resetFirstMove()
+{
+	TileMapGenerator::updateBombOnFirstMove(Rendering::getTextureFromKey("Covered"), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
+}
+
+void GameManager::processInvalidMove(Tile** map, Tile* clicked, const int& isInvalid)
+{
+	if (m_IsFirstMove && isBomb(clicked, isInvalid)) {
+		resetFirstMove();
+
+		updateTileAtPositionClicked(map, clicked);
+		(*clicked).removeBitMaskValue(TileBitMask::Bomb);
+	}
+	else if (!m_IsFirstMove && isBomb(clicked, isInvalid)) {
+		processAllTiles(map, clicked);
+		(*clicked).setGraphics(Rendering::getTextureFromKey("Hit"));
+	}
+}
+
+void GameManager::processValidMoveInsideBoundaries(Tile** map, Tile* clicked)
+{
+	std::unordered_map<std::string, Tile*> memoizationMap;
+	std::unordered_map<std::string, Tile*> edgeLookup;
+	std::queue<Tile*> neighbors;
+
+	neighbors.push(&(*clicked));
+
+	char buffer[50];
+	sprintf_s(buffer, "%p", clicked);
+
+	memoizationMap.insert(std::make_pair(buffer, &(*clicked)));
+
+	while (!neighbors.empty()) {
+
+		clicked = neighbors.front();
+
+		if (!isInsideBounds(map, clicked, edgeLookup)) {
+			neighbors.pop();
+			continue;
+		}
+
+		int nbBombsNearBy = checkAllNeighbors(map, clicked, neighbors, memoizationMap);
+
+		processValidMoveResult(clicked, nbBombsNearBy, edgeLookup, true);
+		updateProcessedTileGraphic(clicked, "Uncovered");
+		if (edgeLookup.empty()) {
+			break;
+		}
+
+		neighbors.pop();
+	}
+	memoizationMap.clear();
+	edgeLookup.clear();
+}
+
+bool GameManager::isInsideBounds(Tile** map, Tile* current, std::unordered_map<std::string, Tile*>& edgeMap)
 {
 	if (edgeMap.empty()) {
 		return true;
 	}
 	else {
+
+		int tilePosX = (*current).getX();
+		int tilePosY = (*current).getY();
+
 		int smallestX = INT_MAX;
 		int smallestY = INT_MAX;
 		int biggestX = INT_MIN;
@@ -119,11 +227,27 @@ bool GameManager::isInsideBounds(Tile** map, const int& x, const int& y, std::un
 			if (y > biggestY) biggestY = y;
 		}
 
-		if (x > biggestX + 1 || x < smallestX - 1 || y > biggestY + 1 || y < smallestY - 1) {
+		if (tilePosX > biggestX + 1 || tilePosX < smallestX - 1 || tilePosY > biggestY + 1 || tilePosY < smallestY - 1) {
 			return false;
 		}
 		return true;
 	}
+}
+
+int GameManager::checkAllNeighbors(Tile** map, Tile* clicked, std::queue<Tile*>& neighbors, std::unordered_map<std::string, Tile*>& memoizationMap)
+{
+	int x = (*clicked).getX();
+	int y = (*clicked).getY();
+
+	return
+		checkNeighbor(map, x + 1, y, neighbors, memoizationMap) +
+		checkNeighbor(map, x - 1, y, neighbors, memoizationMap) +
+		checkNeighbor(map, x, y + 1, neighbors, memoizationMap) +
+		checkNeighbor(map, x, y - 1, neighbors, memoizationMap) +
+		checkNeighbor(map, x + 1, y + 1, neighbors, memoizationMap) +
+		checkNeighbor(map, x - 1, y + 1, neighbors, memoizationMap) +
+		checkNeighbor(map, x + 1, y - 1, neighbors, memoizationMap) +
+		checkNeighbor(map, x - 1, y - 1, neighbors, memoizationMap);
 }
 
 int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
@@ -133,6 +257,7 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 	}
 	else {
 		Tile* temp = &map[x][y];
+
 		char buffer[50];
 		sprintf_s(buffer, "%p", temp);
 
@@ -145,8 +270,8 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 		}
 		else {
 			int isValidMove =
-				(((*temp).getBitmaskValue() & TileBitMask::Covered) == TileBitMask::Covered) +
-				(((*temp).getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty);
+				checkBitMaskEquality(temp, TileBitMask::Covered) +
+				checkBitMaskEquality(temp, TileBitMask::Empty);
 
 			if (isValidMove > 1) {
 
@@ -158,6 +283,81 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 	}
 }
 
+void GameManager::processValidMoveResult(Tile* current, const int& result, std::unordered_map<std::string, Tile*>& edgeMap, const bool& isHandlingEdges)
+{
+	if (result > 0) {
+
+		(*current).addBitMaskValue(TileBitMask::Numbered | TileBitMask::Uncovered);
+		(*current).removeBitMaskValue(TileBitMask::Empty | TileBitMask::Covered);
+		(*current).setValue(result);
+
+		if (isHandlingEdges && edgeMap.empty()) {
+			return;
+		}
+	}
+	else {
+
+		(*current).removeBitMaskValue(TileBitMask::Covered);
+		(*current).addBitMaskValue(TileBitMask::Uncovered);
+
+		if (isHandlingEdges) {
+
+			char buffer[50];
+			sprintf_s(buffer, "%p", current);
+			edgeMap.insert(std::make_pair(buffer, current));
+		}
+	}
+}
+
+void GameManager::updateProcessedTileGraphic(Tile* current, std::string key)
+{
+	(*current).setGraphics(Rendering::getTextureFromKey(key));
+}
+
+void GameManager::processAllTiles(Tile** map, Tile* clicked)
+{
+	std::unordered_map<std::string, Tile*> memoizationMap;
+	std::queue<Tile*> neighbors;
+	std::unordered_map<std::string, Tile*> placeholder;	// unecessary space allocation
+
+	neighbors.push(&(*clicked));
+
+	char buffer[50];
+	sprintf_s(buffer, "%p", clicked);
+
+	memoizationMap.insert(std::make_pair(buffer, &(*clicked)));
+
+	while (!neighbors.empty()) {
+
+		clicked = neighbors.front();
+		int x = (*clicked).getX();
+		int y = (*clicked).getY();
+
+		int value = checkAllNeighborsWithoutConstraint(map, clicked, neighbors, memoizationMap);
+		processValidMoveResult(clicked, value, placeholder, false);
+
+		updateProcessedTileGraphic(clicked, "Uncovered");
+		neighbors.pop();
+	}
+	memoizationMap.clear();
+}
+
+int GameManager::checkAllNeighborsWithoutConstraint(Tile** map, Tile* current, std::queue<Tile*>& neighbors, std::unordered_map<std::string, Tile*>& memoizationMap)
+{
+	int x = (*current).getX();
+	int y = (*current).getY();
+
+	return
+		checkNeighborWithoutConstraint(map, x + 1, y, neighbors, memoizationMap) +
+		checkNeighborWithoutConstraint(map, x - 1, y, neighbors, memoizationMap) +
+		checkNeighborWithoutConstraint(map, x, y + 1, neighbors, memoizationMap) +
+		checkNeighborWithoutConstraint(map, x, y - 1, neighbors, memoizationMap) +
+		checkNeighborWithoutConstraint(map, x + 1, y + 1, neighbors, memoizationMap) +
+		checkNeighborWithoutConstraint(map, x - 1, y + 1, neighbors, memoizationMap) +
+		checkNeighborWithoutConstraint(map, x + 1, y - 1, neighbors, memoizationMap) +
+		checkNeighborWithoutConstraint(map, x - 1, y - 1, neighbors, memoizationMap);
+}
+
 int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
 {
 	if (x < 0 || x >= (*m_Difficulty).m_Height || y < 0 || y >= (*m_Difficulty).m_Width) {
@@ -165,6 +365,7 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 	}
 	else {
 		Tile* temp = &map[x][y];
+
 		char buffer[50];
 		sprintf_s(buffer, "%p", temp);
 
@@ -177,7 +378,7 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 			(*temp).removeBitMaskValue(TileBitMask::Covered);
 			(*temp).addBitMaskValue(TileBitMask::Uncovered);
 
-			(*temp).setGraphics(Rendering::getTextureFromKey("Uncovered"));
+			updateProcessedTileGraphic(temp, "Uncovered");
 			return 1;
 		}
 		else {
@@ -185,7 +386,6 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 
 				(*temp).removeBitMaskValue(TileBitMask::Flag);
 			}
-
 			memoizationMap.insert(std::make_pair(buffer, &(*temp)));
 			queue.push(&(*temp));
 			return 0;
@@ -193,172 +393,14 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 	}
 }
 
-void GameManager::showMap(Tile** map, Tile* tile)
+int GameManager::onExecute()
 {
-	std::unordered_map<std::string, Tile*> memoizationMap;
-	std::queue<Tile*> neighbors;
-
-	neighbors.push(&(*tile));
-
-	char buffer[50];
-	sprintf_s(buffer, "%p", tile);
-
-	memoizationMap.insert(std::make_pair(buffer, &(*tile)));
-
-	while (!neighbors.empty()) {
-
-		tile = neighbors.front();
-		int x = (*tile).getX();
-		int y = (*tile).getY();
-
-		int value =
-			checkNeighborWithoutConstraint(map, x + 1, y, neighbors, memoizationMap) +
-			checkNeighborWithoutConstraint(map, x - 1, y, neighbors, memoizationMap) +
-			checkNeighborWithoutConstraint(map, x, y + 1, neighbors, memoizationMap) +
-			checkNeighborWithoutConstraint(map, x, y - 1, neighbors, memoizationMap) +
-			checkNeighborWithoutConstraint(map, x + 1, y + 1, neighbors, memoizationMap) +
-			checkNeighborWithoutConstraint(map, x - 1, y + 1, neighbors, memoizationMap) +
-			checkNeighborWithoutConstraint(map, x + 1, y - 1, neighbors, memoizationMap) +
-			checkNeighborWithoutConstraint(map, x - 1, y - 1, neighbors, memoizationMap);
-
-		if (value > 0) {
-			(*tile).addBitMaskValue(TileBitMask::Numbered | TileBitMask::Uncovered);
-			(*tile).removeBitMaskValue(TileBitMask::Empty | TileBitMask::Covered);
-			(*tile).setValue(value);
-		}
-		else {
-			(*tile).removeBitMaskValue(TileBitMask::Covered);
-			(*tile).addBitMaskValue(TileBitMask::Uncovered);
-		}
-
-		(*tile).setGraphics(Rendering::getTextureFromKey("Uncovered"));
-		neighbors.pop();
+	initializeGame();
+	while (m_IsRunning) {
+		getInputEvents();
+		runGameLogic();
+		renderFrame();
 	}
-
-	memoizationMap.clear();
-}
-
-void GameManager::resetFirstMove()
-{
-	TileMapGenerator::updateBombOnFirstMove(Rendering::getTextureFromKey("Covered"), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
-}
-
-void GameManager::doFlagCheck(Tile* tile)
-{
-	if (checkBitMaskEquality(tile, TileBitMask::Uncovered)) {
-		return;
-	}
-	else {
-		bool hasFlagMask = checkBitMaskEquality(tile, TileBitMask::Flag);
-
-		if (!canPlaceFlag()) {
-
-			if (hasFlagMask) {
-
-				(*tile).removeBitMaskValue(TileBitMask::Flag);
-				(*tile).addBitMaskValue(TileBitMask::Empty);
-				m_FlagsLeft += 1;
-			}
-		}
-		else {
-			if (hasFlagMask) {
-				(*tile).removeBitMaskValue(TileBitMask::Flag);
-				(*tile).addBitMaskValue(TileBitMask::Empty);
-				m_FlagsLeft += 1;
-			}
-			else {
-				(*tile).removeBitMaskValue(TileBitMask::Empty);
-				(*tile).addBitMaskValue(TileBitMask::Flag);
-				m_FlagsLeft -= 1;
-			}
-		}
-	}
-}
-
-void GameManager::uncoverTile(Tile** map, Tile* tile)
-{
-	int moveResult = isValidMove(tile);
-
-	if (moveResult > 0) {
-		if (moveResult == 1 && checkBitMaskEquality(tile, TileBitMask::Bomb | TileBitMask::Covered)) {
-
-			if (m_IsFirstMove) {
-				resetFirstMove();
-				(*tile).removeBitMaskValue(TileBitMask::Bomb);
-				uncoverTile(map, tile);
-				return;
-			}
-
-			showMap(map, tile);
-			(*tile).setGraphics(Rendering::getTextureFromKey("Hit"));
-		}
-		return;
-	}
-	else {
-
-		if (m_IsFirstMove) {
-			m_IsFirstMove = false;
-		}
-
-		std::unordered_map<std::string, Tile*> memoizationMap;
-		std::unordered_map<std::string, Tile*> edgeLookup;
-		std::queue<Tile*> neighbors;
-
-		neighbors.push(&(*tile));
-
-		char buffer[50];
-		sprintf_s(buffer, "%p", tile);
-
-		memoizationMap.insert(std::make_pair(buffer, &(*tile)));
-
-		while (!neighbors.empty()) {
-
-			tile = neighbors.front();
-			int x = (*tile).getX();
-			int y = (*tile).getY();
-
-			if (!isInsideBounds(map, x, y, edgeLookup)) {
-				neighbors.pop();
-				continue;
-			}
-
-			int value =
-				checkNeighbor(map, x + 1, y, neighbors, memoizationMap) +
-				checkNeighbor(map, x - 1, y, neighbors, memoizationMap) +
-				checkNeighbor(map, x, y + 1, neighbors, memoizationMap) +
-				checkNeighbor(map, x, y - 1, neighbors, memoizationMap) +
-				checkNeighbor(map, x + 1, y + 1, neighbors, memoizationMap) +
-				checkNeighbor(map, x - 1, y + 1, neighbors, memoizationMap) +
-				checkNeighbor(map, x + 1, y - 1, neighbors, memoizationMap) +
-				checkNeighbor(map, x - 1, y - 1, neighbors, memoizationMap);
-
-			if (value > 0) {
-				(*tile).addBitMaskValue(TileBitMask::Numbered | TileBitMask::Uncovered);
-				(*tile).removeBitMaskValue(TileBitMask::Empty | TileBitMask::Covered);
-				(*tile).setValue(value);
-
-				if (edgeLookup.empty()) {
-					(*tile).setGraphics(Rendering::getTextureFromKey("Uncovered"));
-					break;
-				}
-			}
-			else {
-				(*tile).removeBitMaskValue(TileBitMask::Covered);
-				(*tile).addBitMaskValue(TileBitMask::Uncovered);
-
-				sprintf_s(buffer, "%p", tile);
-				edgeLookup.insert(std::make_pair(buffer, tile));
-			}
-
-			(*tile).setGraphics(Rendering::getTextureFromKey("Uncovered"));
-			neighbors.pop();
-		}
-
-		memoizationMap.clear();
-	}
-}
-
-void GameManager::setIsRunning(const bool& value)
-{
-	m_IsRunning = value;
+	clear();
+	return 0;
 }

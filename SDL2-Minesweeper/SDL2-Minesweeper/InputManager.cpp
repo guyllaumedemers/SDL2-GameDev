@@ -13,14 +13,14 @@ void InputManager::getInputEvent(SDL_Event& myEvent, Tile** map)
 			int y = 0;
 
 			SDL_GetMouseState(&x, &y);
-			GameManager::uncoverTile(map, &map[(y / Tile::height)][x / Tile::width]);
+			GameManager::updateTileAtPositionClicked(map, GameManager::getTileAtPositionClicked(map, x, y));
 		}
 		else if (myEvent.button.button == SDL_BUTTON_RIGHT) {
 			int x = 0;
 			int y = 0;
 
 			SDL_GetMouseState(&x, &y);
-			GameManager::doFlagCheck(&map[(y / Tile::height)][x / Tile::width]);
+			GameManager::updateFlagAtPositionClicked(GameManager::getTileAtPositionClicked(map, x, y));
 		}
 		break;
 	}
