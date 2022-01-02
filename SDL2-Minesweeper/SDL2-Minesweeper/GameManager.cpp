@@ -117,26 +117,26 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 		return 0;
 	}
 	else {
-		std::unique_ptr<Tile*> temp = std::make_unique<Tile*>(&map[x][y]);
+		Tile* temp = &map[x][y];
 		char buffer[50];
-		sprintf_s(buffer, "%p", *temp);
+		sprintf_s(buffer, "%p", temp);
 
 		if (memoizationMap.find(buffer) != memoizationMap.end()) {
 			return 0;
 		}
 
-		if (((**temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+		if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
 			return 1;
 		}
 		else {
 			int isValidMove =
-				(((**temp).getBitmaskValue() & TileBitMask::Covered) == TileBitMask::Covered) +
-				(((**temp).getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty);
+				(((*temp).getBitmaskValue() & TileBitMask::Covered) == TileBitMask::Covered) +
+				(((*temp).getBitmaskValue() & TileBitMask::Empty) == TileBitMask::Empty);
 
 			if (isValidMove > 1) {
 
-				memoizationMap.insert(std::make_pair(buffer, &(**temp)));
-				queue.push(&(**temp));
+				memoizationMap.insert(std::make_pair(buffer, &(*temp)));
+				queue.push(&(*temp));
 			}
 			return 0;
 		}
