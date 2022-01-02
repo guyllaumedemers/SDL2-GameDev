@@ -4,6 +4,8 @@ bool GameManager::m_IsRunning = true;
 
 int GameManager::m_FlagsLeft = -1;
 
+bool GameManager::m_IsFirstMove = true;
+
 Difficulty* GameManager::m_Difficulty = nullptr;
 
 void GameManager::initializeGame()
@@ -14,7 +16,7 @@ void GameManager::initializeGame()
 		exit(EXIT_FAILURE);
 	}
 
-	setDifficulty(Mode::medium);
+	setDifficulty(Mode::hard);
 
 	if (m_Difficulty == nullptr) {
 		SDL_Log("Difficulty was not initialize : %s", SDL_GetError());
@@ -23,7 +25,7 @@ void GameManager::initializeGame()
 
 	m_FlagsLeft = (*m_Difficulty).m_Flags;
 
-	Rendering::initialize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::width);
+	Rendering::initialize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::height);
 
 	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));
 	TileMapGenerator::createEmptyMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
@@ -143,6 +145,84 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 	}
 }
 
+int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap)
+{
+	if (x < 0 || x >= (*m_Difficulty).m_Height || y < 0 || y >= (*m_Difficulty).m_Width) {
+		return 0;
+	}
+	else {
+		Tile* temp = &map[x][y];
+		char buffer[50];
+		sprintf_s(buffer, "%p", temp);
+
+		if (memoizationMap.find(buffer) != memoizationMap.end()) {
+			return 0;
+		}
+
+		if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+
+			(*temp).setGraphics(Rendering::getTextureFromKey("Uncovered"));
+			(*temp).setBitmaskValue(TileBitMask::Uncovered, false);
+			(*temp).setBitmaskValue(TileBitMask::Covered, true);
+			return 1;
+		}
+		else {
+			if (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
+				(*temp).setBitmaskValue(TileBitMask::Flag, true);
+			}
+
+			memoizationMap.insert(std::make_pair(buffer, &(*temp)));
+			queue.push(&(*temp));
+			return 0;
+		}
+	}
+}
+
+void GameManager::showMap(Tile** map, Tile* current)
+{
+	std::unordered_map<std::string, Tile*> memoizationMap;
+	std::queue<Tile*> neighbors;
+
+	neighbors.push(&(*current));
+
+	char buffer[50];
+	sprintf_s(buffer, "%p", current);
+
+	memoizationMap.insert(std::make_pair(buffer, &(*current)));
+
+	while (!neighbors.empty()) {
+
+		current = neighbors.front();
+		int x = (*current).getX();
+		int y = (*current).getY();
+
+		int value =
+			checkNeighborWithoutConstraint(map, x + 1, y, neighbors, memoizationMap) +
+			checkNeighborWithoutConstraint(map, x - 1, y, neighbors, memoizationMap) +
+			checkNeighborWithoutConstraint(map, x, y + 1, neighbors, memoizationMap) +
+			checkNeighborWithoutConstraint(map, x, y - 1, neighbors, memoizationMap) +
+			checkNeighborWithoutConstraint(map, x + 1, y + 1, neighbors, memoizationMap) +
+			checkNeighborWithoutConstraint(map, x - 1, y + 1, neighbors, memoizationMap) +
+			checkNeighborWithoutConstraint(map, x + 1, y - 1, neighbors, memoizationMap) +
+			checkNeighborWithoutConstraint(map, x - 1, y - 1, neighbors, memoizationMap);
+
+		if (value > 0) {
+			(*current).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
+			(*current).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
+			(*current).setValue(value);
+		}
+		else {
+			(*current).setBitmaskValue(TileBitMask::Uncovered, false);
+			(*current).setBitmaskValue(TileBitMask::Covered, true);
+		}
+
+		(*current).setGraphics(Rendering::getTextureFromKey("Uncovered"));
+		neighbors.pop();
+	}
+
+	memoizationMap.clear();
+}
+
 void GameManager::removeOrAddFlagFromCount(const bool& value)
 {
 	if (value) {
@@ -188,15 +268,31 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 
 	if (isValidMove > 0) {
 		if (isValidMove == 1 && ((*current).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
-			// you lost
-			//
+
+			if (m_IsFirstMove) {
+				TileMapGenerator::setBuilder(DBG_NEW BombTileBuilder(Rendering::getTextureFromKey("Covered")));
+				TileMapGenerator::createBombMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
+				TileMapGenerator::destroyBuilder();
+
+				(*current).setBitmaskValue(TileBitMask::Bomb, true);
+
+				m_IsFirstMove = false;
+
+				uncoverTile(map, current);
+				return;
+			}
+
 			(*current).setBitmaskValue(TileBitMask::Uncovered, false);
 			(*current).setBitmaskValue(TileBitMask::Covered, true);
+
+			showMap(map, current);
+
 			(*current).setGraphics(Rendering::getTextureFromKey("Hit"));
 		}
 		return;
 	}
 	else {
+		m_IsFirstMove = false;
 
 		std::unordered_map<std::string, Tile*> memoizationMap;
 		std::unordered_map<std::string, Tile*> edgeLookup;

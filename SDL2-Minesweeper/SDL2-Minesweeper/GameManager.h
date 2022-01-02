@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include <ctime>
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -20,6 +19,8 @@ private:
 
 	static int m_FlagsLeft;
 
+	static bool m_IsFirstMove;
+
 	static Difficulty* m_Difficulty;
 
 	static void initializeGame();
@@ -37,6 +38,10 @@ private:
 	static bool isInsideBounds(Tile** map, const int& x, const int& y, std::unordered_map<std::string, Tile*>& edgeMap);
 
 	static int checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
+
+	static int checkNeighborWithoutConstraint(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
+
+	static void showMap(Tile** map, Tile* current);
 
 public:
 
