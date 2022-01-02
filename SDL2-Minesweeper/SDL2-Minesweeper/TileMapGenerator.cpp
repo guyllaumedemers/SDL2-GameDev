@@ -42,6 +42,13 @@ Tile** TileMapGenerator::createBombMap(const int& x, const int& y, int nbBombs)
 	return m_Map;
 }
 
+void TileMapGenerator::updateBombOnFirstMove(SDL_Texture* texture, const int& x, const int& y, int nbBombs)
+{
+	setBuilder(DBG_NEW BombTileBuilder(texture));
+	createBombMap(x, y, nbBombs);
+	destroyBuilder();
+}
+
 void TileMapGenerator::clear(const int& row)
 {
 	for (int i = 0; i < row; ++i) {

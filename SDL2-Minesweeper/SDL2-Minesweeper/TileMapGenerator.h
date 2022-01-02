@@ -21,6 +21,8 @@ public:
 
 	static Tile** createBombMap(const int& x, const int& y, int nbBombs);
 
+	static void updateBombOnFirstMove(SDL_Texture* texture, const int& x, const int& y, int nbBombs);
+
 	static void clear(const int& row);
 
 	static Tile** getMap();

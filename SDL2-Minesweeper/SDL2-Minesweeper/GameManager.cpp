@@ -16,7 +16,7 @@ void GameManager::initializeGame()
 		exit(EXIT_FAILURE);
 	}
 
-	setDifficulty(Mode::hard);
+	setDifficulty(Mode::medium);
 
 	if (m_Difficulty == nullptr) {
 		SDL_Log("Difficulty was not initialize : %s", SDL_GetError());
@@ -270,13 +270,9 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 		if (isValidMove == 1 && ((*current).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
 
 			if (m_IsFirstMove) {
-				TileMapGenerator::setBuilder(DBG_NEW BombTileBuilder(Rendering::getTextureFromKey("Covered")));
-				TileMapGenerator::createBombMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
-				TileMapGenerator::destroyBuilder();
+				TileMapGenerator::updateBombOnFirstMove(Rendering::getTextureFromKey("Covered"), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
 
 				(*current).setBitmaskValue(TileBitMask::Bomb, true);
-
-				m_IsFirstMove = false;
 
 				uncoverTile(map, current);
 				return;
@@ -292,7 +288,9 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 		return;
 	}
 	else {
-		m_IsFirstMove = false;
+		if (m_IsFirstMove) {
+			m_IsFirstMove = false;
+		}
 
 		std::unordered_map<std::string, Tile*> memoizationMap;
 		std::unordered_map<std::string, Tile*> edgeLookup;
