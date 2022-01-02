@@ -35,13 +35,17 @@ private:
 
 	static bool canPlaceFlag();
 
+	static bool checkBitMaskEquality(Tile* tile, TileBitMask bitmask);
+
+	static bool isValidMove(Tile* tile);
+
 	static bool isInsideBounds(Tile** map, const int& x, const int& y, std::unordered_map<std::string, Tile*>& edgeMap);
 
 	static int checkNeighbor(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
 
 	static int checkNeighborWithoutConstraint(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
 
-	static void showMap(Tile** map, Tile* current);
+	static void showMap(Tile** map, Tile* tile);
 
 public:
 

@@ -85,6 +85,19 @@ bool GameManager::canPlaceFlag()
 	return m_FlagsLeft > 0;
 }
 
+bool GameManager::checkBitMaskEquality(Tile* tile, TileBitMask bitmask)
+{
+	return (((*tile).getBitmaskValue() & bitmask) == bitmask);
+}
+
+bool GameManager::isValidMove(Tile* tile)
+{
+	return
+		(((*tile).getBitmaskValue() & TileBitMask::Uncovered) == TileBitMask::Uncovered) +
+		(((*tile).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) +
+		(((*tile).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb);;
+}
+
 bool GameManager::isInsideBounds(Tile** map, const int& x, const int& y, std::unordered_map<std::string, Tile*>& edgeMap)
 {
 	if (edgeMap.empty()) {
@@ -127,7 +140,7 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 			return 0;
 		}
 
-		if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+		if (checkBitMaskEquality(temp, TileBitMask::Bomb)) {
 			return 1;
 		}
 		else {
@@ -159,7 +172,7 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 			return 0;
 		}
 
-		if (((*temp).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+		if (checkBitMaskEquality(temp, TileBitMask::Bomb)) {
 
 			(*temp).setGraphics(Rendering::getTextureFromKey("Uncovered"));
 			(*temp).setBitmaskValue(TileBitMask::Uncovered, false);
@@ -167,7 +180,8 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 			return 1;
 		}
 		else {
-			if (((*temp).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
+			if (checkBitMaskEquality(temp, TileBitMask::Flag)) {
+
 				(*temp).setBitmaskValue(TileBitMask::Flag, true);
 			}
 
@@ -178,23 +192,23 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 	}
 }
 
-void GameManager::showMap(Tile** map, Tile* current)
+void GameManager::showMap(Tile** map, Tile* tile)
 {
 	std::unordered_map<std::string, Tile*> memoizationMap;
 	std::queue<Tile*> neighbors;
 
-	neighbors.push(&(*current));
+	neighbors.push(&(*tile));
 
 	char buffer[50];
-	sprintf_s(buffer, "%p", current);
+	sprintf_s(buffer, "%p", tile);
 
-	memoizationMap.insert(std::make_pair(buffer, &(*current)));
+	memoizationMap.insert(std::make_pair(buffer, &(*tile)));
 
 	while (!neighbors.empty()) {
 
-		current = neighbors.front();
-		int x = (*current).getX();
-		int y = (*current).getY();
+		tile = neighbors.front();
+		int x = (*tile).getX();
+		int y = (*tile).getY();
 
 		int value =
 			checkNeighborWithoutConstraint(map, x + 1, y, neighbors, memoizationMap) +
@@ -207,16 +221,16 @@ void GameManager::showMap(Tile** map, Tile* current)
 			checkNeighborWithoutConstraint(map, x - 1, y - 1, neighbors, memoizationMap);
 
 		if (value > 0) {
-			(*current).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
-			(*current).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
-			(*current).setValue(value);
+			(*tile).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
+			(*tile).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
+			(*tile).setValue(value);
 		}
 		else {
-			(*current).setBitmaskValue(TileBitMask::Uncovered, false);
-			(*current).setBitmaskValue(TileBitMask::Covered, true);
+			(*tile).setBitmaskValue(TileBitMask::Uncovered, false);
+			(*tile).setBitmaskValue(TileBitMask::Covered, true);
 		}
 
-		(*current).setGraphics(Rendering::getTextureFromKey("Uncovered"));
+		(*tile).setGraphics(Rendering::getTextureFromKey("Uncovered"));
 		neighbors.pop();
 	}
 
@@ -233,61 +247,53 @@ void GameManager::removeOrAddFlagFromCount(const bool& value)
 	}
 }
 
-void GameManager::doFlagCheck(Tile* current)
+void GameManager::doFlagCheck(Tile* tile)
 {
-	if (((*current).getBitmaskValue() & TileBitMask::Uncovered) == TileBitMask::Uncovered) {
+	if (((*tile).getBitmaskValue() & TileBitMask::Uncovered) == TileBitMask::Uncovered) {
 		return;
 	}
 	else {
-		bool hasFlagMask = (((*current).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag);
+		bool hasFlagMask = checkBitMaskEquality(tile, TileBitMask::Flag);
 
 		if (!canPlaceFlag()) {
 
 			if (hasFlagMask) {
 
-				(*current).setBitmaskValue(TileBitMask::Empty, false);
-				(*current).setBitmaskValue(TileBitMask::Flag, true);
+				(*tile).setBitmaskValue(TileBitMask::Empty, false);
+				(*tile).setBitmaskValue(TileBitMask::Flag, true);
 				removeOrAddFlagFromCount(false);
 			}
 		}
 		else {
 
-			(*current).setBitmaskValue(TileBitMask::Empty, !hasFlagMask);
-			(*current).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
+			(*tile).setBitmaskValue(TileBitMask::Empty, !hasFlagMask);
+			(*tile).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
 			removeOrAddFlagFromCount(!hasFlagMask);
 		}
 	}
 }
 
-void GameManager::uncoverTile(Tile** map, Tile* current)
+void GameManager::uncoverTile(Tile** map, Tile* tile)
 {
-	int isValidMove =
-		(((*current).getBitmaskValue() & TileBitMask::Uncovered) == TileBitMask::Uncovered) +
-		(((*current).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) +
-		(((*current).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb);
+	int moveResult = isValidMove(tile);
 
-	if (isValidMove > 0) {
-		if (isValidMove == 1 && ((*current).getBitmaskValue() & TileBitMask::Bomb) == TileBitMask::Bomb) {
+	if (moveResult > 0) {
+		if (moveResult == 1 && checkBitMaskEquality(tile, TileBitMask::Bomb | TileBitMask::Covered)) {
 
 			if (m_IsFirstMove) {
 				TileMapGenerator::updateBombOnFirstMove(Rendering::getTextureFromKey("Covered"), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
-
-				(*current).setBitmaskValue(TileBitMask::Bomb, true);
-
-				uncoverTile(map, current);
+				(*tile).setBitmaskValue(TileBitMask::Bomb, true);
+				uncoverTile(map, tile);
 				return;
 			}
 
-			(*current).setBitmaskValue(TileBitMask::Uncovered, false);
-			(*current).setBitmaskValue(TileBitMask::Covered, true);
-
-			showMap(map, current);
-
-			(*current).setGraphics(Rendering::getTextureFromKey("Hit"));
+			showMap(map, tile);
+			(*tile).setGraphics(Rendering::getTextureFromKey("Hit"));
 		}
 		return;
 	}
 	else {
+
 		if (m_IsFirstMove) {
 			m_IsFirstMove = false;
 		}
@@ -296,18 +302,18 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 		std::unordered_map<std::string, Tile*> edgeLookup;
 		std::queue<Tile*> neighbors;
 
-		neighbors.push(&(*current));
+		neighbors.push(&(*tile));
 
 		char buffer[50];
-		sprintf_s(buffer, "%p", current);
+		sprintf_s(buffer, "%p", tile);
 
-		memoizationMap.insert(std::make_pair(buffer, &(*current)));
+		memoizationMap.insert(std::make_pair(buffer, &(*tile)));
 
 		while (!neighbors.empty()) {
 
-			current = neighbors.front();
-			int x = (*current).getX();
-			int y = (*current).getY();
+			tile = neighbors.front();
+			int x = (*tile).getX();
+			int y = (*tile).getY();
 
 			if (!isInsideBounds(map, x, y, edgeLookup)) {
 				neighbors.pop();
@@ -325,24 +331,24 @@ void GameManager::uncoverTile(Tile** map, Tile* current)
 				checkNeighbor(map, x - 1, y - 1, neighbors, memoizationMap);
 
 			if (value > 0) {
-				(*current).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
-				(*current).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
-				(*current).setValue(value);
+				(*tile).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
+				(*tile).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
+				(*tile).setValue(value);
 
 				if (edgeLookup.empty()) {
-					(*current).setGraphics(Rendering::getTextureFromKey("Uncovered"));
+					(*tile).setGraphics(Rendering::getTextureFromKey("Uncovered"));
 					break;
 				}
 			}
 			else {
-				(*current).setBitmaskValue(TileBitMask::Uncovered, false);
-				(*current).setBitmaskValue(TileBitMask::Covered, true);
+				(*tile).setBitmaskValue(TileBitMask::Uncovered, false);
+				(*tile).setBitmaskValue(TileBitMask::Covered, true);
 
-				sprintf_s(buffer, "%p", current);
-				edgeLookup.insert(std::make_pair(buffer, current));
+				sprintf_s(buffer, "%p", tile);
+				edgeLookup.insert(std::make_pair(buffer, tile));
 			}
 
-			(*current).setGraphics(Rendering::getTextureFromKey("Uncovered"));
+			(*tile).setGraphics(Rendering::getTextureFromKey("Uncovered"));
 			neighbors.pop();
 		}
 
