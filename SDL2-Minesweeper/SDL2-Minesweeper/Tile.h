@@ -30,7 +30,9 @@ public:
 
 	~Tile();
 
-	void setBitmaskValue(TileBitMask value, bool isRemoving);
+	void addBitMaskValue(TileBitMask value);
+
+	void removeBitMaskValue(TileBitMask value);
 
 	TileBitMask getBitmaskValue();
 

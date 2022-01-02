@@ -174,15 +174,16 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 
 		if (checkBitMaskEquality(temp, TileBitMask::Bomb)) {
 
+			(*temp).removeBitMaskValue(TileBitMask::Covered);
+			(*temp).addBitMaskValue(TileBitMask::Uncovered);
+
 			(*temp).setGraphics(Rendering::getTextureFromKey("Uncovered"));
-			(*temp).setBitmaskValue(TileBitMask::Uncovered, false);
-			(*temp).setBitmaskValue(TileBitMask::Covered, true);
 			return 1;
 		}
 		else {
 			if (checkBitMaskEquality(temp, TileBitMask::Flag)) {
 
-				(*temp).setBitmaskValue(TileBitMask::Flag, true);
+				(*temp).removeBitMaskValue(TileBitMask::Flag);
 			}
 
 			memoizationMap.insert(std::make_pair(buffer, &(*temp)));
@@ -221,13 +222,13 @@ void GameManager::showMap(Tile** map, Tile* tile)
 			checkNeighborWithoutConstraint(map, x - 1, y - 1, neighbors, memoizationMap);
 
 		if (value > 0) {
-			(*tile).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
-			(*tile).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
+			(*tile).addBitMaskValue(TileBitMask::Numbered | TileBitMask::Uncovered);
+			(*tile).removeBitMaskValue(TileBitMask::Empty | TileBitMask::Covered);
 			(*tile).setValue(value);
 		}
 		else {
-			(*tile).setBitmaskValue(TileBitMask::Uncovered, false);
-			(*tile).setBitmaskValue(TileBitMask::Covered, true);
+			(*tile).removeBitMaskValue(TileBitMask::Covered);
+			(*tile).addBitMaskValue(TileBitMask::Uncovered);
 		}
 
 		(*tile).setGraphics(Rendering::getTextureFromKey("Uncovered"));
@@ -237,19 +238,14 @@ void GameManager::showMap(Tile** map, Tile* tile)
 	memoizationMap.clear();
 }
 
-void GameManager::removeOrAddFlagFromCount(const bool& value)
+void GameManager::resetFirstMove()
 {
-	if (value) {
-		m_FlagsLeft -= 1;
-	}
-	else {
-		m_FlagsLeft += 1;
-	}
+	TileMapGenerator::updateBombOnFirstMove(Rendering::getTextureFromKey("Covered"), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
 }
 
 void GameManager::doFlagCheck(Tile* tile)
 {
-	if (((*tile).getBitmaskValue() & TileBitMask::Uncovered) == TileBitMask::Uncovered) {
+	if (checkBitMaskEquality(tile, TileBitMask::Uncovered)) {
 		return;
 	}
 	else {
@@ -259,16 +255,22 @@ void GameManager::doFlagCheck(Tile* tile)
 
 			if (hasFlagMask) {
 
-				(*tile).setBitmaskValue(TileBitMask::Empty, false);
-				(*tile).setBitmaskValue(TileBitMask::Flag, true);
-				removeOrAddFlagFromCount(false);
+				(*tile).removeBitMaskValue(TileBitMask::Flag);
+				(*tile).addBitMaskValue(TileBitMask::Empty);
+				m_FlagsLeft += 1;
 			}
 		}
 		else {
-
-			(*tile).setBitmaskValue(TileBitMask::Empty, !hasFlagMask);
-			(*tile).setBitmaskValue(TileBitMask::Flag, hasFlagMask);
-			removeOrAddFlagFromCount(!hasFlagMask);
+			if (hasFlagMask) {
+				(*tile).removeBitMaskValue(TileBitMask::Flag);
+				(*tile).addBitMaskValue(TileBitMask::Empty);
+				m_FlagsLeft += 1;
+			}
+			else {
+				(*tile).removeBitMaskValue(TileBitMask::Empty);
+				(*tile).addBitMaskValue(TileBitMask::Flag);
+				m_FlagsLeft -= 1;
+			}
 		}
 	}
 }
@@ -281,8 +283,8 @@ void GameManager::uncoverTile(Tile** map, Tile* tile)
 		if (moveResult == 1 && checkBitMaskEquality(tile, TileBitMask::Bomb | TileBitMask::Covered)) {
 
 			if (m_IsFirstMove) {
-				TileMapGenerator::updateBombOnFirstMove(Rendering::getTextureFromKey("Covered"), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
-				(*tile).setBitmaskValue(TileBitMask::Bomb, true);
+				resetFirstMove();
+				(*tile).removeBitMaskValue(TileBitMask::Bomb);
 				uncoverTile(map, tile);
 				return;
 			}
@@ -331,8 +333,8 @@ void GameManager::uncoverTile(Tile** map, Tile* tile)
 				checkNeighbor(map, x - 1, y - 1, neighbors, memoizationMap);
 
 			if (value > 0) {
-				(*tile).setBitmaskValue(TileBitMask::Numbered | TileBitMask::Uncovered, false);
-				(*tile).setBitmaskValue(TileBitMask::Empty | TileBitMask::Covered, true);
+				(*tile).addBitMaskValue(TileBitMask::Numbered | TileBitMask::Uncovered);
+				(*tile).removeBitMaskValue(TileBitMask::Empty | TileBitMask::Covered);
 				(*tile).setValue(value);
 
 				if (edgeLookup.empty()) {
@@ -341,8 +343,8 @@ void GameManager::uncoverTile(Tile** map, Tile* tile)
 				}
 			}
 			else {
-				(*tile).setBitmaskValue(TileBitMask::Uncovered, false);
-				(*tile).setBitmaskValue(TileBitMask::Covered, true);
+				(*tile).removeBitMaskValue(TileBitMask::Covered);
+				(*tile).addBitMaskValue(TileBitMask::Uncovered);
 
 				sprintf_s(buffer, "%p", tile);
 				edgeLookup.insert(std::make_pair(buffer, tile));

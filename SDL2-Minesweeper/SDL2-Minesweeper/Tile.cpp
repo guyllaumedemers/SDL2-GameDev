@@ -27,14 +27,14 @@ Tile::~Tile()
 	m_Texture = nullptr;
 }
 
-void Tile::setBitmaskValue(TileBitMask value, bool isRemoving)
+void Tile::addBitMaskValue(TileBitMask value)
 {
-	if (isRemoving) {
-		m_Bitmask &= ~value;
-	}
-	else {
-		m_Bitmask |= value;
-	}
+	m_Bitmask |= value;
+}
+
+void Tile::removeBitMaskValue(TileBitMask value)
+{
+	m_Bitmask &= ~value;
 }
 
 TileBitMask Tile::getBitmaskValue()

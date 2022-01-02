@@ -47,6 +47,8 @@ private:
 
 	static void showMap(Tile** map, Tile* tile);
 
+	static void resetFirstMove();
+
 public:
 
 	static void setIsRunning(const bool& value);
@@ -54,8 +56,6 @@ public:
 	static void setDifficulty(Mode mode);
 
 	static void doFlagCheck(Tile* tile);
-
-	static void removeOrAddFlagFromCount(const bool& value);
 
 	static void uncoverTile(Tile** map, Tile* currentTile);
 
