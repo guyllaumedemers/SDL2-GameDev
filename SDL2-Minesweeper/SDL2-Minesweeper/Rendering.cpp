@@ -12,8 +12,8 @@ void Rendering::initializeWindow(const int& width, const int& height)
 		"Minesweeper",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		width,
-		height,
+		width * Tile::width,
+		height * Tile::height,
 		0
 	);
 
@@ -59,7 +59,7 @@ void Rendering::initializeIMG()
 
 void Rendering::setWindowSize(const int& x, const int& y)
 {
-	SDL_SetWindowSize(m_Window, Tile::width * x, Tile::height * y);
+	SDL_SetWindowSize(m_Window, x * Tile::width, y * Tile::height);
 }
 
 void Rendering::initialize(const int& width, const int& height)

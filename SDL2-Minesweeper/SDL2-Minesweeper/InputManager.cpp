@@ -24,7 +24,22 @@ void InputManager::getInputEvent(SDL_Event& myEvent, Tile** map)
 		}
 		break;
 	case SDL_KEYDOWN:
-		std::cout << "called" << std::endl;
+		switch (myEvent.key.keysym.scancode)
+		{
+		case SDL_SCANCODE_F1:
+			GameManager::startNewSession(Mode::beginner);
+			break;
+		case SDL_SCANCODE_F2:
+			GameManager::startNewSession(Mode::medium);
+			break;
+		case SDL_SCANCODE_F3:
+			GameManager::startNewSession(Mode::hard);
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
 		break;
 	}
 }

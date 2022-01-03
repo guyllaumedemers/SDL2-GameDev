@@ -117,21 +117,27 @@ void GameManager::startNewSession(const Mode& mode)
 		SDL_Log("Difficulty was not initialize : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
-	m_FlagsLeft = (*m_Difficulty).m_Flags;
+
+	int height = (*m_Difficulty).m_Height;
+	int width = (*m_Difficulty).m_Width;
+	int bombs = (*m_Difficulty).m_Bombs;
+	int flags = (*m_Difficulty).m_Flags;
+
+	m_FlagsLeft = flags;
 
 	if (m_IsFirstInitialize) {
-		Rendering::initialize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::height);
+		Rendering::initialize(width, height);
 		m_IsFirstInitialize = false;
 	}
 	else {
-		Rendering::setWindowSize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::height);
+		Rendering::setWindowSize(width, height);
 	}
 
 	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));
-	TileMapGenerator::createEmptyMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
+	TileMapGenerator::createEmptyMap(height, width);
 
 	TileMapGenerator::setBuilder(DBG_NEW BombTileBuilder(Rendering::getTextureFromKey("Covered")));
-	TileMapGenerator::createBombMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
+	TileMapGenerator::createBombMap(height, width, bombs);
 
 	TileMapGenerator::destroyBuilder();
 }
