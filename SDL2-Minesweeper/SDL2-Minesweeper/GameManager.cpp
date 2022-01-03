@@ -2,6 +2,8 @@
 
 bool GameManager::m_IsRunning = true;
 
+bool GameManager::m_IsFirstInitialize = true;
+
 int GameManager::m_FlagsLeft = -1;
 
 bool GameManager::m_IsFirstMove = true;
@@ -16,24 +18,7 @@ void GameManager::initializeGame()
 		exit(EXIT_FAILURE);
 	}
 
-	setDifficulty(Mode::medium);
-
-	if (m_Difficulty == nullptr) {
-		SDL_Log("Difficulty was not initialize : %s", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-
-	m_FlagsLeft = (*m_Difficulty).m_Flags;
-
-	Rendering::initialize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::height);
-
-	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));
-	TileMapGenerator::createEmptyMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
-
-	TileMapGenerator::setBuilder(DBG_NEW BombTileBuilder(Rendering::getTextureFromKey("Covered")));
-	TileMapGenerator::createBombMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
-
-	TileMapGenerator::destroyBuilder();
+	startNewSession(Mode::medium);
 }
 
 void GameManager::getInputEvents()
@@ -63,11 +48,6 @@ void GameManager::clear()
 	SDL_Quit();
 }
 
-void GameManager::setDifficulty(Mode mode)
-{
-	m_Difficulty = DBG_NEW Difficulty(mode);
-}
-
 void GameManager::setIsRunning(const bool& value)
 {
 	m_IsRunning = value;
@@ -80,7 +60,7 @@ Tile* GameManager::getTileAtPositionClicked(Tile** map, const int& screenPosX, c
 
 Tile* GameManager::updateTileAtPositionClicked(Tile** map, Tile* clicked)
 {
-	int isInvalid = isValidMove(clicked);
+	int isInvalid = isInvalidMove(clicked);
 
 	if (isInvalid > 0) {
 		processInvalidMove(map, clicked, isInvalid);
@@ -97,11 +77,11 @@ Tile* GameManager::updateTileAtPositionClicked(Tile** map, Tile* clicked)
 
 Tile* GameManager::updateFlagAtPositionClicked(Tile* clicked)
 {
-	if (checkBitMaskEquality(clicked, TileBitMask::Uncovered)) {
+	if (Util::checkBitMaskEquality(clicked, TileBitMask::Uncovered)) {
 		return nullptr;
 	}
 	else {
-		bool hasFlagMask = checkBitMaskEquality(clicked, TileBitMask::Flag);
+		bool hasFlagMask = Util::checkBitMaskEquality(clicked, TileBitMask::Flag);
 		bool canPlaceFlag = m_FlagsLeft > 0;
 
 		if (!canPlaceFlag) {
@@ -129,22 +109,56 @@ Tile* GameManager::updateFlagAtPositionClicked(Tile* clicked)
 	return clicked;
 }
 
-bool GameManager::checkBitMaskEquality(Tile* tile, TileBitMask bitmask)
+void GameManager::startNewSession(const Mode& mode)
 {
-	return (((*tile).getBitmaskValue() & bitmask) == bitmask);
+	clearGame();
+
+	if ((m_Difficulty = new Difficulty(mode)) == nullptr) {
+		SDL_Log("Difficulty was not initialize : %s", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+	m_FlagsLeft = (*m_Difficulty).m_Flags;
+
+	if (m_IsFirstInitialize) {
+		Rendering::initialize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::height);
+		m_IsFirstInitialize = false;
+	}
+	else {
+		Rendering::setWindowSize((*m_Difficulty).m_Width * Tile::width, (*m_Difficulty).m_Height * Tile::height);
+	}
+
+	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));
+	TileMapGenerator::createEmptyMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
+
+	TileMapGenerator::setBuilder(DBG_NEW BombTileBuilder(Rendering::getTextureFromKey("Covered")));
+	TileMapGenerator::createBombMap((*m_Difficulty).m_Height, (*m_Difficulty).m_Width, (*m_Difficulty).m_Bombs);
+
+	TileMapGenerator::destroyBuilder();
 }
 
-bool GameManager::isValidMove(Tile* tile)
+int GameManager::onExecute()
+{
+	initializeGame();
+	while (m_IsRunning) {
+		getInputEvents();
+		runGameLogic();
+		renderFrame();
+	}
+	clear();
+	return 0;
+}
+
+bool GameManager::isInvalidMove(Tile* tile)
 {
 	return
-		checkBitMaskEquality(tile, TileBitMask::Uncovered) +
-		checkBitMaskEquality(tile, TileBitMask::Flag) +
-		checkBitMaskEquality(tile, TileBitMask::Bomb);
+		Util::checkBitMaskEquality(tile, TileBitMask::Uncovered) +
+		Util::checkBitMaskEquality(tile, TileBitMask::Flag) +
+		Util::checkBitMaskEquality(tile, TileBitMask::Bomb);
 }
 
 bool GameManager::isBomb(Tile* tile, const int& isValidMove)
 {
-	return (isValidMove == 1) && checkBitMaskEquality(tile, TileBitMask::Bomb | TileBitMask::Covered);
+	return (isValidMove == 1) && Util::checkBitMaskEquality(tile, TileBitMask::Bomb | TileBitMask::Covered);
 }
 
 void GameManager::resetFirstMove()
@@ -162,7 +176,7 @@ void GameManager::processInvalidMove(Tile** map, Tile* clicked, const int& isInv
 	}
 	else if (!m_IsFirstMove && isBomb(clicked, isInvalid)) {
 		processAllTiles(map, clicked);
-		(*clicked).setGraphics(Rendering::getTextureFromKey("Hit"));
+		updateProcessedTileGraphic(clicked, "Hit");
 	}
 }
 
@@ -265,13 +279,13 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 			return 0;
 		}
 
-		if (checkBitMaskEquality(temp, TileBitMask::Bomb)) {
+		if (Util::checkBitMaskEquality(temp, TileBitMask::Bomb)) {
 			return 1;
 		}
 		else {
 			int isValidMove =
-				checkBitMaskEquality(temp, TileBitMask::Covered) +
-				checkBitMaskEquality(temp, TileBitMask::Empty);
+				Util::checkBitMaskEquality(temp, TileBitMask::Covered) +
+				Util::checkBitMaskEquality(temp, TileBitMask::Empty);
 
 			if (isValidMove > 1) {
 
@@ -373,7 +387,7 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 			return 0;
 		}
 
-		if (checkBitMaskEquality(temp, TileBitMask::Bomb)) {
+		if (Util::checkBitMaskEquality(temp, TileBitMask::Bomb)) {
 
 			(*temp).removeBitMaskValue(TileBitMask::Covered);
 			(*temp).addBitMaskValue(TileBitMask::Uncovered);
@@ -382,7 +396,7 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 			return 1;
 		}
 		else {
-			if (checkBitMaskEquality(temp, TileBitMask::Flag)) {
+			if (Util::checkBitMaskEquality(temp, TileBitMask::Flag)) {
 
 				(*temp).removeBitMaskValue(TileBitMask::Flag);
 			}
@@ -393,14 +407,11 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 	}
 }
 
-int GameManager::onExecute()
+void GameManager::clearGame()
 {
-	initializeGame();
-	while (m_IsRunning) {
-		getInputEvents();
-		runGameLogic();
-		renderFrame();
+	if (m_Difficulty != nullptr) {
+		TileMapGenerator::clear((*m_Difficulty).m_Height);
+		delete m_Difficulty;
+		m_Difficulty = nullptr;
 	}
-	clear();
-	return 0;
 }

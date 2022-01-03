@@ -17,11 +17,15 @@ private:
 
 	static bool m_IsRunning;
 
+	static bool m_IsFirstInitialize;
+
 	static int m_FlagsLeft;
 
 	static bool m_IsFirstMove;
 
 	static Difficulty* m_Difficulty;
+
+	//APP_LOGIC
 
 	static void initializeGame();
 
@@ -33,9 +37,9 @@ private:
 
 	static void clear();
 
-	static bool checkBitMaskEquality(Tile* tile, TileBitMask bitmask);
+	//GAME_LOGIC
 
-	static bool isValidMove(Tile* tile);
+	static bool isInvalidMove(Tile* tile);
 
 	static bool isBomb(Tile* tile, const int& isValidMove);
 
@@ -61,9 +65,9 @@ private:
 
 	static int checkNeighborWithoutConstraint(Tile** map, const int& x, const int& y, std::queue<Tile*>& queue, std::unordered_map<std::string, Tile*>& memoizationMap);
 
-public:
+	static void clearGame();
 
-	static void setDifficulty(Mode mode);
+public:
 
 	static void setIsRunning(const bool& value);
 
@@ -72,6 +76,8 @@ public:
 	static Tile* updateTileAtPositionClicked(Tile** map, Tile* clicked);
 
 	static Tile* updateFlagAtPositionClicked(Tile* clicked);
+
+	static void startNewSession(const Mode& mode);
 
 	static int onExecute();
 };

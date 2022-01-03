@@ -57,6 +57,11 @@ void Rendering::initializeIMG()
 	}
 }
 
+void Rendering::setWindowSize(const int& x, const int& y)
+{
+	SDL_SetWindowSize(m_Window, Tile::width * x, Tile::height * y);
+}
+
 void Rendering::initialize(const int& width, const int& height)
 {
 	initializeWindow(width, height);
@@ -65,9 +70,23 @@ void Rendering::initialize(const int& width, const int& height)
 	initializeIMG();
 }
 
-void Rendering::setWindowSize(const int& x, const int& y)
+void Rendering::update(Tile** map, const int& arrX, const int& arrY)
 {
-	SDL_SetWindowSize(m_Window, Tile::width * x, Tile::height * y);
+	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
+	SDL_RenderClear(m_Renderer);
+
+	updateTileMap(map, arrX, arrY);
+
+	SDL_RenderPresent(m_Renderer);
+}
+
+void Rendering::clear()
+{
+	SDL_DestroyRenderer(m_Renderer);
+	m_Renderer = nullptr;
+	SDL_DestroyWindow(m_Window);
+	m_Window = nullptr;
+	IMG_Quit();
 }
 
 void Rendering::updateTileMap(Tile** map, const int& arrX, const int& arrY)
@@ -92,12 +111,12 @@ void Rendering::updateTileMap(Tile** map, const int& arrX, const int& arrY)
 
 			SDL_RenderCopy(m_Renderer, (*tile).getTexture(), NULL, NULL);
 
-			if (((*tile).getBitmaskValue() & TileBitMask::Flag) == TileBitMask::Flag) {
+			if (Util::checkBitMaskEquality(tile, TileBitMask::Flag)) {
 
 				SDL_SetTextureBlendMode(m_Textures["Flag"], SDL_BLENDMODE_BLEND);
 				SDL_RenderCopy(m_Renderer, m_Textures["Flag"], NULL, NULL);
 			}
-			else if (((*tile).getBitmaskValue() & TileBitMask::Numbered) == TileBitMask::Numbered) {
+			else if (Util::checkBitMaskEquality(tile, TileBitMask::Numbered)) {
 
 				char buffer[50];
 				sprintf_s(buffer, "Number_%d", (*tile).getValue());
@@ -106,7 +125,7 @@ void Rendering::updateTileMap(Tile** map, const int& arrX, const int& arrY)
 				SDL_RenderCopy(m_Renderer, m_Textures[buffer], NULL, NULL);
 			}
 
-			if (((*tile).getBitmaskValue() & (TileBitMask::Uncovered | TileBitMask::Bomb)) == (TileBitMask::Uncovered | TileBitMask::Bomb)) {
+			if (Util::checkBitMaskEquality(tile, TileBitMask::Uncovered | TileBitMask::Bomb)) {
 
 				SDL_SetTextureBlendMode(m_Textures["Bomb"], SDL_BLENDMODE_BLEND);
 				SDL_RenderCopy(m_Renderer, m_Textures["Bomb"], NULL, NULL);
@@ -119,25 +138,6 @@ void Rendering::updateTileMap(Tile** map, const int& arrX, const int& arrY)
 			target = nullptr;
 		}
 	}
-}
-
-void Rendering::update(Tile** map, const int& arrX, const int& arrY)
-{
-	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
-	SDL_RenderClear(m_Renderer);
-
-	updateTileMap(map, arrX, arrY);
-
-	SDL_RenderPresent(m_Renderer);
-}
-
-void Rendering::clear()
-{
-	SDL_DestroyRenderer(m_Renderer);
-	m_Renderer = nullptr;
-	SDL_DestroyWindow(m_Window);
-	m_Window = nullptr;
-	IMG_Quit();
 }
 
 SDL_Texture* Rendering::getTextureFromKey(std::string key)

@@ -23,5 +23,8 @@ void InputManager::getInputEvent(SDL_Event& myEvent, Tile** map)
 			GameManager::updateFlagAtPositionClicked(GameManager::getTileAtPositionClicked(map, x, y));
 		}
 		break;
+	case SDL_KEYDOWN:
+		std::cout << "called" << std::endl;
+		break;
 	}
 }
