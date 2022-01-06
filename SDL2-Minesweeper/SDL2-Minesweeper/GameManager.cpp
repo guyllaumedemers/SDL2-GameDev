@@ -162,9 +162,9 @@ bool GameManager::isInvalidMove(Tile* tile)
 		Util::checkBitMaskEquality(tile, TileBitMask::Bomb);
 }
 
-bool GameManager::isBomb(Tile* tile, const int& isValidMove)
+bool GameManager::isBomb(Tile* tile, const int& isInvalid)
 {
-	return (isValidMove == 1) && Util::checkBitMaskEquality(tile, TileBitMask::Bomb | TileBitMask::Covered);
+	return (isInvalid == 1) && Util::checkBitMaskEquality(tile, TileBitMask::Bomb | TileBitMask::Covered);
 }
 
 void GameManager::resetFirstMove()
@@ -176,9 +176,9 @@ void GameManager::processInvalidMove(Tile** map, Tile* clicked, const int& isInv
 {
 	if (m_IsFirstMove && isBomb(clicked, isInvalid)) {
 		resetFirstMove();
+		(*clicked).removeBitMaskValue(TileBitMask::Bomb);
 
 		updateTileAtPositionClicked(map, clicked);
-		(*clicked).removeBitMaskValue(TileBitMask::Bomb);
 	}
 	else if (!m_IsFirstMove && isBomb(clicked, isInvalid)) {
 		processAllTiles(map, clicked);
@@ -212,10 +212,10 @@ void GameManager::processValidMoveInsideBoundaries(Tile** map, Tile* clicked)
 
 		processValidMoveResult(clicked, nbBombsNearBy, edgeLookup, true);
 		updateProcessedTileGraphic(clicked, "Uncovered");
+
 		if (edgeLookup.empty()) {
 			break;
 		}
-
 		neighbors.pop();
 	}
 	memoizationMap.clear();
@@ -228,29 +228,26 @@ bool GameManager::isInsideBounds(Tile** map, Tile* current, std::unordered_map<s
 		return true;
 	}
 	else {
-
-		int tilePosX = (*current).getX();
-		int tilePosY = (*current).getY();
-
-		int smallestX = INT_MAX;
-		int smallestY = INT_MAX;
-		int biggestX = INT_MIN;
-		int biggestY = INT_MIN;
-
 		for (const auto& it : edgeMap) {
-			int x = (*it.second).getX();
-			int y = (*it.second).getY();
 
-			if (x < smallestX) smallestX = x;
-			if (y < smallestY) smallestY = y;
-			if (x > biggestX) biggestX = x;
-			if (y > biggestY) biggestY = y;
-		}
+			int x = (*current).getX();
+			int y = (*current).getY();
 
-		if (tilePosX > biggestX + 1 || tilePosX < smallestX - 1 || tilePosY > biggestY + 1 || tilePosY < smallestY - 1) {
-			return false;
+			int value =
+				(x == (*it.second).getX() + 1 && y == (*it.second).getY()) +
+				(x == (*it.second).getX() - 1 && y == (*it.second).getY()) +
+				(x == (*it.second).getX() && y == (*it.second).getY() + 1) +
+				(x == (*it.second).getX() && y == (*it.second).getY() - 1) +
+				(x == (*it.second).getX() + 1 && y == (*it.second).getY() + 1) +
+				(x == (*it.second).getX() - 1 && y == (*it.second).getY() + 1) +
+				(x == (*it.second).getX() + 1 && y == (*it.second).getY() - 1) +
+				(x == (*it.second).getX() - 1 && y == (*it.second).getY() - 1);
+
+			if (value > 0) {
+				return true;
+			}
 		}
-		return true;
+		return false;
 	}
 }
 
@@ -305,15 +302,11 @@ int GameManager::checkNeighbor(Tile** map, const int& x, const int& y, std::queu
 
 void GameManager::processValidMoveResult(Tile* current, const int& result, std::unordered_map<std::string, Tile*>& edgeMap, const bool& isHandlingEdges)
 {
-	if (result > 0) {
+	if (result > 0 && !isBomb(current, 1)) {
 
 		(*current).addBitMaskValue(TileBitMask::Numbered | TileBitMask::Uncovered);
 		(*current).removeBitMaskValue(TileBitMask::Empty | TileBitMask::Covered);
 		(*current).setValue(result);
-
-		if (isHandlingEdges && edgeMap.empty()) {
-			return;
-		}
 	}
 	else {
 
