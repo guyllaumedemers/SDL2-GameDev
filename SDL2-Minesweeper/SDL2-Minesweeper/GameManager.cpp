@@ -175,9 +175,9 @@ void GameManager::resetFirstMove()
 void GameManager::processInvalidMove(Tile** map, Tile* clicked, const int& isInvalid)
 {
 	if (m_IsFirstMove && isBomb(clicked, isInvalid)) {
+		m_IsFirstMove = false;
 		resetFirstMove();
 		(*clicked).removeBitMaskValue(TileBitMask::Bomb);
-
 		updateTileAtPositionClicked(map, clicked);
 	}
 	else if (!m_IsFirstMove && isBomb(clicked, isInvalid)) {
@@ -313,7 +313,7 @@ void GameManager::processValidMoveResult(Tile* current, const int& result, std::
 		(*current).removeBitMaskValue(TileBitMask::Covered);
 		(*current).addBitMaskValue(TileBitMask::Uncovered);
 
-		if (isHandlingEdges) {
+		if (result == 0 && isHandlingEdges) {
 
 			char buffer[50];
 			sprintf_s(buffer, "%p", current);
@@ -387,11 +387,6 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 		}
 
 		if (Util::checkBitMaskEquality(temp, TileBitMask::Bomb)) {
-
-			(*temp).removeBitMaskValue(TileBitMask::Covered);
-			(*temp).addBitMaskValue(TileBitMask::Uncovered);
-
-			updateProcessedTileGraphic(temp, "Uncovered");
 			return 1;
 		}
 		else {
