@@ -387,6 +387,10 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 		}
 
 		if (Util::checkBitMaskEquality(temp, TileBitMask::Bomb)) {
+
+			updateProcessedTileGraphic(temp, "Uncovered");
+			(*temp).addBitMaskValue(TileBitMask::Uncovered);
+			(*temp).removeBitMaskValue(TileBitMask::Covered);
 			return 1;
 		}
 		else {
