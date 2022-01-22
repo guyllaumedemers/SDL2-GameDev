@@ -67,7 +67,7 @@ void Rendering::updateTileMap(Tile** map, Panel* contentArea, const int& arrX, c
 	for (int i = 0; i < arrX; ++i) {
 		for (int j = 0; j < arrY; ++j) {
 
-			int x = j * Tile::width;	//TODO Handle offset of play area
+			int x = j * Tile::width;
 			int y = i * Tile::height;
 
 			SDL_Rect dest{

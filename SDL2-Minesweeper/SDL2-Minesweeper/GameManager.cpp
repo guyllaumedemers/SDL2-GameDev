@@ -55,7 +55,9 @@ void GameManager::setIsRunning(const bool& value)
 
 Tile* GameManager::getTileAtPositionClicked(Tile** map, const int& screenPosX, const int& screenPosY)
 {
-	return &map[(screenPosY / Tile::height)][screenPosX / Tile::width];
+	int x = (*(*Window::getPlayAreaPanel()).getRect()).x;
+	int y = (*(*Window::getPlayAreaPanel()).getRect()).y;
+	return &map[(screenPosY - y) / Tile::height][(screenPosX - x) / Tile::width];
 }
 
 Tile* GameManager::updateTileAtPositionClicked(Tile** map, Tile* clicked)
