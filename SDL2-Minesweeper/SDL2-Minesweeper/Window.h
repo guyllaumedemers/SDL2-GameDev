@@ -56,9 +56,9 @@ private:
 
 	static void resetPanels();
 
-	static int getDeltaHeight(SDL_Rect* rect);
+	static int getNextPanelHeightPosition(SDL_Rect* rect);
 
-	static int getDeltaWidth(SDL_Rect* rect);
+	static int getNextPanelWidthPosition(SDL_Rect* rect);
 
 public:
 

@@ -63,6 +63,9 @@ Tile* GameManager::getTileAtPositionClicked(Tile** map, const int& screenPosX, c
 {
 	int x = (*(*Window::getPlayAreaPanel()).getRect()).x;
 	int y = (*(*Window::getPlayAreaPanel()).getRect()).y;
+	if ((screenPosY - y) < 0 || (screenPosX - x) < 0) {
+		return nullptr;
+	}
 	return &map[(screenPosY - y) / Tile::height][(screenPosX - x) / Tile::width];
 }
 

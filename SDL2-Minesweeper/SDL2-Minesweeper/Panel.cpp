@@ -1,4 +1,5 @@
 #include "Panel.h"
+#include <iostream>
 
 Panel::Panel(const int& x, const int& y, const int& w, const int& h)
 {
@@ -21,12 +22,16 @@ Panel::~Panel()
 
 void Panel::draw(SDL_Renderer* renderer)
 {
+	SDL_Texture* target = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, (*m_Rect).w, (*m_Rect).h);
+	SDL_SetRenderTarget(renderer, target);
+
 	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_RenderClear(renderer);
+
 	SDL_RenderFillRect(renderer, m_Rect);
 
-	// render the background fill rect
-
-	// blend the sub panels onto the main
+	SDL_SetRenderTarget(renderer, NULL);
+	SDL_RenderCopy(renderer, target, NULL, m_Rect);
 }
 
 void Panel::reset()

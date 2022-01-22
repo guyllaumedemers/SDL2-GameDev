@@ -47,6 +47,7 @@ void Rendering::initializeRenderingCTX(SDL_Window* window)
 
 void Rendering::update(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY)
 {
+	// clear the current rendering target
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
 

@@ -125,6 +125,10 @@ void Window::resetPanels()
 	for (auto& it : m_Panels) {
 		(*it).reset();
 	}
+	for (auto& it : m_Panels) {
+		delete it;
+	}
+	m_Panels.clear();
 }
 
 int Window::getNextPanelHeightPosition(SDL_Rect* rect)
