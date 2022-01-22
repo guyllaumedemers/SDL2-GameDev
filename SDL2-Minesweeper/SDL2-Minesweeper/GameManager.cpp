@@ -18,7 +18,7 @@ void GameManager::initializeGame()
 		exit(EXIT_FAILURE);
 	}
 
-	startNewSession(Mode::medium);
+	startNewSession(Mode::hard);
 }
 
 void GameManager::getInputEvents()
@@ -36,7 +36,7 @@ void GameManager::runGameLogic()
 
 void GameManager::renderFrame()
 {
-	Rendering::update(TileMapGenerator::getMap(), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
+	Rendering::update(TileMapGenerator::getMap(), Window::getPlayAreaPanel(), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
 }
 
 void GameManager::clear()
@@ -126,11 +126,12 @@ void GameManager::startNewSession(const Mode& mode)
 	m_FlagsLeft = flags;
 
 	if (m_IsFirstInitialize) {
-		Rendering::initialize(width, height);
+		Window::intializeWindowCTX(width, height);
+		Rendering::initializeRenderingCTX(Window::getWindow());
 		m_IsFirstInitialize = false;
 	}
 	else {
-		Rendering::setWindowSize(width, height);
+		Window::setWindowSize(width, height);
 	}
 
 	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));

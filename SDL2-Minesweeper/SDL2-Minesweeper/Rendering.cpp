@@ -2,30 +2,11 @@
 
 SDL_Renderer* Rendering::m_Renderer = nullptr;
 
-SDL_Window* Rendering::m_Window = nullptr;
-
 std::unordered_map<std::string, SDL_Texture*> Rendering::m_Textures;
-
-void Rendering::initializeWindow(const int& width, const int& height)
-{
-	m_Window = SDL_CreateWindow(
-		"Minesweeper",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		width * Tile::width,
-		height * Tile::height,
-		0
-	);
-
-	if (m_Window == nullptr) {
-		SDL_Log("Cannot initalize SDL_Window : %s", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-}
 
 void Rendering::initializeRendering()
 {
-	m_Renderer = SDL_CreateRenderer(m_Window, -1, SDL_RENDERER_ACCELERATED);
+	m_Renderer = SDL_CreateRenderer(Window::getWindow(), -1, SDL_RENDERER_ACCELERATED);
 
 	if (m_Renderer == nullptr) {
 		SDL_Log("Cannot initalize SDL_Renderer : %s", SDL_GetError());
@@ -33,20 +14,20 @@ void Rendering::initializeRendering()
 	}
 }
 
-void Rendering::initializeTextures()
+void Rendering::initializeTextures(SDL_Window* window)
 {
-	m_Textures.insert(std::make_pair("Flag", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Flag.png")));
-	m_Textures.insert(std::make_pair("Bomb", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/Bomb.png")));
+	m_Textures.insert(std::make_pair("Flag", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/Flag.png")));
+	m_Textures.insert(std::make_pair("Bomb", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/Bomb.png")));
 
 	char buffer[50];
 	for (int i = 1; i <= 8; ++i) {
 		sprintf_s(buffer, "../SDL2-Minesweeper/Assets/%d.png", i);
-		m_Textures.insert(std::make_pair("Number_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), buffer)));
+		m_Textures.insert(std::make_pair("Number_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), buffer)));
 	}
 
-	m_Textures.insert(std::make_pair("Covered", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/CoveredTile.png")));
-	m_Textures.insert(std::make_pair("Uncovered", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
-	m_Textures.insert(std::make_pair("Hit", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(m_Window), "../SDL2-Minesweeper/Assets/TileHit.png")));
+	m_Textures.insert(std::make_pair("Covered", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/CoveredTile.png")));
+	m_Textures.insert(std::make_pair("Uncovered", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
+	m_Textures.insert(std::make_pair("Hit", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/TileHit.png")));
 }
 
 void Rendering::initializeIMG()
@@ -57,25 +38,19 @@ void Rendering::initializeIMG()
 	}
 }
 
-void Rendering::setWindowSize(const int& x, const int& y)
+void Rendering::initializeRenderingCTX(SDL_Window* window)
 {
-	SDL_SetWindowSize(m_Window, x * Tile::width, y * Tile::height);
-}
-
-void Rendering::initialize(const int& width, const int& height)
-{
-	initializeWindow(width, height);
 	initializeRendering();
-	initializeTextures();
+	initializeTextures(window);
 	initializeIMG();
 }
 
-void Rendering::update(Tile** map, const int& arrX, const int& arrY)
+void Rendering::update(Tile** map, Panel* contentArea, const int& arrX, const int& arrY)
 {
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
 
-	updateTileMap(map, arrX, arrY);
+	updateTileMap(map, contentArea, arrX, arrY);
 
 	SDL_RenderPresent(m_Renderer);
 }
@@ -84,22 +59,20 @@ void Rendering::clear()
 {
 	SDL_DestroyRenderer(m_Renderer);
 	m_Renderer = nullptr;
-	SDL_DestroyWindow(m_Window);
-	m_Window = nullptr;
 	IMG_Quit();
 }
 
-void Rendering::updateTileMap(Tile** map, const int& arrX, const int& arrY)
+void Rendering::updateTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY)
 {
 	for (int i = 0; i < arrX; ++i) {
 		for (int j = 0; j < arrY; ++j) {
 
-			int x = j * Tile::width;
+			int x = j * Tile::width;	//TODO Handle offset of play area
 			int y = i * Tile::height;
 
 			SDL_Rect dest{
-				x,
-				y,
+				x + (*(*contentArea).getRect()).x,
+				y + (*(*contentArea).getRect()).y,
 				Tile::width,
 				Tile::height
 			};

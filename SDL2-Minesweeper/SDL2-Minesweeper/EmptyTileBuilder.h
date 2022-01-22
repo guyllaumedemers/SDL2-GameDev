@@ -11,7 +11,7 @@ public:
 
 	EmptyTileBuilder(SDL_Texture* texture);
 
-	~EmptyTileBuilder();
+	virtual ~EmptyTileBuilder();
 
 	Tile buildTile(int x, int y) override;
 

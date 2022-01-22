@@ -11,7 +11,7 @@ public:
 
 	BombTileBuilder(SDL_Texture* texture);
 
-	~BombTileBuilder();
+	virtual ~BombTileBuilder();
 
 	Tile buildTile(int x, int y) override;
 
