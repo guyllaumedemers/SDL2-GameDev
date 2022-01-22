@@ -19,9 +19,25 @@ Panel::~Panel()
 	m_Rect = nullptr;
 }
 
-void Panel::setGraphic(SDL_Texture* texture)
+void Panel::draw(SDL_Renderer* renderer)
 {
-	m_Texture = texture;
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_RenderFillRect(renderer, m_Rect);
+
+	// render the background fill rect
+
+	// blend the sub panels onto the main
+}
+
+void Panel::reset()
+{
+	for (auto& it : m_Panels) {
+		(*it).reset();
+	}
+	for (auto& p : m_Panels) {
+		delete p;
+	}
+	m_Panels.clear();
 }
 
 void Panel::addPanel(Panel* panel)
@@ -34,14 +50,9 @@ void Panel::removePanel(Panel* panel)
 
 }
 
-void Panel::draw(SDL_Renderer* renderer)
+void Panel::setGraphic(SDL_Texture* texture)
 {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_RenderFillRect(renderer, m_Rect);
-
-	// render the background fill rect
-
-	// blend the sub panels onto the main
+	m_Texture = texture;
 }
 
 SDL_Rect* Panel::getRect()

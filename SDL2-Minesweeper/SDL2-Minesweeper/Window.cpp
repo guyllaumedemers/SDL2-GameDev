@@ -31,8 +31,8 @@ SDL_Rect* Window::initializeContentArea(const int& width, const int& height)
 {
 	SDL_Rect* rect = nullptr;
 	rect = buildTopMenuPanel(0, 0, width, m_TopMenuBarHeight);
-	rect = buildGameInfoPanel(0, (*rect).y + (*rect).h, width, m_GameContentInfoHeight);
-	rect = buildGamePanel(0, (*rect).y + (*rect).h, width, height);
+	rect = buildGameInfoPanel(0, getDeltaHeight(rect), width, m_GameContentInfoHeight);
+	rect = buildGamePanel(0, getDeltaHeight(rect), width, height);
 	destroyBuilder();
 	return rect;
 }
@@ -74,7 +74,7 @@ SDL_Rect* Window::buildTopMenuPanel(const int& x, const int& y, const int& width
 	int widthPerCell = 10;
 
 	rect = buildSubPanel(topMenuPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, nullptr);
-	rect = buildSubPanel(topMenuPanel, (*rect).x + (*rect).w, (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(topMenuPanel, getDeltaWidth(rect), (*rect).y, widthPerCell, (*rect).h, nullptr);
 	addPanel(topMenuPanel);
 
 	return (*topMenuPanel).getRect();
@@ -91,8 +91,8 @@ SDL_Rect* Window::buildGameInfoPanel(const int& x, const int& y, const int& widt
 	int widthPerCell = ((*rect).w / 3);
 
 	rect = buildSubPanel(gameInfoPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, nullptr);
-	rect = buildSubPanel(gameInfoPanel, (*rect).x + (*rect).w, (*rect).y, widthPerCell, (*rect).h, nullptr);
-	rect = buildSubPanel(gameInfoPanel, (*rect).x + (*rect).w, (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(gameInfoPanel, getDeltaWidth(rect), (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(gameInfoPanel, getDeltaWidth(rect), (*rect).y, widthPerCell, (*rect).h, nullptr);
 	addPanel(gameInfoPanel);
 
 	return (*gameInfoPanel).getRect();
@@ -120,15 +120,34 @@ SDL_Rect* Window::buildSubPanel(Panel* panel, const int& x, const int& y, const 
 	return (*subPanel).getRect();
 }
 
+void Window::resetPanels()
+{
+	for (auto& it : m_Panels) {
+		(*it).reset();
+	}
+}
+
+int Window::getDeltaHeight(SDL_Rect* rect)
+{
+	return (*rect).y + (*rect).h;
+}
+
+int Window::getDeltaWidth(SDL_Rect* rect)
+{
+	return (*rect).x + (*rect).w;
+}
+
 void Window::intializeWindowCTX(const int& width, const int& height)
 {
 	SDL_Rect* rect = initializeContentArea(width, height);
 	initializeWindow((*rect).x, (*rect).y, width, height);
 }
 
-void Window::setWindowSize(const int& x, const int& y)
+void Window::setWindowSize(const int& width, const int& height)
 {
-	SDL_SetWindowSize(m_Window, x * Tile::width, y * Tile::height);
+	resetPanels();
+	SDL_Rect* rect = initializeContentArea(width, height);
+	SDL_SetWindowSize(m_Window, (*rect).w, getDeltaHeight(rect));
 }
 
 SDL_Window* Window::getWindow()

@@ -18,13 +18,15 @@ public:
 
 	~Panel();
 
-	void setGraphic(SDL_Texture* texture);
+	void draw(SDL_Renderer* renderer);
+
+	void reset();
 
 	void addPanel(Panel* panel);
 
 	void removePanel(Panel* panel);
 
-	void draw(SDL_Renderer* renderer);
+	void setGraphic(SDL_Texture* texture);
 
 	SDL_Rect* getRect();
 

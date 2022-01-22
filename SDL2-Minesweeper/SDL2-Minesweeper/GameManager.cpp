@@ -139,7 +139,7 @@ void GameManager::startNewSession(const Mode& mode)
 		m_IsFirstInitialize = false;
 	}
 	else {
-		Window::setWindowSize(width, height);
+		Window::setWindowSize(width * Tile::width, height * Tile::height);
 	}
 
 	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));

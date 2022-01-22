@@ -52,11 +52,19 @@ private:
 
 	static SDL_Rect* buildSubPanel(Panel* panel, const int& x, const int& y, const int& width, const int& height, SDL_Texture* texture);
 
+	//RESET_PANELS
+
+	static void resetPanels();
+
+	static int getDeltaHeight(SDL_Rect* rect);
+
+	static int getDeltaWidth(SDL_Rect* rect);
+
 public:
 
 	static void intializeWindowCTX(const int& width, const int& height);
 
-	static void setWindowSize(const int& x, const int& y);
+	static void setWindowSize(const int& width, const int& height);
 
 	static SDL_Window* getWindow();
 
