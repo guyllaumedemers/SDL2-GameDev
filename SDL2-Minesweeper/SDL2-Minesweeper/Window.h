@@ -1,10 +1,12 @@
 #pragma once
+#pragma once
 #include <SDL.h>
 #include <vector>
 #include <iostream>
 #include "Tile.h"
 #include "PanelBuilder.h"
 #include "MainPanelBuilder.h"
+#include "SubPanelBuilder.h"
 
 class Window
 {
@@ -20,6 +22,8 @@ private:
 
 	static PanelBuilder* m_PanelBuilder;
 
+	//APP_LOGIC
+
 	static void initializeWindow(const int& x, const int& y, const int& width, const int& height);
 
 	static SDL_Rect* initializeContentArea(const int& width, const int& height);
@@ -28,17 +32,25 @@ private:
 
 	static void removePanel(Panel* panel);
 
+	//BUILDER_LOGIC
+
 	static void resetBuilder();
 
 	static void setBuilder(PanelBuilder* builder);
 
 	static void destroyBuilder();
 
+	//MAIN_UI_GENERATION_LOGIC
+
 	static SDL_Rect* buildTopMenuPanel(const int& x, const int& y, const int& width, const int& height);
 
 	static SDL_Rect* buildGameInfoPanel(const int& x, const int& y, const int& width, const int& height);
 
 	static SDL_Rect* buildGamePanel(const int& x, const int& y, const int& width, const int& height);
+
+	//SUB_UI_GENERATION_LOGIC
+
+	static SDL_Rect* buildSubPanel(Panel* panel, const int& x, const int& y, const int& width, const int& height, SDL_Texture* texture);
 
 public:
 

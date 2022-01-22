@@ -155,6 +155,7 @@
     <ClInclude Include="Panel.h" />
     <ClInclude Include="PanelBuilder.h" />
     <ClInclude Include="Rendering.h" />
+    <ClInclude Include="SubPanelBuilder.h" />
     <ClInclude Include="TileBitMask.h" />
     <ClInclude Include="TileBuilder.h" />
     <ClInclude Include="GameManager.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="MainPanelBuilder.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Rendering.cpp" />
+    <ClCompile Include="SubPanelBuilder.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="Window.cpp" />

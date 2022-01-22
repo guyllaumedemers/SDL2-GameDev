@@ -13,6 +13,7 @@ MainPanelBuilder::MainPanelBuilder(const int& x, const int& y, const int& w, con
 
 MainPanelBuilder::~MainPanelBuilder()
 {
+	m_Texture = nullptr;
 	delete m_Rect;
 	m_Rect = nullptr;
 }

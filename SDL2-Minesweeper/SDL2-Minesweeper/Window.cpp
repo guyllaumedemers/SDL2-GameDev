@@ -70,8 +70,11 @@ SDL_Rect* Window::buildTopMenuPanel(const int& x, const int& y, const int& width
 	Panel* topMenuPanel = (*m_PanelBuilder).buildPanel();
 	(*m_PanelBuilder).buildGraphic(*topMenuPanel);
 
-	// add sub content here
+	SDL_Rect* rect = (*topMenuPanel).getRect();
+	int widthPerCell = 10;
 
+	rect = buildSubPanel(topMenuPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(topMenuPanel, (*rect).x + (*rect).w, (*rect).y, widthPerCell, (*rect).h, nullptr);
 	addPanel(topMenuPanel);
 
 	return (*topMenuPanel).getRect();
@@ -84,8 +87,12 @@ SDL_Rect* Window::buildGameInfoPanel(const int& x, const int& y, const int& widt
 	Panel* gameInfoPanel = (*m_PanelBuilder).buildPanel();
 	(*m_PanelBuilder).buildGraphic(*gameInfoPanel);
 
-	// add sub content here
+	SDL_Rect* rect = (*gameInfoPanel).getRect();
+	int widthPerCell = ((*rect).w / 3);
 
+	rect = buildSubPanel(gameInfoPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(gameInfoPanel, (*rect).x + (*rect).w, (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(gameInfoPanel, (*rect).x + (*rect).w, (*rect).y, widthPerCell, (*rect).h, nullptr);
 	addPanel(gameInfoPanel);
 
 	return (*gameInfoPanel).getRect();
@@ -100,6 +107,17 @@ SDL_Rect* Window::buildGamePanel(const int& x, const int& y, const int& width, c
 	addPanel(gamePanel);
 
 	return (*gamePanel).getRect();
+}
+
+SDL_Rect* Window::buildSubPanel(Panel* panel, const int& x, const int& y, const int& width, const int& height, SDL_Texture* texture)
+{
+	setBuilder(DBG_NEW SubPanelBuilder(panel, x, y, width, height, texture));
+
+	Panel* subPanel = (*m_PanelBuilder).buildPanel();
+	(*m_PanelBuilder).buildGraphic(*subPanel);
+	(*panel).AddPanel(subPanel);
+
+	return (*subPanel).getRect();
 }
 
 void Window::intializeWindowCTX(const int& width, const int& height)
