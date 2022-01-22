@@ -23,8 +23,6 @@ private:
 
 	//GAME_LOGIC
 
-	static void updatePanel(Panel* panel);
-
 	static void updateTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY);
 
 public:

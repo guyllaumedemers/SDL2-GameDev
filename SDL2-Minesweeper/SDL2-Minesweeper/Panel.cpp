@@ -20,12 +20,12 @@ Panel::~Panel()
 	m_Rect = nullptr;
 }
 
-void Panel::draw(SDL_Renderer* renderer)
+void Panel::draw(SDL_Renderer* renderer, SDL_Color color)
 {
 	SDL_Texture* target = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, (*m_Rect).w, (*m_Rect).h);
 	SDL_SetRenderTarget(renderer, target);
 
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(renderer);
 
 	SDL_RenderFillRect(renderer, m_Rect);

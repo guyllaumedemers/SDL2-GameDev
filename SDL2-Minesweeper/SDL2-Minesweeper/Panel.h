@@ -18,7 +18,7 @@ public:
 
 	~Panel();
 
-	void draw(SDL_Renderer* renderer);
+	void draw(SDL_Renderer* renderer, SDL_Color color);
 
 	void reset();
 
