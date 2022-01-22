@@ -24,17 +24,32 @@ void Panel::setGraphic(SDL_Texture* texture)
 	m_Texture = texture;
 }
 
-void Panel::AddPanel(Panel* panel)
+void Panel::addPanel(Panel* panel)
 {
 	m_Panels.push_back(panel);
 }
 
-void Panel::RemovePanel(Panel* panel)
+void Panel::removePanel(Panel* panel)
 {
 
+}
+
+void Panel::draw(SDL_Renderer* renderer)
+{
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_RenderFillRect(renderer, m_Rect);
+
+	// render the background fill rect
+
+	// blend the sub panels onto the main
 }
 
 SDL_Rect* Panel::getRect()
 {
 	return m_Rect;
+}
+
+std::vector<Panel*> Panel::getPanels()
+{
+	return m_Panels;
 }

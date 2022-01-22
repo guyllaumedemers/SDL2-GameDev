@@ -20,10 +20,14 @@ public:
 
 	void setGraphic(SDL_Texture* texture);
 
-	void AddPanel(Panel* panel);
+	void addPanel(Panel* panel);
 
-	void RemovePanel(Panel* panel);
+	void removePanel(Panel* panel);
+
+	void draw(SDL_Renderer* renderer);
 
 	SDL_Rect* getRect();
+
+	std::vector<Panel*> getPanels();
 };
 

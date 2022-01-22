@@ -60,6 +60,8 @@ public:
 
 	static SDL_Window* getWindow();
 
+	static std::vector<Panel*> getPanels();
+
 	static Panel* getPlayAreaPanel();
 };
 

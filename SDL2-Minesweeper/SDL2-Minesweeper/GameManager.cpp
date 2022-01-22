@@ -36,7 +36,13 @@ void GameManager::runGameLogic()
 
 void GameManager::renderFrame()
 {
-	Rendering::update(TileMapGenerator::getMap(), Window::getPlayAreaPanel(), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width);
+	Rendering::update(
+		TileMapGenerator::getMap(),
+		Window::getPanels(),
+		Window::getPlayAreaPanel(),
+		(*m_Difficulty).m_Height,
+		(*m_Difficulty).m_Width
+	);
 }
 
 void GameManager::clear()
@@ -128,7 +134,7 @@ void GameManager::startNewSession(const Mode& mode)
 	m_FlagsLeft = flags;
 
 	if (m_IsFirstInitialize) {
-		Window::intializeWindowCTX(width, height);
+		Window::intializeWindowCTX(width * Tile::width, height * Tile::height);
 		Rendering::initializeRenderingCTX(Window::getWindow());
 		m_IsFirstInitialize = false;
 	}

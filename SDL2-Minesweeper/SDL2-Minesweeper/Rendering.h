@@ -23,13 +23,15 @@ private:
 
 	//GAME_LOGIC
 
+	static void updatePanel(Panel* panel);
+
 	static void updateTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY);
 
 public:
 
 	static void initializeRenderingCTX(SDL_Window* window);
 
-	static void update(Tile** map, Panel* contentArea, const int& arrX, const int& arrY);
+	static void update(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY);
 
 	static void clear();
 

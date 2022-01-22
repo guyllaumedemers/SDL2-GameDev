@@ -45,11 +45,14 @@ void Rendering::initializeRenderingCTX(SDL_Window* window)
 	initializeIMG();
 }
 
-void Rendering::update(Tile** map, Panel* contentArea, const int& arrX, const int& arrY)
+void Rendering::update(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY)
 {
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
 
+	for (const auto& it : panels) {
+		updatePanel(it);
+	}
 	updateTileMap(map, contentArea, arrX, arrY);
 
 	SDL_RenderPresent(m_Renderer);
@@ -60,6 +63,11 @@ void Rendering::clear()
 	SDL_DestroyRenderer(m_Renderer);
 	m_Renderer = nullptr;
 	IMG_Quit();
+}
+
+void Rendering::updatePanel(Panel* panel)
+{
+	(*panel).draw(m_Renderer);
 }
 
 void Rendering::updateTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY)

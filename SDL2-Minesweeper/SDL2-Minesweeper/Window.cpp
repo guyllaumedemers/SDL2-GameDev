@@ -6,9 +6,9 @@ std::vector<Panel*> Window::m_Panels;
 
 PanelBuilder* Window::m_PanelBuilder = nullptr;
 
-int Window::m_TopMenuBarHeight = 10;
+int Window::m_TopMenuBarHeight = Tile::height;
 
-int Window::m_GameContentInfoHeight = 70;
+int Window::m_GameContentInfoHeight = Tile::height * 3;
 
 void Window::initializeWindow(const int& x, const int& y, const int& width, const int& height)
 {
@@ -16,8 +16,8 @@ void Window::initializeWindow(const int& x, const int& y, const int& width, cons
 		"Minesweeper",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		x + (width * Tile::width),
-		y + (height * Tile::height),
+		x + width,
+		y + height,
 		0
 	);
 
@@ -115,7 +115,7 @@ SDL_Rect* Window::buildSubPanel(Panel* panel, const int& x, const int& y, const 
 
 	Panel* subPanel = (*m_PanelBuilder).buildPanel();
 	(*m_PanelBuilder).buildGraphic(*subPanel);
-	(*panel).AddPanel(subPanel);
+	(*panel).addPanel(subPanel);
 
 	return (*subPanel).getRect();
 }
@@ -134,6 +134,11 @@ void Window::setWindowSize(const int& x, const int& y)
 SDL_Window* Window::getWindow()
 {
 	return m_Window;
+}
+
+std::vector<Panel*> Window::getPanels()
+{
+	return m_Panels;
 }
 
 Panel* Window::getPlayAreaPanel()
