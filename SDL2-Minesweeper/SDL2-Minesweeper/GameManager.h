@@ -8,6 +8,7 @@
 #include <functional>
 
 #include "Difficulty.h"
+#include "Window.h"
 #include "Rendering.h"
 #include "InputManager.h"
 

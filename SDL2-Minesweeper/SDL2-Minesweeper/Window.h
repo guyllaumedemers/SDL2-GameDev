@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "Tile.h"
+#include "Rendering.h"
 #include "PanelBuilder.h"
 #include "MainPanelBuilder.h"
 #include "SubPanelBuilder.h"

@@ -31,6 +31,9 @@ void Rendering::initializeTextures()
 
 	m_Textures.insert(std::make_pair("OnHooverEnter", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/OnHooverEnter.png")));
 	m_Textures.insert(std::make_pair("OnButtonSelect", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/OnButtonSelect.png")));
+
+	m_Textures.insert(std::make_pair("Game", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Game.png")));
+	m_Textures.insert(std::make_pair("Help", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Help.png")));
 }
 
 void Rendering::initializeIMG()
@@ -45,12 +48,10 @@ void Rendering::draw(Tile** map, const std::vector<Panel*>& panels, Panel* conte
 {
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
-
-	(*panels.at(0)).draw(m_Renderer, SDL_Color{ 236,233,216,255 });
-	(*panels.at(1)).draw(m_Renderer, SDL_Color{ 192,192,192,255 });
-	(*panels.at(2)).draw(m_Renderer, SDL_Color{ 192,192,192,255 });
+	for (const auto& it : panels) {
+		(*it).draw(m_Renderer, SDL_Color{ 192,192,192,255 });
+	}
 	drawTileMap(map, contentArea, arrX, arrY);
-
 	SDL_RenderPresent(m_Renderer);
 }
 

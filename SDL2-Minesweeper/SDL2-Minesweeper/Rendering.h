@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include "Util.h"
-#include "Window.h"
+#include "Panel.h"
 #include "ImageLoader.h"
 #include "TileMapGenerator.h"
 

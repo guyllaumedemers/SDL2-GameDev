@@ -1,5 +1,4 @@
 #include "Window.h"
-#include "Rendering.h"
 
 SDL_Window* Window::m_Window = nullptr;
 
@@ -81,8 +80,8 @@ SDL_Rect* Window::buildTopMenuPanel(const int& x, const int& y, const int& width
 	SDL_Rect* rect = (*topMenuPanel).getRect();
 	int widthPerCell = 2 * Tile::width;
 
-	rect = buildSubPanel(topMenuPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, Rendering::getTextureFromKey("OnHooverEnter"));
-	rect = buildSubPanel(topMenuPanel, getNextPanelWidthPosition(rect), (*rect).y, widthPerCell, (*rect).h, Rendering::getTextureFromKey("OnHooverEnter"));
+	rect = buildSubPanel(topMenuPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, Rendering::getTextureFromKey("Game"));							//TODO Improve this
+	rect = buildSubPanel(topMenuPanel, getNextPanelWidthPosition(rect), (*rect).y, widthPerCell, (*rect).h, Rendering::getTextureFromKey("Help"));
 	addPanel(topMenuPanel);
 
 	return (*topMenuPanel).getRect();
