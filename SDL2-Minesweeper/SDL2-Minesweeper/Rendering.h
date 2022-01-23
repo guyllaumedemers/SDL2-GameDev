@@ -13,23 +13,21 @@ private:
 
 	static SDL_Renderer* m_Renderer;
 
-	//APP_LOGIC
-
-	static void initializeRendering();
-
-	static void initializeTextures(SDL_Window* window);
-
-	static void initializeIMG();
-
 	//GAME_LOGIC
 
-	static void updateTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY);
+	static void drawTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY);
 
 public:
 
-	static void initializeRenderingCTX(SDL_Window* window);
+	//APP_LOGIC
 
-	static void update(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY);
+	static void initializeRendering(SDL_Window* window);
+
+	static void initializeTextures();
+
+	static void initializeIMG();
+
+	static void draw(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY);
 
 	static void clear();
 

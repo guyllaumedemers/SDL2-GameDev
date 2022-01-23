@@ -14,7 +14,6 @@ Panel::Panel(const int& x, const int& y, const int& w, const int& h)
 
 Panel::~Panel()
 {
-	SDL_DestroyTexture(m_Texture);
 	m_Texture = nullptr;
 	delete m_Rect;
 	m_Rect = nullptr;
@@ -28,10 +27,18 @@ void Panel::draw(SDL_Renderer* renderer, SDL_Color color)
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(renderer);
 
-	SDL_RenderFillRect(renderer, m_Rect);
+	SDL_SetTextureBlendMode(m_Texture, SDL_BLENDMODE_BLEND);
+	SDL_RenderCopy(renderer, m_Texture, NULL, NULL);
 
 	SDL_SetRenderTarget(renderer, NULL);
 	SDL_RenderCopy(renderer, target, NULL, m_Rect);
+
+	for (const auto& it : m_Panels) {
+		(*it).draw(renderer, color);
+	}
+
+	SDL_DestroyTexture(target);
+	target = nullptr;
 }
 
 void Panel::reset()

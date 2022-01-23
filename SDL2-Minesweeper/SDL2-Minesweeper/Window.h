@@ -22,10 +22,6 @@ private:
 
 	static PanelBuilder* m_PanelBuilder;
 
-	//APP_LOGIC
-
-	static void initializeWindow(const int& x, const int& y, const int& width, const int& height);
-
 	static SDL_Rect* initializeContentArea(const int& width, const int& height);
 
 	static void addPanel(Panel* panel);
@@ -62,7 +58,9 @@ private:
 
 public:
 
-	static void intializeWindowCTX(const int& width, const int& height);
+	//APP_LOGIC
+
+	static void initializeWindow(const int& x, const int& y, const int& width, const int& height);
 
 	static void setWindowSize(const int& width, const int& height);
 

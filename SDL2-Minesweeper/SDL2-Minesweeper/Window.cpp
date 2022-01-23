@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Rendering.h"
 
 SDL_Window* Window::m_Window = nullptr;
 
@@ -25,6 +26,13 @@ void Window::initializeWindow(const int& x, const int& y, const int& width, cons
 		SDL_Log("Cannot initalize SDL_Window : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
+}
+
+void Window::setWindowSize(const int& width, const int& height)
+{
+	resetPanels();
+	SDL_Rect* rect = initializeContentArea(width, height);
+	SDL_SetWindowSize(m_Window, (*rect).w, getNextPanelHeightPosition(rect));
 }
 
 SDL_Rect* Window::initializeContentArea(const int& width, const int& height)
@@ -71,10 +79,10 @@ SDL_Rect* Window::buildTopMenuPanel(const int& x, const int& y, const int& width
 	(*m_PanelBuilder).buildGraphic(*topMenuPanel);
 
 	SDL_Rect* rect = (*topMenuPanel).getRect();
-	int widthPerCell = 10;
+	int widthPerCell = 2 * Tile::width;
 
-	rect = buildSubPanel(topMenuPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, nullptr);
-	rect = buildSubPanel(topMenuPanel, getNextPanelWidthPosition(rect), (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(topMenuPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, Rendering::getTextureFromKey("OnHooverEnter"));
+	rect = buildSubPanel(topMenuPanel, getNextPanelWidthPosition(rect), (*rect).y, widthPerCell, (*rect).h, Rendering::getTextureFromKey("OnHooverEnter"));
 	addPanel(topMenuPanel);
 
 	return (*topMenuPanel).getRect();
@@ -139,19 +147,6 @@ int Window::getNextPanelHeightPosition(SDL_Rect* rect)
 int Window::getNextPanelWidthPosition(SDL_Rect* rect)
 {
 	return (*rect).x + (*rect).w;
-}
-
-void Window::intializeWindowCTX(const int& width, const int& height)
-{
-	SDL_Rect* rect = initializeContentArea(width, height);
-	initializeWindow((*rect).x, (*rect).y, width, height);
-}
-
-void Window::setWindowSize(const int& width, const int& height)
-{
-	resetPanels();
-	SDL_Rect* rect = initializeContentArea(width, height);
-	SDL_SetWindowSize(m_Window, (*rect).w, getNextPanelHeightPosition(rect));
 }
 
 SDL_Window* Window::getWindow()

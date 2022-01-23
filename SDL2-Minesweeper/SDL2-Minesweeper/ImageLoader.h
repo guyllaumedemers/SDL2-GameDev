@@ -9,6 +9,6 @@ public:
 
 	static SDL_Surface* loadCPURendering(SDL_Surface* windowSurface, std::string path);
 
-	static SDL_Texture* loadGPURendering(SDL_Renderer* renderer, SDL_Surface* windowSurface, std::string path);
+	static SDL_Texture* loadGPURendering(SDL_Renderer* renderer, std::string path);
 };
 

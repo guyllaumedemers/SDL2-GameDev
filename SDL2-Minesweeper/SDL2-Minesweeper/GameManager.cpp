@@ -36,7 +36,7 @@ void GameManager::runGameLogic()
 
 void GameManager::renderFrame()
 {
-	Rendering::update(
+	Rendering::draw(
 		TileMapGenerator::getMap(),
 		Window::getPanels(),
 		Window::getPlayAreaPanel(),
@@ -137,13 +137,14 @@ void GameManager::startNewSession(const Mode& mode)
 	m_FlagsLeft = flags;
 
 	if (m_IsFirstInitialize) {
-		Window::intializeWindowCTX(width * Tile::width, height * Tile::height);
-		Rendering::initializeRenderingCTX(Window::getWindow());
+		Window::initializeWindow(0, 0, width * Tile::width, height * Tile::height);
+		Rendering::initializeRendering(Window::getWindow());
+		Rendering::initializeTextures();
+		Rendering::initializeIMG();
+
 		m_IsFirstInitialize = false;
 	}
-	else {
-		Window::setWindowSize(width * Tile::width, height * Tile::height);
-	}
+	Window::setWindowSize(width * Tile::width, height * Tile::height);
 
 	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));
 	TileMapGenerator::createEmptyMap(height, width);

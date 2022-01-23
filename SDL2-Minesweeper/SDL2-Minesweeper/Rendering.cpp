@@ -4,9 +4,9 @@ SDL_Renderer* Rendering::m_Renderer = nullptr;
 
 std::unordered_map<std::string, SDL_Texture*> Rendering::m_Textures;
 
-void Rendering::initializeRendering()
+void Rendering::initializeRendering(SDL_Window* window)
 {
-	m_Renderer = SDL_CreateRenderer(Window::getWindow(), -1, SDL_RENDERER_ACCELERATED);
+	m_Renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 	if (m_Renderer == nullptr) {
 		SDL_Log("Cannot initalize SDL_Renderer : %s", SDL_GetError());
@@ -14,20 +14,23 @@ void Rendering::initializeRendering()
 	}
 }
 
-void Rendering::initializeTextures(SDL_Window* window)
+void Rendering::initializeTextures()
 {
-	m_Textures.insert(std::make_pair("Flag", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/Flag.png")));
-	m_Textures.insert(std::make_pair("Bomb", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/Bomb.png")));
+	m_Textures.insert(std::make_pair("Flag", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Flag.png")));
+	m_Textures.insert(std::make_pair("Bomb", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Bomb.png")));
 
 	char buffer[50];
 	for (int i = 1; i <= 8; ++i) {
 		sprintf_s(buffer, "../SDL2-Minesweeper/Assets/%d.png", i);
-		m_Textures.insert(std::make_pair("Number_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), buffer)));
+		m_Textures.insert(std::make_pair("Number_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, buffer)));
 	}
 
-	m_Textures.insert(std::make_pair("Covered", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/CoveredTile.png")));
-	m_Textures.insert(std::make_pair("Uncovered", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
-	m_Textures.insert(std::make_pair("Hit", ImageLoader::loadGPURendering(m_Renderer, SDL_GetWindowSurface(window), "../SDL2-Minesweeper/Assets/TileHit.png")));
+	m_Textures.insert(std::make_pair("Covered", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/CoveredTile.png")));
+	m_Textures.insert(std::make_pair("Uncovered", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
+	m_Textures.insert(std::make_pair("Hit", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/TileHit.png")));
+
+	m_Textures.insert(std::make_pair("OnHooverEnter", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/OnHooverEnter.png")));
+	m_Textures.insert(std::make_pair("OnButtonSelect", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/OnButtonSelect.png")));
 }
 
 void Rendering::initializeIMG()
@@ -38,14 +41,7 @@ void Rendering::initializeIMG()
 	}
 }
 
-void Rendering::initializeRenderingCTX(SDL_Window* window)
-{
-	initializeRendering();
-	initializeTextures(window);
-	initializeIMG();
-}
-
-void Rendering::update(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY)
+void Rendering::draw(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY)
 {
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
@@ -53,7 +49,7 @@ void Rendering::update(Tile** map, const std::vector<Panel*>& panels, Panel* con
 	(*panels.at(0)).draw(m_Renderer, SDL_Color{ 236,233,216,255 });
 	(*panels.at(1)).draw(m_Renderer, SDL_Color{ 192,192,192,255 });
 	(*panels.at(2)).draw(m_Renderer, SDL_Color{ 192,192,192,255 });
-	updateTileMap(map, contentArea, arrX, arrY);
+	drawTileMap(map, contentArea, arrX, arrY);
 
 	SDL_RenderPresent(m_Renderer);
 }
@@ -65,7 +61,7 @@ void Rendering::clear()
 	IMG_Quit();
 }
 
-void Rendering::updateTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY)
+void Rendering::drawTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY)
 {
 	for (int i = 0; i < arrX; ++i) {
 		for (int j = 0; j < arrY; ++j) {

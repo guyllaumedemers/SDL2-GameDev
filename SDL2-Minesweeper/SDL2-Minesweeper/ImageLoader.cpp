@@ -19,7 +19,7 @@ SDL_Surface* ImageLoader::loadCPURendering(SDL_Surface* windowSurface, std::stri
 	return optimizeSurface;
 }
 
-SDL_Texture* ImageLoader::loadGPURendering(SDL_Renderer* renderer, SDL_Surface* windowSurface, std::string path)
+SDL_Texture* ImageLoader::loadGPURendering(SDL_Renderer* renderer, std::string path)
 {
 	SDL_Texture* optimizeTexture = IMG_LoadTexture(renderer, path.c_str());
 
