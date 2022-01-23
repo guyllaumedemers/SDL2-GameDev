@@ -98,8 +98,8 @@ SDL_Rect* Window::buildGameInfoPanel(const int& x, const int& y, const int& widt
 	int widthPerCell = ((*rect).w / 3);
 
 	rect = buildSubPanel(gameInfoPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, nullptr);
-	rect = buildSubPanel(gameInfoPanel, getNextPanelWidthPosition(rect), (*rect).y, widthPerCell, (*rect).h, nullptr);
-	rect = buildSubPanel(gameInfoPanel, getNextPanelWidthPosition(rect), (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(gameInfoPanel, getNextPanelWidthPosition(rect), (*rect).y, (*rect).w, (*rect).h, nullptr);
+	rect = buildSubPanel(gameInfoPanel, getNextPanelWidthPosition(rect), (*rect).y, (*rect).w, (*rect).h, nullptr);
 	addPanel(gameInfoPanel);
 
 	return (*gameInfoPanel).getRect();

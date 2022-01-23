@@ -25,6 +25,11 @@ void Rendering::initializeTextures()
 		m_Textures.insert(std::make_pair("Number_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, buffer)));
 	}
 
+	for (int i = 0; i < 10; ++i) {
+		sprintf_s(buffer, "../SDL2-Minesweeper/Assets/Time_%d.png", i);
+		m_Textures.insert(std::make_pair("Time_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, buffer)));
+	}
+
 	m_Textures.insert(std::make_pair("Covered", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/CoveredTile.png")));
 	m_Textures.insert(std::make_pair("Uncovered", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
 	m_Textures.insert(std::make_pair("Hit", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/TileHit.png")));
