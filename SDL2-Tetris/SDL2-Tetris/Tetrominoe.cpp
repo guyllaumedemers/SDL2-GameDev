@@ -1,12 +1,21 @@
 #include "Tetrominoe.h"
 
-Tetrominoe::Tetrominoe(Shape* shape)
+Tetrominoe::Tetrominoe(TetrominoeType type, SDL_Texture* texture)
 {
-	m_Shape = shape;
+	this->shape = new Shape(type);
+	this->texture = texture;
 }
 
 Tetrominoe::~Tetrominoe()
 {
-	delete m_Shape;
-	m_Shape = nullptr;
+	SDL_DestroyTexture(texture);
+	texture = nullptr;
+}
+
+void Tetrominoe::update()
+{
+}
+
+void Tetrominoe::draw()
+{
 }

@@ -78,10 +78,8 @@ SDL_Rect* Window::buildTopMenuPanel(const int& x, const int& y, const int& width
 	(*m_PanelBuilder).buildGraphic(*topMenuPanel);
 
 	SDL_Rect* rect = (*topMenuPanel).getRect();
-	int widthPerCell = 2 * Tile::width;
-
-	rect = buildSubPanel(topMenuPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, Rendering::getTextureFromKey("Game"));							//TODO Improve this
-	rect = buildSubPanel(topMenuPanel, getNextPanelWidthPosition(rect), (*rect).y, widthPerCell, (*rect).h, Rendering::getTextureFromKey("Help"));
+	rect = buildSubPanel(topMenuPanel, (*rect).x, (*rect).y, 2 * Tile::width, (*rect).h, Rendering::getTextureFromKey("Game"));							//TODO Improve this
+	rect = buildSubPanel(topMenuPanel, getNextPanelWidthPosition(rect), (*rect).y, (*rect).w, (*rect).h, Rendering::getTextureFromKey("Help"));
 	addPanel(topMenuPanel);
 
 	return (*topMenuPanel).getRect();
@@ -95,9 +93,7 @@ SDL_Rect* Window::buildGameInfoPanel(const int& x, const int& y, const int& widt
 	(*m_PanelBuilder).buildGraphic(*gameInfoPanel);
 
 	SDL_Rect* rect = (*gameInfoPanel).getRect();
-	int widthPerCell = ((*rect).w / 3);
-
-	rect = buildSubPanel(gameInfoPanel, (*rect).x, (*rect).y, widthPerCell, (*rect).h, nullptr);
+	rect = buildSubPanel(gameInfoPanel, (*rect).x, (*rect).y, (*rect).w / 3, (*rect).h, nullptr);
 	rect = buildSubPanel(gameInfoPanel, getNextPanelWidthPosition(rect), (*rect).y, (*rect).w, (*rect).h, nullptr);
 	rect = buildSubPanel(gameInfoPanel, getNextPanelWidthPosition(rect), (*rect).y, (*rect).w, (*rect).h, nullptr);
 	addPanel(gameInfoPanel);

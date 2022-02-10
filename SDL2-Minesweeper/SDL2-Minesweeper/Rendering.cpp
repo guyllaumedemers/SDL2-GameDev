@@ -39,6 +39,10 @@ void Rendering::initializeTextures()
 
 	m_Textures.insert(std::make_pair("Game", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Game.png")));
 	m_Textures.insert(std::make_pair("Help", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Help.png")));
+
+	m_Textures.insert(std::make_pair("SadFace", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/SadFace.png")));
+	m_Textures.insert(std::make_pair("HappyFace", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/SmileyFace.png")));
+	m_Textures.insert(std::make_pair("GlassFace", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/SmileyFaceWithGlasses.png")));
 }
 
 void Rendering::initializeIMG()

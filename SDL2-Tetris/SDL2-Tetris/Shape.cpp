@@ -1,12 +1,17 @@
 #include "Shape.h"
 
-Shape::Shape(SDL_Texture* texture)
+Shape::Shape(const int& row, const int& col)
 {
-	m_Texture = texture;
+	tiles = new bool* [row];
+	for (int i = 0; i < row; ++i) {
+		tiles[i] = new bool[col];
+		for (int j = 0; j < col; ++j) {
+			tiles[i][j] = false;
+		}
+	}
 }
 
 Shape::~Shape()
 {
-	SDL_DestroyTexture(m_Texture);
-	m_Texture = nullptr;
+
 }

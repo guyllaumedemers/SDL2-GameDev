@@ -1,16 +1,14 @@
 #pragma once
-#define SDL_MAIN_HANDLED
 #include <SDL.h>
+#include <iostream>
 
 class GameManager
 {
+public:
+	static int onExecute();
+
 private:
-
 	static bool isRunning;
-
-	static SDL_Window* window;
-
-	static SDL_Renderer* renderer;
 
 	//APP_LOGIC
 
@@ -24,10 +22,6 @@ private:
 
 	static void clear();
 
-public:
-
-	static void setIsRunning(const bool& value);
-
-	static int onExecute();
+	//GAME_LOGIC
 };
 

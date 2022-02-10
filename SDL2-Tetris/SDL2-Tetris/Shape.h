@@ -1,18 +1,18 @@
 #pragma once
-#include <SDL.h>
+#include "TetrominoeType.h"
 
-struct Shape
+class Shape
 {
-protected:
-
-	SDL_Texture* m_Texture = nullptr;
-
 public:
 
-	Shape(SDL_Texture* texture);
+	Shape(TetrominoeType type);
 
 	~Shape();
 
-	virtual void flip() = 0;
+private:
+
+	Shape(const int& row, const int& col);
+
+	bool** tiles = nullptr;
 };
 

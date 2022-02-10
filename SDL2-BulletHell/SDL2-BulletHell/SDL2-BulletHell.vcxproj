@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{770e4471-1f46-4c19-a78e-9aef383b8678}</ProjectGuid>
-    <RootNamespace>SDL2Tetris</RootNamespace>
+    <ProjectGuid>{2b17f529-f5ae-4a65-b180-fa86d384d125}</ProjectGuid>
+    <RootNamespace>SDL2BulletHell</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\msys64\mingw64\include\SDL2;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\msys64\mingw64\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -118,12 +118,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\msys64\mingw64\include\SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2Main.lib;SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\msys64\mingw64\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,34 +144,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="ImageLoader.cpp" />
-    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="IBulletPattern.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Rendering.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="Shape.cpp" />
-    <ClCompile Include="Tetrominoe.cpp" />
-    <ClCompile Include="TetrominoeFactory.cpp" />
-    <ClCompile Include="TileMapManager.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Vector2d.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="ImageLoader.h" />
-    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="IBulletPattern.h" />
     <ClInclude Include="Rendering.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="Shape.h" />
-    <ClInclude Include="Tetrominoe.h" />
-    <ClInclude Include="TetrominoeFactory.h" />
-    <ClInclude Include="TetrominoeType.h" />
-    <ClInclude Include="TileMapManager.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Vector2d.h" />
     <ClInclude Include="Window.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SDL2-Tetris.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

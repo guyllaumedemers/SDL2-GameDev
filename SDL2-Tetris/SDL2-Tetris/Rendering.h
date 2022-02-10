@@ -3,18 +3,22 @@
 
 class Rendering
 {
-private:
-
-	static SDL_Window* m_Window;
-
-	static SDL_Renderer* m_Renderer;
-
 public:
 
-	static void initializeContext(const int& w, const int& h);
+	~Rendering();
 
-	static void renderFrame();
+	static Rendering* getInstance(SDL_Window* window);
 
-	static void clear();
+	void operator=(const Rendering&) = delete;
+
+	SDL_Renderer* getRenderer();
+
+private:
+
+	Rendering(SDL_Window* window);
+
+	static Rendering* instance;
+
+	SDL_Renderer* sdl_renderer = nullptr;
 };
 
