@@ -11,13 +11,13 @@ public:
 
 	static void div(Vector2d& target, double div);
 
+	double X() { return x; };
+
+	double Y() { return y; };
+
 	Vector2d();
 
 	Vector2d(double x, double y);
-
-	Vector2d(const Vector2d&) = default;
-
-	Vector2d(Vector2d&&) = default;
 private:
 	double x, y;
 };

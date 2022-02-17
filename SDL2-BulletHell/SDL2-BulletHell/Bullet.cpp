@@ -28,12 +28,22 @@ void Bullet::update(const Vector2d& force_to_apply)
 	Vector2d::mul(acceleration, 0);
 }
 
-float Bullet::getAngle()
+void Bullet::print(SDL_Renderer* ren)
+{
+	SDL_Rect* rect = new SDL_Rect();
+	rect->x = location.X();
+	rect->y = location.Y();
+	rect->w = 10;
+	rect->h = 10;
+	SDL_RenderFillRect(ren, rect);
+}
+
+double Bullet::getAngle() const
 {
 	return angle;
 }
 
-Bullet::Bullet(double angle)
+Bullet::Bullet(double angle, int x, int y) : angle(angle), acceleration(0, 0), velocity(0, 0), location(x, y)
 {
 	ptr_shared_texture = nullptr;
 }

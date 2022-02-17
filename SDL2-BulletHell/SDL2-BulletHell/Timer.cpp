@@ -1,9 +1,20 @@
 #include "Timer.h"
 
-Timer::Timer(double time)
+bool Timer::hasFinished()
 {
-	last = std::chrono::high_resolution_clock::now();
-	threshold = time;
+	if (getDeltaTime() >= threshold) {
+		last = std::chrono::high_resolution_clock::now();
+		return true;
+	}
+	return false;
+}
+
+Timer::Timer(std::chrono::milliseconds threshold) : last(std::chrono::high_resolution_clock::now()), threshold(threshold)
+{
+}
+
+Timer::~Timer()
+{
 }
 
 std::chrono::milliseconds Timer::getDeltaTime()

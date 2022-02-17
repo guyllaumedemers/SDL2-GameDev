@@ -4,15 +4,14 @@
 struct Timer
 {
 public:
-	std::chrono::milliseconds getDeltaTime();
+	bool hasFinished();
 
-	Timer(double time);
+	Timer(std::chrono::milliseconds threshold);
 
-	Timer(const Timer&) = default;
-
-	Timer(Timer&&) = default;
+	~Timer();
 private:
+	std::chrono::milliseconds getDeltaTime();
 	std::chrono::high_resolution_clock::time_point last;
-	double threshold = 0.0f;
+	std::chrono::milliseconds threshold;
 };
 

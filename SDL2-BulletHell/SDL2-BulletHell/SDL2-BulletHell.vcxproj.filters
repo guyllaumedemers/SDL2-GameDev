@@ -39,7 +39,7 @@
     <ClCompile Include="BulletManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IBulletPattern.cpp">
+    <ClCompile Include="FullCirclePattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IBulletPattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FullCirclePattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

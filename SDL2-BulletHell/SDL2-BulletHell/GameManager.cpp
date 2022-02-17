@@ -1,19 +1,28 @@
 #include "GameManager.h"
-#include "Window.h"
-#include "Rendering.h"
+#include <iostream>
+#include "BulletManager.h"
+#include "FullCirclePattern.h"
+#include "Timer.h"
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 400
 
 bool GameManager::isRunning = true;
 
+Window* GameManager::window = nullptr;
+
+Rendering* GameManager::ren = nullptr;
+
 int GameManager::onExecute()
 {
 	initialize();
+	BulletManager::factoryMethod(new FullCirclePattern(), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	Timer frame_capping(std::chrono::milliseconds{ 16 });
 	while (isRunning) {
 		getInputs();
 		runGameLogic();
 		renderFrame();
+		while (!frame_capping.hasFinished()) {}
 	}
 	clear();
 	return 0;
@@ -26,8 +35,8 @@ void GameManager::initialize()
 		exit(1);
 	}
 
-	Window* window = Window::getInstance(SCREEN_WIDTH, SCREEN_HEIGHT);
-	Rendering* ren = Rendering::getInstance(window->getWindow());
+	window = new Window(SCREEN_WIDTH, SCREEN_HEIGHT);
+	ren = new Rendering(window);
 }
 
 void GameManager::getInputs()
@@ -47,17 +56,20 @@ void GameManager::getInputs()
 
 void GameManager::runGameLogic()
 {
-
+	BulletManager::update();
 }
 
 void GameManager::renderFrame()
 {
-	SDL_SetRenderDrawColor(Rendering::getInstance(nullptr)->getRenderer(), 0, 0, 0, 255);
-	SDL_RenderClear(Rendering::getInstance(nullptr)->getRenderer());
+	SDL_Renderer* temp = ren->getRenderer();
 
-	//render here
+	SDL_SetRenderDrawColor(temp, 0, 0, 0, 255);
+	SDL_RenderClear(temp);
 
-	SDL_RenderPresent(Rendering::getInstance(nullptr)->getRenderer());
+	SDL_SetRenderDrawColor(temp, 255, 0, 0, 255);
+	BulletManager::print(temp);
+
+	SDL_RenderPresent(temp);
 }
 
 void GameManager::clear()

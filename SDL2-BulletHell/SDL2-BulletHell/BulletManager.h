@@ -1,18 +1,16 @@
 #pragma once
-#include <vector>
-#include <cmath>
-#include "Bullet.h"
+#include <SDL.h>
 #include "IBulletPattern.h"
 
 class BulletManager
 {
 public:
-	void factoryMethod(IBulletPattern* pattern);
+	static void factoryMethod(IBulletPattern* pattern, int x, int y);
 
-	void update();
+	static void update();
+
+	static void print(SDL_Renderer* ren);
 private:
-	std::vector<Bullet> bullets;
-
-	static double forceApplied;
+	static std::vector<Bullet> bullets;
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
-#include <iostream>
+#include "Window.h"
+#include "Rendering.h"
 
 class GameManager
 {
@@ -9,6 +10,10 @@ public:
 
 private:
 	static bool isRunning;
+
+	static Window* window;
+
+	static Rendering* ren;
 
 	//APP_LOGIC
 

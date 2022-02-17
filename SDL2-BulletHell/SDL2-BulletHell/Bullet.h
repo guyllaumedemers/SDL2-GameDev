@@ -7,13 +7,11 @@ struct Bullet
 public:
 	void update(const Vector2d& force_to_apply);
 
-	float getAngle();
+	void print(SDL_Renderer* ren);
 
-	Bullet(double angle);
+	double getAngle() const;
 
-	Bullet(const Bullet&) = default;
-
-	Bullet(Bullet&&) = default;
+	Bullet(double angle, int x, int y);
 private:
 	void applyForce(const Vector2d& force_to_apply);
 

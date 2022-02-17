@@ -1,9 +1,12 @@
 #pragma once
 #include <vector>
+#include "Bullet.h"
 
 class IBulletPattern
 {
 public:
-	virtual std::vector<Bullet> create() = 0;
+	virtual ~IBulletPattern() {};
+
+	virtual std::vector<Bullet> create(int x, int y) = 0;
 };
 

@@ -1,6 +1,5 @@
 #include "Window.h"
-
-Window* Window::instance = nullptr;
+#include <iostream>
 
 Window::Window(int w, int h)
 {
@@ -22,12 +21,6 @@ Window::~Window()
 {
 	SDL_DestroyWindow(window);
 	window = nullptr;
-}
-
-Window* Window::getInstance(int w, int h)
-{
-	if (instance == nullptr) return instance = new Window(w, h);
-	else return instance;
 }
 
 SDL_Window* Window::getWindow()
