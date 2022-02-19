@@ -1,11 +1,7 @@
 #pragma once
 #include <SDL.h>
-#include "Vector2d.h"
-#pragma once
-#include <SDL.h>
 #include "Group.h"
 #include "Vector2d.h"
-#include "IBulletBehaviour.h"
 
 class Bullet : virtual public Group
 {
@@ -13,7 +9,7 @@ public:
 
 	//BULLET_LOGIC
 
-	virtual void update(IBulletBehaviour*) override;
+	virtual void update() override;
 
 	//CHILDREN_HANDLING
 

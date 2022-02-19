@@ -1,5 +1,4 @@
 #pragma once
-#include "IBulletBehaviour.h"
 
 class Group
 {
@@ -11,7 +10,7 @@ public:
 
 	//COMPONENT_LOGIC
 
-	virtual void update(IBulletBehaviour*) = 0;
+	virtual void update() = 0;
 
 	//CHILDREN_HANDLING
 

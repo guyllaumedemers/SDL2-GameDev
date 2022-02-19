@@ -2,18 +2,17 @@
 
 //CONSTRUCTOR
 
-SubPattern::SubPattern()
-{
-}
+SubPattern::SubPattern(const vector<Group*>& childrens) : childrens(childrens) {}
 
-SubPattern::~SubPattern()
-{
-}
+SubPattern::~SubPattern() {}
 
 //SUBPATTERN_LOGIC
 
-void SubPattern::update(IBulletBehaviour* instance) {
-	
+void SubPattern::update()
+{
+	for (auto& it : childrens) {
+		it->update();
+	}
 }
 
 //CHILDREN_HANDLING

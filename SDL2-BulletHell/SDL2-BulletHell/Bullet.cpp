@@ -10,18 +10,19 @@ const double Bullet::mass = 10.0f;
 
 //CONSTRUCTOR
 
-Bullet::Bullet(const Bullet& instance)
-{
+Bullet::Bullet(const Bullet& instance) :
+	angle(instance.angle),
+	angular_velocity(instance.angular_velocity),
+	acceleration(instance.acceleration),
+	velocity(instance.velocity),
+	location(instance.location),
+	ptr_shared_texture(nullptr) {}
 
-}
-
-Bullet::~Bullet()
-{
-}
+Bullet::~Bullet() {}
 
 //BULLET_LOGIC
 
-void Bullet::update(IBulletBehaviour* instance)
+void Bullet::update()
 {
 	//TODO Given Force retrieve acceleration to apply to velocity and blah blah blah
 }

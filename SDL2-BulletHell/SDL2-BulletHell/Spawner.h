@@ -1,5 +1,6 @@
 #pragma once
 #include "IDanmaku.h"
+#include "Timer.h"
 
 using namespace std;
 class Spawner
@@ -8,19 +9,21 @@ private:
 
 	//FIELDS
 
-	IDanmaku* danmaku;
+	IDanmaku* danmaku = nullptr;
 
-	//CONSTRUCTOR
-
-	Spawner();
-
-	~Spawner();
+	Timer* spawnRate = nullptr;
 
 public:
 
+	//CONSTRUCTOR
+
+	Spawner(IDanmaku*);
+
+	~Spawner();
+
 	//SPAWNER_LOGIC
 
-	void create(IDanmaku*);
+	void create();
 
 	void update();
 };

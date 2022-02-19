@@ -1,7 +1,9 @@
 #pragma once
 
-class IBulletBehaviour
+class IFactory
 {
 public:
+
+
 };
 

@@ -10,6 +10,12 @@ private:
 
 public:
 
+	//CONSTRUCTOR
+
+	Vector2d();
+
+	Vector2d(double x, double y);
+
 	//VECTOR_LOGIC
 
 	static void add(Vector2d& target, const Vector2d& add);
@@ -23,11 +29,5 @@ public:
 	double X() { return x; };
 
 	double Y() { return y; };
-
-	//CONSTRUCTOR
-
-	Vector2d();
-
-	Vector2d(double x, double y);
 };
 

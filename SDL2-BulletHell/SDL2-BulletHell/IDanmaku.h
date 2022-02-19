@@ -5,22 +5,22 @@
 using namespace std;
 class IDanmaku
 {
-private:
+protected:
 
 	//FIELDS
 
 	vector<Group*> subPatterns;
 
-	//CONSTRUCTOR
-
-	IDanmaku();
-
-	~IDanmaku();
-
 public:
+
+	//DESTRUCTOR
+
+	virtual ~IDanmaku() {};
 
 	//DANMAKU_LOGIC
 
-	void update();
+	virtual void create() = 0;
+
+	virtual void update() = 0;
 };
 

@@ -16,14 +16,14 @@ private:
 
 public:
 
-	//TIMER_LOGIC
-
-	bool hasFinished();
-
 	//CONSTRUCTOR
 
 	Timer(std::chrono::milliseconds threshold);
 
 	~Timer();
+
+	//TIMER_LOGIC
+
+	bool hasFinished();
 };
 

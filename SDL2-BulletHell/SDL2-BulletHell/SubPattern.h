@@ -7,19 +7,23 @@ class SubPattern : virtual public Group
 {
 protected:
 
+	//FIELDS
+
 	//CHILDREN_REFERENCE
 
 	vector<Group*> childrens;
 
 public:
 
-	SubPattern();
+	//CONSTRUCTOR
+
+	SubPattern(const vector<Group*>&);
 
 	virtual ~SubPattern();
 
 	//SUBPATTERN_LOGIC
 
-	virtual void update(IBulletBehaviour*) override;
+	virtual void update() override;
 
 	//CHILDREN_HANDLING
 

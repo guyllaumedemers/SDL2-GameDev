@@ -36,13 +36,16 @@
     <ClCompile Include="Rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BulletManager.cpp">
+    <ClCompile Include="IBulletBehaviour.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FullCirclePattern.cpp">
+    <ClCompile Include="SubPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IBulletPatternImp.cpp">
+    <ClCompile Include="Spawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IDanmaku.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,16 +68,19 @@
     <ClInclude Include="Rendering.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BulletManager.h">
+    <ClInclude Include="Group.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IBulletPattern.h">
+    <ClInclude Include="IBulletBehaviour.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FullCirclePattern.h">
+    <ClInclude Include="SubPattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IBulletPatternImp.h">
+    <ClInclude Include="Spawner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDanmaku.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
