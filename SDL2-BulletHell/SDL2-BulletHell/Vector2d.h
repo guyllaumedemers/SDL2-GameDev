@@ -2,7 +2,16 @@
 
 struct Vector2d
 {
+private:
+
+	//FIELDS
+
+	double x, y;
+
 public:
+
+	//VECTOR_LOGIC
+
 	static void add(Vector2d& target, const Vector2d& add);
 
 	static void sub(Vector2d& target, const Vector2d& sub);
@@ -15,10 +24,10 @@ public:
 
 	double Y() { return y; };
 
+	//CONSTRUCTOR
+
 	Vector2d();
 
 	Vector2d(double x, double y);
-private:
-	double x, y;
 };
 

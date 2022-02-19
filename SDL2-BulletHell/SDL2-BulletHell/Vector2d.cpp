@@ -1,5 +1,13 @@
 #include "Vector2d.h"
 
+//CONSTRUCTOR
+
+Vector2d::Vector2d() : x(0), y(0) {}
+
+Vector2d::Vector2d(double x, double y) : x(x), y(y) {}
+
+//VECTOR_LOGIC
+
 void Vector2d::add(Vector2d& target, const Vector2d& add)
 {
 	target.x += add.x;
@@ -23,7 +31,3 @@ void Vector2d::div(Vector2d& target, double div)
 	target.x /= div;
 	target.y /= div;
 }
-
-Vector2d::Vector2d() : x(0), y(0) {}
-
-Vector2d::Vector2d(double x, double y) : x(x), y(y) {}

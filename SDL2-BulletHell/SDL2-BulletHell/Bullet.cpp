@@ -1,6 +1,49 @@
 #include "Bullet.h"
 
-const int Bullet::mass = 10;
+//STATIC_FIELD
+
+const double Bullet::min_velocity = 0.0f;
+
+const double Bullet::max_velocity = 20.0f;
+
+const double Bullet::mass = 10.0f;
+
+//CONSTRUCTOR
+
+Bullet::Bullet(const Bullet& instance)
+{
+
+}
+
+Bullet::~Bullet()
+{
+}
+
+//BULLET_LOGIC
+
+void Bullet::update(IBulletBehaviour* instance)
+{
+	//TODO Given Force retrieve acceleration to apply to velocity and blah blah blah
+}
+
+//CHILDREN_HANDLING
+
+void Bullet::add(Group*)
+{
+	//TODO Define what a leaf should do
+}
+
+void Bullet::remove(Group*)
+{
+	//TODO Define what a leaf should do
+}
+
+bool Bullet::isComposite()
+{
+	return false;
+}
+
+//PHYSIC_LOGIC
 
 void Bullet::applyForce(const Vector2d& force_to_apply)
 {
@@ -18,32 +61,4 @@ void Bullet::applyAcceleration()
 void Bullet::applyVelocity()
 {
 	Vector2d::add(location, velocity);
-}
-
-void Bullet::update(const Vector2d& force_to_apply)
-{
-	applyForce(force_to_apply);
-	applyAcceleration();
-	applyVelocity();
-	Vector2d::mul(acceleration, 0);
-}
-
-void Bullet::print(SDL_Renderer* ren)
-{
-	SDL_Rect* rect = new SDL_Rect();
-	rect->x = location.X();
-	rect->y = location.Y();
-	rect->w = 10;
-	rect->h = 10;
-	SDL_RenderFillRect(ren, rect);
-}
-
-double Bullet::getAngle() const
-{
-	return angle;
-}
-
-Bullet::Bullet(double angle, int x, int y) : angle(angle), acceleration(0, 0), velocity(0, 0), location(x, y)
-{
-	ptr_shared_texture = nullptr;
 }

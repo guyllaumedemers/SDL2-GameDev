@@ -1,6 +1,8 @@
 #include "Window.h"
 #include <iostream>
 
+//CONSTRUCTOR
+
 Window::Window(int w, int h)
 {
 	window = SDL_CreateWindow(
@@ -22,6 +24,8 @@ Window::~Window()
 	SDL_DestroyWindow(window);
 	window = nullptr;
 }
+
+//GETTER
 
 SDL_Window* Window::getWindow()
 {

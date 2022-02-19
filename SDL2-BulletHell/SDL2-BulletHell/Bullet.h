@@ -1,25 +1,55 @@
 #pragma once
 #include <SDL.h>
 #include "Vector2d.h"
+#pragma once
+#include <SDL.h>
+#include "Group.h"
+#include "Vector2d.h"
+#include "IBulletBehaviour.h"
 
-struct Bullet
+class Bullet : virtual public Group
 {
 public:
-	void update(const Vector2d& force_to_apply);
 
-	void print(SDL_Renderer* ren);
+	//BULLET_LOGIC
 
-	double getAngle() const;
+	virtual void update(IBulletBehaviour*) override;
 
-	Bullet(double angle, int x, int y);
+	//CHILDREN_HANDLING
+
+	virtual void add(Group*) override;
+
+	virtual void remove(Group*) override;
+
+	virtual bool isComposite() override;
+
+	//CONSTRUCTOR
+
+	Bullet(const Bullet&);
+
+	virtual ~Bullet();
+
 private:
-	void applyForce(const Vector2d& force_to_apply);
+
+	//PHYSIC_LOGIC
+
+	void applyForce(const Vector2d&);
 
 	void applyAcceleration();
 
 	void applyVelocity();
 
-	static const int mass;
+	//FIELDS
+
+	double angle = 0;
+
+	double angular_velocity = 0;
+
+	static const double min_velocity;
+
+	static const double max_velocity;
+
+	static const double mass;
 
 	Vector2d acceleration;
 
@@ -28,7 +58,5 @@ private:
 	Vector2d location;
 
 	SDL_Texture* ptr_shared_texture = nullptr;
-
-	double angle = 0.0f;
 };
 

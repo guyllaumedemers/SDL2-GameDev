@@ -148,6 +148,7 @@
     <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="FullCirclePattern.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="IBulletPatternImp.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="FullCirclePattern.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IBulletPattern.h" />
+    <ClInclude Include="IBulletPatternImp.h" />
     <ClInclude Include="Rendering.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector2d.h" />

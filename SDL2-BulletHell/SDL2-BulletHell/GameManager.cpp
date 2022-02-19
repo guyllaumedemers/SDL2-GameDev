@@ -1,7 +1,5 @@
 #include "GameManager.h"
 #include <iostream>
-#include "BulletManager.h"
-#include "FullCirclePattern.h"
 #include "Timer.h"
 
 #define SCREEN_WIDTH 600
@@ -16,7 +14,6 @@ Rendering* GameManager::ren = nullptr;
 int GameManager::onExecute()
 {
 	initialize();
-	BulletManager::factoryMethod(new FullCirclePattern(), SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	Timer frame_capping(std::chrono::milliseconds{ 16 });
 	while (isRunning) {
 		getInputs();
@@ -56,20 +53,17 @@ void GameManager::getInputs()
 
 void GameManager::runGameLogic()
 {
-	BulletManager::update();
+
 }
 
 void GameManager::renderFrame()
 {
-	SDL_Renderer* temp = ren->getRenderer();
+	SDL_Renderer* _ren = ren->getRenderer();
 
-	SDL_SetRenderDrawColor(temp, 0, 0, 0, 255);
-	SDL_RenderClear(temp);
+	SDL_SetRenderDrawColor(_ren, 0, 0, 0, 255);
+	SDL_RenderClear(_ren);
 
-	SDL_SetRenderDrawColor(temp, 255, 0, 0, 255);
-	BulletManager::print(temp);
-
-	SDL_RenderPresent(temp);
+	SDL_RenderPresent(_ren);
 }
 
 void GameManager::clear()

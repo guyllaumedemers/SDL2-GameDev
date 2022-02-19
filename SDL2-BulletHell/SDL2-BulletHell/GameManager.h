@@ -1,14 +1,13 @@
 #pragma once
-#include <SDL.h>
 #include "Window.h"
 #include "Rendering.h"
 
 class GameManager
 {
-public:
-	static int onExecute();
-
 private:
+
+	//FIELDS
+
 	static bool isRunning;
 
 	static Window* window;
@@ -27,6 +26,10 @@ private:
 
 	static void clear();
 
+public:
+
 	//GAME_LOGIC
+
+	static int onExecute();
 };
 

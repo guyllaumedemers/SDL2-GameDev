@@ -1,13 +1,6 @@
 #include "Timer.h"
 
-bool Timer::hasFinished()
-{
-	if (getDeltaTime() >= threshold) {
-		last = std::chrono::high_resolution_clock::now();
-		return true;
-	}
-	return false;
-}
+//CONSTRUCTOR
 
 Timer::Timer(std::chrono::milliseconds threshold) : last(std::chrono::high_resolution_clock::now()), threshold(threshold)
 {
@@ -15,6 +8,17 @@ Timer::Timer(std::chrono::milliseconds threshold) : last(std::chrono::high_resol
 
 Timer::~Timer()
 {
+}
+
+//TIMER_LOGIC
+
+bool Timer::hasFinished()
+{
+	if (getDeltaTime() >= threshold) {
+		last = std::chrono::high_resolution_clock::now();
+		return true;
+	}
+	return false;
 }
 
 std::chrono::milliseconds Timer::getDeltaTime()
