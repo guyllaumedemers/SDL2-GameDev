@@ -17,6 +17,7 @@ NOTE : This project is broken down into multiples folders, each representing a s
 * GameOfLife & Cellular Automata
 * MineSweeper (*WIP)
 * Tetris (*WIP)
+* Danmaku (*WIP)
 
 ## Resources
 
