@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Group">
+      <UniqueIdentifier>{bf4178a6-5f8a-4c80-aa40-e9de44ed6afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Group">
+      <UniqueIdentifier>{7457703e-c541-4fb8-87e0-95e88677c5a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -36,17 +42,23 @@
     <ClCompile Include="Rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IBulletBehaviour.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SubPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IDanmaku.cpp">
+    <ClCompile Include="IFactory.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ring.cpp">
+      <Filter>Source Files\Group</Filter>
+    </ClCompile>
+    <ClCompile Include="Spread.cpp">
+      <Filter>Source Files\Group</Filter>
+    </ClCompile>
+    <ClCompile Include="Stack.cpp">
+      <Filter>Source Files\Group</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,9 +83,6 @@
     <ClInclude Include="Group.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IBulletBehaviour.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SubPattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -82,6 +91,18 @@
     </ClInclude>
     <ClInclude Include="IDanmaku.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ring.h">
+      <Filter>Header Files\Group</Filter>
+    </ClInclude>
+    <ClInclude Include="IFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spread.h">
+      <Filter>Header Files\Group</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>Header Files\Group</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

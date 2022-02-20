@@ -1,6 +1,8 @@
 #pragma once
+#include "SubPattern.h"
 
-class Stack
+class Stack : virtual public SubPattern
 {
+public:
 };
 
