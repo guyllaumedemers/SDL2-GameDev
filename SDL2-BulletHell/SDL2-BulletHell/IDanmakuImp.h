@@ -1,5 +1,8 @@
 #pragma once
+#include <vector>
+#include "Group.h"
 
+using namespace std;
 class IDanmakuImp
 {
 public:
@@ -10,7 +13,7 @@ public:
 
 	//DANMAKU_LOGIC
 
-	virtual void create() = 0;
+	virtual vector<Group*> create() = 0;
 
 	virtual void update() = 0;
 

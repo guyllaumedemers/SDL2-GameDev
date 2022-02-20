@@ -13,7 +13,7 @@ Danmaku_1::~Danmaku_1() {}
 
 void Danmaku_1::create()
 {
-	imp->create();
+	subpatterns = imp->create();
 }
 
 void Danmaku_1::update()

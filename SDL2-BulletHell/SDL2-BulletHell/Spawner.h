@@ -2,7 +2,6 @@
 #include "IDanmaku.h"
 #include "Timer.h"
 
-using namespace std;
 class Spawner
 {
 private:

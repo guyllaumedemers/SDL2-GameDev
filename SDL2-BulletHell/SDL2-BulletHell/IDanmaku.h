@@ -1,5 +1,7 @@
 #pragma once
+#include <vector>
 #include "IDanmakuImp.h"
+#include "Group.h"
 
 using namespace std;
 class IDanmaku
@@ -7,8 +9,10 @@ class IDanmaku
 protected:
 
 	//FIELDS
-	
+
 	IDanmakuImp* imp = nullptr;
+
+	vector<Group*> subpatterns;
 
 public:
 

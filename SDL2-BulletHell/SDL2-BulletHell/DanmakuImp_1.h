@@ -13,7 +13,7 @@ public:
 
 	//DANMAKU_LOGIC
 
-	void create() override;
+	vector<Group*> create() override;
 
 	void update() override;
 
