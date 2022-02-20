@@ -13,10 +13,40 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Group">
+    <Filter Include="Header Files\Bridge Pattern">
+      <UniqueIdentifier>{923aec45-0def-44c0-80ae-c4dd7173b191}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Composite Pattern">
+      <UniqueIdentifier>{c1f822b0-d6c0-49c8-8fe4-69ef3d8437b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Bridge Pattern\Danmaku">
+      <UniqueIdentifier>{d4119ca1-3fd6-4c66-a54c-62f6d93ec02f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tools">
+      <UniqueIdentifier>{2e11418e-f14b-407e-b7e5-40e537054955}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SDL">
+      <UniqueIdentifier>{16d4b9e0-5e92-4fee-8ede-1071aa58ac75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bridge Pattern">
+      <UniqueIdentifier>{46374e93-fc94-4d78-8998-17f0280a9fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bridge Pattern\Danmaku">
+      <UniqueIdentifier>{1e4cfc3e-0614-4edd-93fa-a3cd9209a3ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Composite Pattern">
+      <UniqueIdentifier>{5bf8f283-91be-43e6-8020-158f72b80cf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDL">
+      <UniqueIdentifier>{95b31f40-895e-457d-824f-4c0fa8aaeec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools">
+      <UniqueIdentifier>{a07687b1-f92a-4bb0-81d7-998f0eb7fc8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Composite Pattern\Extend Composite">
       <UniqueIdentifier>{bf4178a6-5f8a-4c80-aa40-e9de44ed6afc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Group">
+    <Filter Include="Source Files\Composite Pattern\Extend Composite">
       <UniqueIdentifier>{7457703e-c541-4fb8-87e0-95e88677c5a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -24,85 +54,97 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rendering.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SubPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Ring.cpp">
-      <Filter>Source Files\Group</Filter>
+      <Filter>Source Files\Composite Pattern\Extend Composite</Filter>
     </ClCompile>
     <ClCompile Include="Spread.cpp">
-      <Filter>Source Files\Group</Filter>
+      <Filter>Source Files\Composite Pattern\Extend Composite</Filter>
     </ClCompile>
     <ClCompile Include="Stack.cpp">
-      <Filter>Source Files\Group</Filter>
+      <Filter>Source Files\Composite Pattern\Extend Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="Danmaku_1.cpp">
+      <Filter>Source Files\Bridge Pattern\Danmaku</Filter>
+    </ClCompile>
+    <ClCompile Include="IDanmakuImp.cpp">
+      <Filter>Source Files\Bridge Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="SubPattern.cpp">
+      <Filter>Source Files\Composite Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\Composite Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering.cpp">
+      <Filter>Source Files\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2d.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="DanmakuImp_1.cpp">
+      <Filter>Source Files\Bridge Pattern\Danmaku</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rendering.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Group.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SubPattern.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Spawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IDanmaku.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Ring.h">
-      <Filter>Header Files\Group</Filter>
-    </ClInclude>
-    <ClInclude Include="IFactory.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Composite Pattern\Extend Composite</Filter>
     </ClInclude>
     <ClInclude Include="Spread.h">
-      <Filter>Header Files\Group</Filter>
+      <Filter>Header Files\Composite Pattern\Extend Composite</Filter>
     </ClInclude>
     <ClInclude Include="Stack.h">
-      <Filter>Header Files\Group</Filter>
+      <Filter>Header Files\Composite Pattern\Extend Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="Danmaku_1.h">
+      <Filter>Header Files\Bridge Pattern\Danmaku</Filter>
+    </ClInclude>
+    <ClInclude Include="IDanmakuImp.h">
+      <Filter>Header Files\Bridge Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="IDanmaku.h">
+      <Filter>Header Files\Bridge Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Group.h">
+      <Filter>Header Files\Composite Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Composite Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="SubPattern.h">
+      <Filter>Header Files\Composite Pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2d.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering.h">
+      <Filter>Header Files\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="DanmakuImp_1.h">
+      <Filter>Header Files\Bridge Pattern\Danmaku</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

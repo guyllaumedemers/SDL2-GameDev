@@ -8,9 +8,10 @@ DanmakuImp_1::~DanmakuImp_1() {}
 
 //DANMAKU_LOGIC
 
-void DanmakuImp_1::create()
+vector<Group*> DanmakuImp_1::create()
 {
 	//TODO Add Group* to the vector<Group*> here
+	return vector<Group*>{};
 }
 
 void DanmakuImp_1::update()
