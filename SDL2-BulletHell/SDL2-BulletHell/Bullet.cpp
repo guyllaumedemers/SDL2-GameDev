@@ -1,22 +1,17 @@
 #include "Bullet.h"
 
-//STATIC_FIELD
-
-const double Bullet::min_velocity = 0.0f;
-
-const double Bullet::max_velocity = 20.0f;
-
-const double Bullet::mass = 10.0f;
-
 //CONSTRUCTOR
 
-Bullet::Bullet(const Bullet& instance) :
-	angle(instance.angle),
-	angular_velocity(instance.angular_velocity),
-	acceleration(instance.acceleration),
-	velocity(instance.velocity),
-	location(instance.location),
-	ptr_shared_texture(nullptr) {}
+Bullet::Bullet(Vector2d force, double mass, double angle, double angular_velocity) : ptr_shared_texture(nullptr)
+{
+	this->force = force;
+	this->mass = mass;
+	this->angle = angle;
+	this->angular_velocity = angular_velocity;
+	this->acceleration = Vector2d(0, 0);
+	this->velocity = Vector2d(0, 0);
+	this->location = Vector2d(0, 0);		//TODO Should be at position of spawner
+}
 
 Bullet::~Bullet() {}
 
@@ -24,7 +19,10 @@ Bullet::~Bullet() {}
 
 void Bullet::update()
 {
-	//TODO Given Force retrieve acceleration to apply to velocity and blah blah blah
+	applyForce(force);
+	applyAcceleration();
+	applyVelocity();
+	Vector2d::mul(acceleration, 0);
 }
 
 //CHILDREN_HANDLING
@@ -32,11 +30,13 @@ void Bullet::update()
 void Bullet::add(Group*)
 {
 	//TODO Define what a leaf should do
+	return;
 }
 
 void Bullet::remove(Group*)
 {
 	//TODO Define what a leaf should do
+	return;
 }
 
 bool Bullet::isComposite()
@@ -50,7 +50,7 @@ void Bullet::applyForce(const Vector2d& force_to_apply)
 {
 	Vector2d temp = force_to_apply;
 
-	Vector2d::div(temp, Bullet::mass);
+	Vector2d::div(temp, mass);
 	Vector2d::add(acceleration, temp);
 }
 

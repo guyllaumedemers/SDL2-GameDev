@@ -1,4 +1,5 @@
 #include "DanmakuImp_1.h"
+#include "Ring.h"
 
 //CONSTRUCTOR
 
@@ -11,7 +12,7 @@ DanmakuImp_1::~DanmakuImp_1() {}
 vector<Group*> DanmakuImp_1::create()
 {
 	//TODO Add Group* to the vector<Group*> here
-	return vector<Group*>{};
+	return vector<Group*>{ new Ring(360, 0, 1, 0, 0)};
 }
 
 void DanmakuImp_1::update()

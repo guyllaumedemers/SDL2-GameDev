@@ -17,16 +17,14 @@ private:
 
 	double seed_angle = 0.0f;
 
+	double angular_velocity = 0.0f;
+
 public:
 
 	//CONSTRUCTOR
 
-	Ring(const vector<Group*>& childrens, int nb_bullets, double offset, double radius, double seed_angle);
+	Ring(int nb_bullets, double offset, double radius, double seed_angle, double angular_velocity);
 
 	virtual ~Ring();
-
-	//RING_LOGIC
-
-	virtual void update() override;
 };
 

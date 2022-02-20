@@ -17,6 +17,8 @@ public:
 
 	//CONSTRUCTOR
 
+	SubPattern();
+
 	SubPattern(const vector<Group*>&);
 
 	virtual ~SubPattern();

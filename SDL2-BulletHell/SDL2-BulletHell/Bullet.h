@@ -21,7 +21,7 @@ public:
 
 	//CONSTRUCTOR
 
-	Bullet(const Bullet&);
+	Bullet(Vector2d force, double mass, double angle, double angular_velocity);
 
 	virtual ~Bullet();
 
@@ -36,22 +36,6 @@ private:
 	void applyVelocity();
 
 	//FIELDS
-
-	double angle = 0;
-
-	double angular_velocity = 0;
-
-	static const double min_velocity;
-
-	static const double max_velocity;
-
-	static const double mass;
-
-	Vector2d acceleration;
-
-	Vector2d velocity;
-
-	Vector2d location;
 
 	SDL_Texture* ptr_shared_texture = nullptr;
 };
