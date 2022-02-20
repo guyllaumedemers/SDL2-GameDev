@@ -1,6 +1,5 @@
 #include "GameManager.h"
 #include <iostream>
-#include "Timer.h"
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 400
@@ -14,12 +13,10 @@ Rendering* GameManager::ren = nullptr;
 int GameManager::onExecute()
 {
 	initialize();
-	Timer frame_capping(std::chrono::milliseconds{ 16 });
 	while (isRunning) {
 		getInputs();
 		runGameLogic();
 		renderFrame();
-		while (!frame_capping.hasFinished()) {}
 	}
 	clear();
 	return 0;

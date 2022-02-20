@@ -2,7 +2,7 @@
 
 //CONSTRUCTOR
 
-Spawner::Spawner(IDanmaku* danmaku) : danmaku(danmaku), isAlive(true) {}
+Spawner::Spawner(IDanmaku* danmaku, Timer* spawnRate) : danmaku(danmaku), spawnRate(spawnRate), isAlive(true) {}
 
 Spawner::~Spawner() {}
 

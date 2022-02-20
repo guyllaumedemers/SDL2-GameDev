@@ -19,7 +19,7 @@ public:
 
 	//CONSTRUCTOR
 
-	Spawner(IDanmaku*);
+	Spawner(IDanmaku*, Timer*);
 
 	~Spawner();
 
