@@ -13,6 +13,8 @@ private:
 
 	Timer* spawnRate = nullptr;
 
+	bool isAlive = false;
+
 public:
 
 	//CONSTRUCTOR
@@ -26,5 +28,7 @@ public:
 	void create();
 
 	void update();
+
+	void die();
 };
 

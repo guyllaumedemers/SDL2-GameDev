@@ -1,20 +1,12 @@
 #pragma once
-#include "IDanmakuImp.h"
 
-using namespace std;
-class IDanmaku
+class IDanmakuImp
 {
-protected:
-
-	//FIELDS
-	
-	IDanmakuImp* imp = nullptr;
-
 public:
 
 	//DESTRUCTOR
 
-	virtual ~IDanmaku() {};
+	virtual ~IDanmakuImp() {};
 
 	//DANMAKU_LOGIC
 

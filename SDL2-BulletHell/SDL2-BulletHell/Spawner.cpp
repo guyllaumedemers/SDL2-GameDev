@@ -2,7 +2,7 @@
 
 //CONSTRUCTOR
 
-Spawner::Spawner(IDanmaku* danmaku) : danmaku(danmaku) {}
+Spawner::Spawner(IDanmaku* danmaku) : danmaku(danmaku), isAlive(true) {}
 
 Spawner::~Spawner() {}
 
@@ -16,4 +16,9 @@ void Spawner::create()
 void Spawner::update()
 {
 	danmaku->update();
+}
+
+void Spawner::die()
+{
+	danmaku->die();
 }
