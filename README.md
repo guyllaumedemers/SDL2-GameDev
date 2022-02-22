@@ -33,11 +33,11 @@ NOTE : This project is broken down into multiples folders, each representing a s
 
 ### Tetris
 
-> wip.
+> ...
 
 ### Danmaku
 
-> wip.
+> ...
 
 ## Resources
 
