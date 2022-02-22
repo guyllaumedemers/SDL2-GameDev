@@ -41,5 +41,5 @@ NOTE : This project is broken down into multiples folders, each representing a s
 
 ## Resources
 
-💬 References are given from : [sdltutorials.com](http://www.sdltutorials.com/sdl-tutorial-tic-tac-toe) and migrated for SDL2 APIs. More references on other subjects can be found [Automata theory : wiki](https://en.wikipedia.org/wiki/Cellular_automaton) and obviously explaination by the [G.O.A.T](https://www.youtube.com/watch?v=E7CxMHsYzSs&t=499s&ab_channel=javidx9). </br>
-💬 References for Danmaku are given from [Sparen](https://github.com/Sparen) : More reference on the subject of 'Curtain Fire' can be found on his website at the following src [DanmakuDesign](https://sparen.github.io/ph3tutorials/danmakudesign.html).
+💬 References are given from : [sdltutorials.com](http://www.sdltutorials.com/sdl-tutorial-tic-tac-toe) and migrated for SDL2 APIs. More references on other subjects can be found at [Automata theory : wiki](https://en.wikipedia.org/wiki/Cellular_automaton). </br>
+💬 References for Danmaku are given from [Sparen](https://github.com/Sparen) : More reference on the subject of 'Curtain Fire' can be found on his website at the following address [DanmakuDesign](https://sparen.github.io/ph3tutorials/danmakudesign.html).
