@@ -1,6 +1,8 @@
 #include "SpawnerManager.h"
 #include "LevelManager.h"
 
+vector<Spawner*> SpawnerManager::spawners;
+
 //SPAWNER_LOGIC
 
 void SpawnerManager::getSpawners(Level* level)

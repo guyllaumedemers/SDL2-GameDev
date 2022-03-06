@@ -1,4 +1,5 @@
 #include "LevelManager.h"
+#include "DefaultLevelFactory.h"
 
 vector<Level*> LevelManager::levels;
 
@@ -9,7 +10,7 @@ void LevelManager::create()
 	//TODO Load levels from file
 
 	//TEMP
-	levels.push_back(new Level());
+	levels.push_back(new Level(new DefaultLevelFactory()));
 }
 
 void LevelManager::destroy()
