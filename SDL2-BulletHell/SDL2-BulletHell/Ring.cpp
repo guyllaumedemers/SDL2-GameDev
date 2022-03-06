@@ -3,27 +3,22 @@
 
 //CONSTRUCTOR
 
-Ring::Ring(int nb_bullets, double offset, double radius, double seed_angle, double angular_velocity) :
-	nb_bullets(nb_bullets),
-	offset(offset),
-	radius(radius),
-	seed_angle(seed_angle),
-	angular_velocity(angular_velocity) {
-
-	double angle = 360 / nb_bullets;
-
+Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, double center_offset, double seed_angle, double angular_velocity)
+{
+	double angle = (360 / nb_bullets) + seed_angle;
+	double rad = (M_PI / 180) * angle;
 	for (int i = 0; i < nb_bullets; ++i) {
-		add(new Bullet(angle, angular_velocity));
-		angle += angle;
+		double x_offset = location.X() + center_offset * cos(rad);
+		double y_offset = location.Y() + center_offset * sin(rad);
+		Vector2d location_offset = Vector2d(x_offset, y_offset);
+		Vector2d force = Vector2d(cos(rad), sin(rad));
+		Vector2d::normalized(force);
+		Vector2d::mul(force, force_multiplier);
+		Bullet* bullet = new Bullet(location_offset, force, angle, angular_velocity);
+		this->childrens.push_back(bullet);
+
+		rad += rad;
 	}
-
-	//TODO How to integrate Radius variation into the equation
-
-	//TODO What should the offset do
-
-	//TODO How does the seed_angle behave
-
-	//TODO How do we add the angular velocity to the update method
 }
 
 Ring::~Ring() {}

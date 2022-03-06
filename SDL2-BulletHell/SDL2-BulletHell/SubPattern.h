@@ -1,13 +1,12 @@
 #pragma once
 #include <vector>
 #include "Group.h"
+#include "Vector2d.h"
 
 using namespace std;
 class SubPattern : virtual public Group
 {
 protected:
-
-	//FIELDS
 
 	//CHILDREN_REFERENCE
 
@@ -15,11 +14,7 @@ protected:
 
 public:
 
-	//CONSTRUCTOR
-
-	SubPattern();
-
-	SubPattern(const vector<Group*>&);
+	//DESTRUCTOR
 
 	virtual ~SubPattern();
 

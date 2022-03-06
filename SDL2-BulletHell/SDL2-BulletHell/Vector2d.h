@@ -26,8 +26,10 @@ public:
 
 	static void div(Vector2d& target, double div);
 
-	double X() { return x; };
+	static void normalized(Vector2d& target);
 
-	double Y() { return y; };
+	double X() const { return x; };
+
+	double Y() const { return y; };
 };
 

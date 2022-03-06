@@ -1,8 +1,6 @@
 #include "SubPattern.h"
 
-//CONSTRUCTOR
-
-SubPattern::SubPattern(const vector<Group*>& childrens) : childrens(childrens) {}
+//DESTRUCTOR
 
 SubPattern::~SubPattern() {}
 

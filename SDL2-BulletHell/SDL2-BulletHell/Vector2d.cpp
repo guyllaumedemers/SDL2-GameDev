@@ -1,4 +1,5 @@
 #include "Vector2d.h"
+#include <math.h>
 
 //CONSTRUCTOR
 
@@ -30,4 +31,10 @@ void Vector2d::div(Vector2d& target, double div)
 {
 	target.x /= div;
 	target.y /= div;
+}
+
+void Vector2d::normalized(Vector2d& target)
+{
+	double mag = sqrt(target.x * target.x + target.y * target.y);
+	div(target, mag);
 }

@@ -21,11 +21,31 @@ public:
 
 	//CONSTRUCTOR
 
-	Bullet(Vector2d force, double mass, double angle, double angular_velocity);
+	Bullet(const Vector2d&, const Vector2d&, double angle, double angular_velocity);
 
 	virtual ~Bullet();
 
 private:
+
+	//FIELDS
+
+	double angle = 0;
+
+	double angular_velocity = 0;
+
+	static const double min_velocity;
+
+	static const double max_velocity;
+
+	static const double mass;
+
+	Vector2d force;
+
+	Vector2d acceleration;
+
+	Vector2d velocity;
+
+	Vector2d location;
 
 	//PHYSIC_LOGIC
 
