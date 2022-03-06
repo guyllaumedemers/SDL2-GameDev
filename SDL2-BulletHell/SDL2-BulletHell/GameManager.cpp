@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "TextureManager.h"
+#include "LevelManager.h"
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 400
@@ -34,6 +35,7 @@ void GameManager::initialize()
 	ren = DBG_NEW Rendering(window);
 
 	TextureManager::create(ren->getRenderer());
+	LevelManager::create();
 }
 
 void GameManager::getInputs()

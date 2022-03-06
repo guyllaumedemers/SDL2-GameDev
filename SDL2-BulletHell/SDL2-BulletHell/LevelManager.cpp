@@ -7,6 +7,9 @@ vector<Level*> LevelManager::levels;
 void LevelManager::create()
 {
 	//TODO Load levels from file
+
+	//TEMP
+	levels.push_back(new Level());
 }
 
 void LevelManager::destroy()

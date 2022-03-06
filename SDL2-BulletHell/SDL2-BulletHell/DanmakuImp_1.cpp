@@ -1,5 +1,6 @@
 #include "DanmakuImp_1.h"
 #include "Ring.h"
+#include "TextureManager.h"
 
 //CONSTRUCTOR
 
@@ -11,8 +12,10 @@ DanmakuImp_1::~DanmakuImp_1() {}
 
 vector<Group*> DanmakuImp_1::create()
 {
-	//TODO Add Group* to the vector<Group*> here
-	return vector<Group*>{ };
+	//TODO Pass the location of the spawner as argument to the create function
+	return {
+		new Ring(Vector2d(0,0), 12, 1, 0, 0, 0, TextureManager::getTexture("CP1"))
+	};
 }
 
 void DanmakuImp_1::update()
