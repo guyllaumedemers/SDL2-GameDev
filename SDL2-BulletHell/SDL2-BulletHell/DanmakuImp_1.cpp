@@ -12,7 +12,7 @@ DanmakuImp_1::~DanmakuImp_1() {}
 vector<Group*> DanmakuImp_1::create()
 {
 	//TODO Add Group* to the vector<Group*> here
-	return vector<Group*>{};
+	return vector<Group*>{ };
 }
 
 void DanmakuImp_1::update()

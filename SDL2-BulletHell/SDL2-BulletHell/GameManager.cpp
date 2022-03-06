@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include <iostream>
+#include "TextureManager.h"
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 400
@@ -24,13 +25,16 @@ int GameManager::onExecute()
 
 void GameManager::initialize()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		std::cout << "ERROR::SDL_INIT::FAILED" << std::endl;
 		exit(1);
 	}
 
-	window = new Window(SCREEN_WIDTH, SCREEN_HEIGHT);
-	ren = new Rendering(window);
+	window = DBG_NEW Window(SCREEN_WIDTH, SCREEN_HEIGHT);
+	ren = DBG_NEW Rendering(window);
+
+	TextureManager::create(ren->getRenderer());
 }
 
 void GameManager::getInputs()
@@ -65,5 +69,6 @@ void GameManager::renderFrame()
 
 void GameManager::clear()
 {
+	TextureManager::destroy();
 	SDL_Quit();
 }

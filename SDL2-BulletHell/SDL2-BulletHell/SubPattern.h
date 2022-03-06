@@ -2,6 +2,7 @@
 #include <vector>
 #include "Group.h"
 #include "Vector2d.h"
+#include "Debugger.h"
 
 using namespace std;
 class SubPattern : virtual public Group

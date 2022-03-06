@@ -17,7 +17,7 @@ Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, do
 		Vector2d location_offset = Vector2d(x_offset, y_offset);
 		Vector2d force = Vector2d(cos(rad), sin(rad));
 		Vector2d::mul(force, force_multiplier);
-		Bullet* bullet = new Bullet(location_offset, force, angular_velocity);
+		Bullet* bullet = DBG_NEW Bullet(location_offset, force, angular_velocity);
 		add(bullet);
 
 		rad += rad;
