@@ -8,11 +8,10 @@ const double Bullet::mass = 10.0f;
 
 //CONSTRUCTOR
 
-Bullet::Bullet(const Vector2d& location, const Vector2d& force, double angle, double angular_velocity) : ptr_shared_texture(nullptr)
+Bullet::Bullet(const Vector2d& location, const Vector2d& force, double angular_velocity) : ptr_shared_texture(nullptr)
 {
 	this->location = location;
 	this->force = force;
-	this->angle = angle;
 	this->angular_velocity = angular_velocity;
 	this->acceleration = Vector2d(0, 0);
 	this->velocity = Vector2d(0, 0);
