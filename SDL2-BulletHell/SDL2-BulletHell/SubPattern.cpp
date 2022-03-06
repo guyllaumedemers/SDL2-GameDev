@@ -1,4 +1,5 @@
 #include "SubPattern.h"
+#include <iostream>
 
 //DESTRUCTOR
 
@@ -20,7 +21,8 @@ void SubPattern::add(Group* instance) {
 }
 
 void SubPattern::remove(Group* instance) {
-	//TODO Remove Instance
+	auto it = find(childrens.begin(), childrens.end(), instance);
+	if (it != childrens.end()) childrens.erase(it);
 }
 
 bool SubPattern::isComposite()

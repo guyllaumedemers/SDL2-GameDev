@@ -29,5 +29,7 @@ public:
 	virtual void remove(Group*) override;
 
 	virtual bool isComposite() override;
+
+	vector<Group*> getChildrens() { return childrens; }
 };
 

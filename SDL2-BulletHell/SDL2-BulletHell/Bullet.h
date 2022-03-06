@@ -25,6 +25,8 @@ public:
 
 	virtual ~Bullet();
 
+	Vector2d getForce() { return force; }
+
 private:
 
 	//FIELDS
