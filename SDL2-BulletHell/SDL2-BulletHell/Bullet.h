@@ -29,8 +29,6 @@ private:
 
 	//FIELDS
 
-	double angle = 0;
-
 	double angular_velocity = 0;
 
 	static const double min_velocity;

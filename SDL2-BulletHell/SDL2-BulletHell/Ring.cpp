@@ -1,12 +1,15 @@
 #include "Ring.h"
 #include "Bullet.h"
 
+const int Ring::min_bullet = 3;
+
 //CONSTRUCTOR
 
 Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, double center_offset, double seed_angle, double angular_velocity)
 {
-	double angle = (360 / nb_bullets) + seed_angle;
+	double angle = (360 / max(min_bullet, nb_bullets)) + seed_angle;
 	double rad = (M_PI / 180) * angle;
+
 	for (int i = 0; i < nb_bullets; ++i) {
 		double x_offset = location.X() + center_offset * cos(rad);
 		double y_offset = location.Y() + center_offset * sin(rad);
