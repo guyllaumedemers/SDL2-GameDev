@@ -1,5 +1,6 @@
 #include "Ring.h"
 #include "Bullet.h"
+#include <iostream>
 
 const int Ring::min_bullet = 3;
 
@@ -15,7 +16,6 @@ Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, do
 		double y_offset = location.Y() + center_offset * sin(rad);
 		Vector2d location_offset = Vector2d(x_offset, y_offset);
 		Vector2d force = Vector2d(cos(rad), sin(rad));
-		Vector2d::normalized(force);
 		Vector2d::mul(force, force_multiplier);
 		Bullet* bullet = new Bullet(location_offset, force, angular_velocity);
 		add(bullet);
