@@ -2,6 +2,7 @@
 #include "Debugger.h"
 #include "Window.h"
 #include "Rendering.h"
+#include "Ring.h"
 
 class GameManager
 {

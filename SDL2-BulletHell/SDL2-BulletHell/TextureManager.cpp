@@ -9,19 +9,21 @@ unordered_map<string, SDL_Texture*> TextureManager::textures;
 
 string TextureManager::path = "../SDL2-BulletHell/Assets/";
 
-//TEXTURE_LOGIC
+//GAME_LOGIC
 
 void TextureManager::create(SDL_Renderer* ren)
 {
-	if (!IMG_Init(IMG_INIT_PNG)) {
-		SDL_Log("Cannot Initialize SDL_Image : %s", SDL_GetError());
+	if (!IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG)) {
+		SDL_Log("ERROR::IMG_INIT::FAILED : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 
 	for (const auto& file : filesystem::directory_iterator(path)) {
 		filesystem::path path = file.path();
 		string s_path = path.generic_u8string();
+		std::cout << s_path << std::endl;
 		SDL_Texture* temp = ImageLoader::loadGPURendering(ren, s_path);
+		std::cout << &temp << std::endl;
 		vector<string> tokens;
 		Util::Parse(tokens, s_path, "/.png");
 		if (temp != nullptr) add(temp, tokens.at(tokens.size() - 1));
@@ -44,9 +46,10 @@ SDL_Texture* TextureManager::getTexture(string key)
 	else return nullptr;
 }
 
+//TEXTURE_LOGIC
+
 void TextureManager::add(SDL_Texture* texture, string key)
 {
-	std::cout << &texture << std::endl;
 	textures.insert(make_pair(key, texture));
 }
 

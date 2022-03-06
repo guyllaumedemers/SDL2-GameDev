@@ -21,7 +21,7 @@ public:
 
 	//CONSTRUCTOR
 
-	Bullet(const Vector2d&, const Vector2d&, double angular_velocity);
+	Bullet(const Vector2d& location, const Vector2d& force, double angular_velocity, SDL_Texture* shared_texture);
 
 	virtual ~Bullet();
 

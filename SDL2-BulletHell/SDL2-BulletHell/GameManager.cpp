@@ -1,5 +1,4 @@
 #include "GameManager.h"
-#include <iostream>
 #include "TextureManager.h"
 
 #define SCREEN_WIDTH 600
@@ -27,7 +26,7 @@ void GameManager::initialize()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		std::cout << "ERROR::SDL_INIT::FAILED" << std::endl;
+		SDL_Log("ERROR::SDL_INIT::FAILED : %s", SDL_GetError());
 		exit(1);
 	}
 
@@ -54,7 +53,6 @@ void GameManager::getInputs()
 
 void GameManager::runGameLogic()
 {
-
 }
 
 void GameManager::renderFrame()

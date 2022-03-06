@@ -1,12 +1,12 @@
 #include "Ring.h"
 #include "Bullet.h"
-#include <iostream>
+#include "TextureManager.h"
 
 const int Ring::min_bullet = 3;
 
 //CONSTRUCTOR
 
-Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, double center_offset, double seed_angle, double angular_velocity)
+Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, double center_offset, double seed_angle, double angular_velocity, SDL_Texture* shared_texture)
 {
 	double angle = (360 / max(min_bullet, nb_bullets)) + seed_angle;
 	double rad = (M_PI / 180) * angle;
@@ -17,7 +17,7 @@ Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, do
 		Vector2d location_offset = Vector2d(x_offset, y_offset);
 		Vector2d force = Vector2d(cos(rad), sin(rad));
 		Vector2d::mul(force, force_multiplier);
-		Bullet* bullet = DBG_NEW Bullet(location_offset, force, angular_velocity);
+		Bullet* bullet = DBG_NEW Bullet(location_offset, force, angular_velocity, shared_texture);
 		add(bullet);
 
 		rad += rad;
@@ -25,3 +25,5 @@ Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, do
 }
 
 Ring::~Ring() {}
+
+//RING_LOGIC

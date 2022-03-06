@@ -23,7 +23,7 @@ private:
 
 public:
 
-	//TEXTURE_LOGIC
+	//GAME_LOGIC
 
 	static void create(SDL_Renderer*);
 
