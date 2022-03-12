@@ -14,11 +14,9 @@ private:
 
 	//SPAWNER_LOGIC
 
-	static void getSpawners(Level*);
-
 	static Spawner* getSpawner();
 
-	static void discardFront();
+	static void discard();
 
 public:
 

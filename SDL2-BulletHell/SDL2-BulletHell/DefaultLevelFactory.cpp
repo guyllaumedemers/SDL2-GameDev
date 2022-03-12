@@ -10,6 +10,6 @@ vector<Spawner*> DefaultLevelFactory::create()
 		DBG_NEW Spawner(
 			DBG_NEW Danmaku(DBG_NEW DanmakuImp_1()),
 			DBG_NEW Timer(chrono::milliseconds{1000}),
-			Vector2d(200,200))
+			Vector2d(300,200))
 	};
 }

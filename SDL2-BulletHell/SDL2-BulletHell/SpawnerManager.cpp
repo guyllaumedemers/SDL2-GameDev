@@ -5,19 +5,13 @@ vector<Spawner*> SpawnerManager::spawners;
 
 //SPAWNER_LOGIC
 
-void SpawnerManager::getSpawners(Level* level)
-{
-	spawners.clear();
-	spawners = level->create();
-}
-
 Spawner* SpawnerManager::getSpawner()
 {
 	if (!spawners.empty()) return spawners.front();
 	else return nullptr;
 }
 
-void SpawnerManager::discardFront()
+void SpawnerManager::discard()
 {
 	if (!spawners.empty()) spawners.erase(spawners.begin());
 }
@@ -26,14 +20,9 @@ void SpawnerManager::discardFront()
 
 void SpawnerManager::create(Level* level)
 {
-	//TODO Create and fill the spawner collection from the level args
-	getSpawners(level);
-
-	//TODO Spawners will have to be added following specific timestamps
-
-	//TODO Spawners needs to be updated on in a way that wont block the main thread
-
-	//TODO each Spawners needs to handle his own sets of bullets which imply that their update is handle on the same thread that will update spawners
+	spawners.clear();
+	spawners = level->create();
+	for (const auto& it : spawners) it->create();
 }
 
 void SpawnerManager::update()
