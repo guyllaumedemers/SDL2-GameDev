@@ -24,6 +24,8 @@ public:
 
 	virtual void update() = 0;
 
+	virtual void render(SDL_Renderer*) = 0;
+
 	virtual void die() = 0;
 };
 

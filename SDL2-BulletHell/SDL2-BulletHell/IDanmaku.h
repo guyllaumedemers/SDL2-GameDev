@@ -1,7 +1,5 @@
 #pragma once
-#include <vector>
 #include "IDanmakuImp.h"
-#include "Group.h"
 #include "Vector2d.h"
 
 using namespace std;
@@ -24,6 +22,8 @@ public:
 	virtual void create(const Vector2d&) = 0;
 
 	virtual void update() = 0;
+
+	virtual void render(SDL_Renderer*) = 0;
 
 	virtual void die() = 0;
 };

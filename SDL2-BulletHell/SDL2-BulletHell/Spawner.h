@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL.h>
 #include "IDanmaku.h"
 #include "Timer.h"
 #include "Vector2d.h"
@@ -28,6 +29,8 @@ public:
 	void create();
 
 	void update();
+
+	void render(SDL_Renderer*);
 
 	void die();
 };

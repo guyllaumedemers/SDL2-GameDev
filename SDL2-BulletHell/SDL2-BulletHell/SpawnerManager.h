@@ -27,5 +27,7 @@ public:
 	static void create(Level*);
 
 	static void update();
+
+	static void render(SDL_Renderer*);
 };
 

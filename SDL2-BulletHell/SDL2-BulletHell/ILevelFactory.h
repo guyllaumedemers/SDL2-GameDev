@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Spawner.h"
+#include "Debugger.h"
 
 class ILevelFactory
 {

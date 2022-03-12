@@ -23,6 +23,8 @@ public:
 
 	virtual void update() override;
 
+	virtual void render(SDL_Renderer*) override;
+
 	//CHILDREN_HANDLING
 
 	virtual void add(Group*) override;

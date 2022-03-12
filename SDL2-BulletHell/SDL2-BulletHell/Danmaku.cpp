@@ -21,6 +21,11 @@ void Danmaku::update()
 	imp->update();
 }
 
+void Danmaku::render(SDL_Renderer* ren)
+{
+	imp->render(ren);
+}
+
 void Danmaku::die()
 {
 	imp->die();

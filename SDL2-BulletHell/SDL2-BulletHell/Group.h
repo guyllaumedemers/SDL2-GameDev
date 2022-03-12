@@ -1,5 +1,6 @@
 #pragma once
 #define _USE_MATH_DEFINES
+#include <SDL.h>
 
 class Group
 {
@@ -12,6 +13,8 @@ public:
 	//COMPONENT_LOGIC
 
 	virtual void update() = 0;
+
+	virtual void render(SDL_Renderer*) = 0;
 
 	//CHILDREN_HANDLING
 

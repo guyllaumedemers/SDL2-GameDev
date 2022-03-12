@@ -12,6 +12,11 @@ void SubPattern::update()
 	for (auto& it : childrens) it->update();
 }
 
+void SubPattern::render(SDL_Renderer* ren)
+{
+	for (auto& it : childrens) it->render(ren);
+}
+
 //CHILDREN_HANDLING
 
 void SubPattern::add(Group* instance) {

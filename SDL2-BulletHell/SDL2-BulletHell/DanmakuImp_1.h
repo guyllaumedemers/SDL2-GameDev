@@ -17,6 +17,8 @@ public:
 
 	void update() override;
 
+	void render(SDL_Renderer*) override;
+
 	void die() override;
 };
 

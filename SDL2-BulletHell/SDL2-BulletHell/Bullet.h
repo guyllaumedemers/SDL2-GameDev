@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL.h>
 #include "Group.h"
 #include "Vector2d.h"
 
@@ -10,6 +9,8 @@ public:
 	//BULLET_LOGIC
 
 	virtual void update() override;
+
+	virtual void render(SDL_Renderer*) override;
 
 	//CHILDREN_HANDLING
 
@@ -58,5 +59,9 @@ private:
 	//FIELDS
 
 	SDL_Texture* ptr_shared_texture = nullptr;
+
+	static const int sprite_width;
+
+	static const int sprite_height;
 };
 

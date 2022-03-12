@@ -19,6 +19,11 @@ void Spawner::update()
 	danmaku->update();
 }
 
+void Spawner::render(SDL_Renderer* ren)
+{
+	danmaku->render(ren);
+}
+
 void Spawner::die()
 {
 	danmaku->die();

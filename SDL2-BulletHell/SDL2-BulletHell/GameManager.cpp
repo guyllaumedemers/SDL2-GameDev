@@ -68,11 +68,17 @@ void GameManager::renderFrame()
 	SDL_SetRenderDrawColor(_ren, 0, 0, 0, 255);
 	SDL_RenderClear(_ren);
 
+	SpawnerManager::render(_ren);
+
 	SDL_RenderPresent(_ren);
 }
 
 void GameManager::clear()
 {
+	delete window;
+	window = nullptr;
+	delete ren;
+	ren = nullptr;
 	TextureManager::destroy();
 	SDL_Quit();
 }

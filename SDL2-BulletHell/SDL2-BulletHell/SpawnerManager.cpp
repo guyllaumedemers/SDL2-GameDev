@@ -40,3 +40,8 @@ void SpawnerManager::update()
 {
 	for (auto& it : spawners) it->update();
 }
+
+void SpawnerManager::render(SDL_Renderer* ren)
+{
+	for (auto& it : spawners) it->render(ren);
+}

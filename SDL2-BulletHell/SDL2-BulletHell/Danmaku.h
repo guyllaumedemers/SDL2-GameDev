@@ -17,6 +17,8 @@ public:
 
 	virtual void update() override;
 
+	virtual void render(SDL_Renderer*) override;
+
 	virtual void die() override;
 };
 

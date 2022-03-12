@@ -13,7 +13,7 @@ DanmakuImp_1::~DanmakuImp_1() {}
 void DanmakuImp_1::create(const Vector2d& location)
 {
 	subpatterns = {
-		new Ring(location, 12, 1, 0, 0, 0, TextureManager::getTexture("CP1"))
+		DBG_NEW Ring(location, 12, 1, 0, 0, 0, TextureManager::getTexture("CP1"))
 	};
 }
 
@@ -21,6 +21,11 @@ void DanmakuImp_1::update()
 {
 	//TODO Bridge Pattern Could be triggering external behaivour depending on the imp after a period of time
 	for (auto& it : subpatterns) it->update();
+}
+
+void DanmakuImp_1::render(SDL_Renderer* ren)
+{
+	for (auto& it : subpatterns) it->render(ren);
 }
 
 void DanmakuImp_1::die()
