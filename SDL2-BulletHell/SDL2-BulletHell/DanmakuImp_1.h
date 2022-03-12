@@ -13,9 +13,9 @@ public:
 
 	//DANMAKU_LOGIC
 
-	vector<Group*> create() override;
+	vector<Group*> create(const Vector2d&) override;
 
-	void update() override;
+	void update(const Vector2d&) override;
 
 	void die() override;
 };

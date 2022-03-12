@@ -13,9 +13,9 @@ public:
 
 	//DANMAKU_LOGIC
 
-	virtual void create() override;
+	virtual void create(const Vector2d&) override;
 
-	virtual void update() override;
+	virtual void update(const Vector2d&) override;
 
 	virtual void die() override;
 };

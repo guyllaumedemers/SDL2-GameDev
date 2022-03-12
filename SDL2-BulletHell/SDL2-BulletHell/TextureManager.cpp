@@ -21,9 +21,7 @@ void TextureManager::create(SDL_Renderer* ren)
 	for (const auto& file : filesystem::directory_iterator(path)) {
 		filesystem::path path = file.path();
 		string s_path = path.generic_u8string();
-		std::cout << s_path << std::endl;
 		SDL_Texture* temp = ImageLoader::loadGPURendering(ren, s_path);
-		std::cout << &*temp << std::endl;
 		vector<string> tokens;
 		Util::Parse(tokens, s_path, "/.png");
 		if (temp != nullptr) add(tokens.at(tokens.size() - 1), temp);

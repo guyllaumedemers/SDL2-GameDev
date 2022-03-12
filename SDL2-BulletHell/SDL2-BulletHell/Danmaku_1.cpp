@@ -11,14 +11,14 @@ Danmaku_1::~Danmaku_1() {}
 
 //DANMAKU_LOGIC
 
-void Danmaku_1::create()
+void Danmaku_1::create(const Vector2d& location)
 {
-	subpatterns = imp->create();
+	subpatterns = imp->create(location);
 }
 
-void Danmaku_1::update()
+void Danmaku_1::update(const Vector2d& location)
 {
-	imp->update();
+	imp->update(location);
 }
 
 void Danmaku_1::die()

@@ -75,9 +75,6 @@
     <ClCompile Include="Danmaku_1.cpp">
       <Filter>Source Files\Bridge Pattern\Danmaku</Filter>
     </ClCompile>
-    <ClCompile Include="IDanmakuImp.cpp">
-      <Filter>Source Files\Bridge Pattern</Filter>
-    </ClCompile>
     <ClCompile Include="SubPattern.cpp">
       <Filter>Source Files\Composite Pattern</Filter>
     </ClCompile>

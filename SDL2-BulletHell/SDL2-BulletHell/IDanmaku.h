@@ -2,6 +2,7 @@
 #include <vector>
 #include "IDanmakuImp.h"
 #include "Group.h"
+#include "Vector2d.h"
 
 using namespace std;
 class IDanmaku
@@ -22,9 +23,9 @@ public:
 
 	//DANMAKU_LOGIC
 
-	virtual void create() = 0;
+	virtual void create(const Vector2d&) = 0;
 
-	virtual void update() = 0;
+	virtual void update(const Vector2d&) = 0;
 
 	virtual void die() = 0;
 };

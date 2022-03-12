@@ -1,6 +1,7 @@
 #pragma once
 #include "IDanmaku.h"
 #include "Timer.h"
+#include "Vector2d.h"
 
 class Spawner
 {
@@ -12,13 +13,13 @@ private:
 
 	Timer* spawnRate = nullptr;
 
-	bool isAlive = false;
+	Vector2d location;
 
 public:
 
 	//CONSTRUCTOR
 
-	Spawner(IDanmaku*, Timer*);
+	Spawner(IDanmaku*, Timer*, const Vector2d&);
 
 	~Spawner();
 

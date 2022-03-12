@@ -150,7 +150,6 @@
     <ClCompile Include="Danmaku_1.cpp" />
     <ClCompile Include="DefaultLevelFactory.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="IDanmakuImp.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />

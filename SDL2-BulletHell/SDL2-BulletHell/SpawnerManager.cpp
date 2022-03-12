@@ -35,3 +35,8 @@ void SpawnerManager::create(Level* level)
 
 	//TODO each Spawners needs to handle his own sets of bullets which imply that their update is handle on the same thread that will update spawners
 }
+
+void SpawnerManager::update()
+{
+	for (auto& it : spawners) it->update();
+}

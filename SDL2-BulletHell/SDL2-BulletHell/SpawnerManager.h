@@ -25,5 +25,7 @@ public:
 	//GAME_LOGIC
 
 	static void create(Level*);
+
+	static void update();
 };
 
