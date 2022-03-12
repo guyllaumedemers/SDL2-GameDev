@@ -13,8 +13,6 @@ protected:
 
 	IDanmakuImp* imp = nullptr;
 
-	vector<Group*> subpatterns;
-
 public:
 
 	//DESTRUCTOR

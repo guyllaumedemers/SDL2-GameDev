@@ -6,6 +6,12 @@
 using namespace std;
 class IDanmakuImp
 {
+protected:
+
+	//FIELDS
+
+	vector<Group*> subpatterns;
+
 public:
 
 	//DESTRUCTOR
@@ -14,6 +20,10 @@ public:
 
 	//DANMAKU_LOGIC
 
-	virtual vector<Group*> create(const Vector2d&) = 0;
+	virtual void create(const Vector2d&) = 0;
+
+	virtual void update() = 0;
+
+	virtual void die() = 0;
 };
 

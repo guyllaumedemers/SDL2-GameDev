@@ -13,19 +13,15 @@ Danmaku::~Danmaku() {}
 
 void Danmaku::create(const Vector2d& location)
 {
-	subpatterns = imp->create(location);
+	imp->create(location);
 }
 
 void Danmaku::update()
 {
-	for (auto& it : subpatterns) it->update();
+	imp->update();
 }
 
 void Danmaku::die()
 {
-	for (auto& it : subpatterns) {
-		delete it;
-		it = nullptr;
-	}
-	subpatterns.clear();
+	imp->die();
 }

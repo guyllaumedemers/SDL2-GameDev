@@ -13,6 +13,10 @@ public:
 
 	//DANMAKU_LOGIC
 
-	vector<Group*> create(const Vector2d&) override;
+	void create(const Vector2d&) override;
+
+	void update() override;
+
+	void die() override;
 };
 
