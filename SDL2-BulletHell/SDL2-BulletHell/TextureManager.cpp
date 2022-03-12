@@ -23,10 +23,10 @@ void TextureManager::create(SDL_Renderer* ren)
 		string s_path = path.generic_u8string();
 		std::cout << s_path << std::endl;
 		SDL_Texture* temp = ImageLoader::loadGPURendering(ren, s_path);
-		std::cout << &temp << std::endl;
+		std::cout << &*temp << std::endl;
 		vector<string> tokens;
 		Util::Parse(tokens, s_path, "/.png");
-		if (temp != nullptr) add(temp, tokens.at(tokens.size() - 1));
+		if (temp != nullptr) add(tokens.at(tokens.size() - 1), temp);
 	}
 }
 
@@ -48,7 +48,7 @@ SDL_Texture* TextureManager::getTexture(string key)
 
 //TEXTURE_LOGIC
 
-void TextureManager::add(SDL_Texture* texture, string key)
+void TextureManager::add(string key, SDL_Texture* texture)
 {
 	textures.insert(make_pair(key, texture));
 }

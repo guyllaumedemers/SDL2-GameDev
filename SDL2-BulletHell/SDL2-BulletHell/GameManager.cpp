@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "TextureManager.h"
+#include "SpawnerManager.h"
 #include "LevelManager.h"
 
 #define SCREEN_WIDTH 600
@@ -28,7 +29,7 @@ void GameManager::initialize()
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		SDL_Log("ERROR::SDL_INIT::FAILED : %s", SDL_GetError());
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	window = DBG_NEW Window(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -36,6 +37,8 @@ void GameManager::initialize()
 
 	TextureManager::create(ren->getRenderer());
 	LevelManager::create();
+	Level* level = LevelManager::getLevel(0);
+	SpawnerManager::create(level);
 }
 
 void GameManager::getInputs()

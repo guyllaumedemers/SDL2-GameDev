@@ -17,7 +17,7 @@ private:
 
 	//TEXTURE_LOGIC
 
-	static void add(SDL_Texture*, string key);
+	static void add(string key, SDL_Texture* texture);
 
 	static void remove(string key);
 

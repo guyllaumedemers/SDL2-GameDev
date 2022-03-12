@@ -27,6 +27,7 @@ void SpawnerManager::discardFront()
 void SpawnerManager::create(Level* level)
 {
 	//TODO Create and fill the spawner collection from the level args
+	getSpawners(level);
 
 	//TODO Spawners will have to be added following specific timestamps
 
