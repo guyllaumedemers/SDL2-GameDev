@@ -72,7 +72,7 @@
     <ClCompile Include="Stack.cpp">
       <Filter>Source Files\Composite Pattern\Extend Composite</Filter>
     </ClCompile>
-    <ClCompile Include="Danmaku_1.cpp">
+    <ClCompile Include="Danmaku.cpp">
       <Filter>Source Files\Bridge Pattern\Danmaku</Filter>
     </ClCompile>
     <ClCompile Include="SubPattern.cpp">
@@ -134,7 +134,7 @@
     <ClInclude Include="Stack.h">
       <Filter>Header Files\Composite Pattern\Extend Composite</Filter>
     </ClInclude>
-    <ClInclude Include="Danmaku_1.h">
+    <ClInclude Include="Danmaku.h">
       <Filter>Header Files\Bridge Pattern\Danmaku</Filter>
     </ClInclude>
     <ClInclude Include="IDanmakuImp.h">

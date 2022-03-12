@@ -14,9 +14,5 @@ public:
 	//DANMAKU_LOGIC
 
 	vector<Group*> create(const Vector2d&) override;
-
-	void update(vector<Group*>& subpatterns) override;
-
-	void die() override;
 };
 

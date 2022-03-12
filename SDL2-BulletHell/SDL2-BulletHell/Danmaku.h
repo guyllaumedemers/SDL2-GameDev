@@ -1,15 +1,15 @@
 #pragma once
 #include "IDanmaku.h"
 
-class Danmaku_1 : virtual public IDanmaku
+class Danmaku : virtual public IDanmaku
 {
 public:
 
 	//CONSTRUCTOR
 
-	Danmaku_1(IDanmakuImp*);
+	Danmaku(IDanmakuImp*);
 
-	virtual ~Danmaku_1();
+	virtual ~Danmaku();
 
 	//DANMAKU_LOGIC
 

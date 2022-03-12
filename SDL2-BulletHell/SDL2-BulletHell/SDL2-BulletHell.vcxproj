@@ -147,7 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="DanmakuImp_1.cpp" />
-    <ClCompile Include="Danmaku_1.cpp" />
+    <ClCompile Include="Danmaku.cpp" />
     <ClCompile Include="DefaultLevelFactory.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
@@ -169,7 +169,7 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="DanmakuImp_1.h" />
-    <ClInclude Include="Danmaku_1.h" />
+    <ClInclude Include="Danmaku.h" />
     <ClInclude Include="DefaultLevelFactory.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Group.h" />

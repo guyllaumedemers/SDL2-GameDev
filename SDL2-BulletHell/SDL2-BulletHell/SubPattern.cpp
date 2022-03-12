@@ -9,9 +9,7 @@ SubPattern::~SubPattern() {}
 
 void SubPattern::update()
 {
-	for (auto& it : childrens) {
-		it->update();
-	}
+	for (auto& it : childrens) it->update();
 }
 
 //CHILDREN_HANDLING
