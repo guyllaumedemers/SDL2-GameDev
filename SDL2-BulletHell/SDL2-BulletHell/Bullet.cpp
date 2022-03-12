@@ -38,6 +38,7 @@ void Bullet::render(SDL_Renderer* ren)
 {
 	SDL_Texture* target = SDL_CreateTexture(ren, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, sprite_width, sprite_height);
 	SDL_SetRenderTarget(ren, target);
+	SDL_SetTextureBlendMode(target, SDL_BLENDMODE_BLEND);
 
 	SDL_Rect dest = {
 		location.X(),
