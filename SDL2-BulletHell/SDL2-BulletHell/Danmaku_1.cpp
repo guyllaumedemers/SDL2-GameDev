@@ -16,9 +16,9 @@ void Danmaku_1::create(const Vector2d& location)
 	subpatterns = imp->create(location);
 }
 
-void Danmaku_1::update(const Vector2d& location)
+void Danmaku_1::update()
 {
-	imp->update(location);
+	imp->update(subpatterns);
 }
 
 void Danmaku_1::die()

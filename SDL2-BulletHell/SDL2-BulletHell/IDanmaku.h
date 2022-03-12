@@ -25,7 +25,7 @@ public:
 
 	virtual void create(const Vector2d&) = 0;
 
-	virtual void update(const Vector2d&) = 0;
+	virtual void update() = 0;
 
 	virtual void die() = 0;
 };

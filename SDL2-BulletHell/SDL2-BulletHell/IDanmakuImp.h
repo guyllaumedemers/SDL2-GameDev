@@ -16,7 +16,7 @@ public:
 
 	virtual vector<Group*> create(const Vector2d&) = 0;
 
-	virtual void update(const Vector2d&) = 0;
+	virtual void update(vector<Group*>& subpatterns) = 0;
 
 	virtual void die() = 0;
 };

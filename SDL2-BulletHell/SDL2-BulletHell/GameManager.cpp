@@ -58,6 +58,7 @@ void GameManager::getInputs()
 
 void GameManager::runGameLogic()
 {
+	SpawnerManager::update();
 }
 
 void GameManager::renderFrame()

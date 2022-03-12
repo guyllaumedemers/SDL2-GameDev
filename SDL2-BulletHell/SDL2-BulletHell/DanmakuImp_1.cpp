@@ -17,9 +17,9 @@ vector<Group*> DanmakuImp_1::create(const Vector2d& location)
 	};
 }
 
-void DanmakuImp_1::update(const Vector2d& location)
+void DanmakuImp_1::update(vector<Group*>& subpatterns)
 {
-	//TODO Update Group* inside the vector<Group*> here
+	for (auto& it : subpatterns) it->update();
 }
 
 void DanmakuImp_1::die()
