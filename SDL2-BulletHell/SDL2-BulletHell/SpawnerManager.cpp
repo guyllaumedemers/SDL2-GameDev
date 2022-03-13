@@ -37,7 +37,7 @@ void SpawnerManager::update()
 
 void SpawnerManager::render(SDL_Renderer* ren)
 {
-	//auto start = Timer::setTimestamp();
+	auto start = Timer::setTimestamp();
 	for (auto& it : spawners) it->render(ren);
-	//Timer::printExecutionTime(start);
+	Timer::printExecutionTime(start);
 }

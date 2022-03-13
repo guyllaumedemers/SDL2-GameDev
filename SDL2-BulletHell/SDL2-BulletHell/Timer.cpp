@@ -28,7 +28,9 @@ steady_clock::time_point Timer::setTimestamp()
 
 void Timer::printExecutionTime(steady_clock::time_point& start)
 {
-	cout << "Execution Time: " << duration_cast<microseconds>(high_resolution_clock::now() - start).count() << "us" << endl;
+	cout << "Execution Time: " <<
+		duration_cast<microseconds>(high_resolution_clock::now() - start).count() << "us, " <<
+		duration_cast<milliseconds>(high_resolution_clock::now() - start).count() << "ms" << endl;
 }
 
 milliseconds Timer::getDeltaTime()
