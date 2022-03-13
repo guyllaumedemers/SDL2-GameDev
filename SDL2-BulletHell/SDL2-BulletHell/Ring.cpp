@@ -1,6 +1,5 @@
 #include "Ring.h"
 #include "Bullet.h"
-#include <iostream>
 
 const int Ring::min_bullet = 3;
 
@@ -21,7 +20,6 @@ Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, do
 		Vector2d location_offset = Vector2d(x_offset, y_offset);
 		Vector2d force = Vector2d(cos(radian), sin(radian));
 		Vector2d::mul(force, force_multiplier);
-		cout << angle << endl;
 		Bullet* bullet = DBG_NEW Bullet(location_offset, force, angle_increment, angular_velocity, shared_texture);
 		add(bullet);
 
