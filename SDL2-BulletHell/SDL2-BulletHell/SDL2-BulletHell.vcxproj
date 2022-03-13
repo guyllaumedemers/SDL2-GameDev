@@ -162,6 +162,7 @@
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="SubPattern.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="ThreadManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Vector2d.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -189,6 +190,8 @@
     <ClInclude Include="Stack.h" />
     <ClInclude Include="SubPattern.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="ThreadManager.h" />
+    <ClInclude Include="thread_pool.hpp" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Vector2d.h" />

@@ -1,6 +1,7 @@
 #include "DanmakuImp_1.h"
 #include "Ring.h"
 #include "TextureManager.h"
+#include "ThreadManager.h"
 
 //CONSTRUCTOR
 
@@ -13,24 +14,29 @@ DanmakuImp_1::~DanmakuImp_1() {}
 void DanmakuImp_1::create(const Vector2d& location)
 {
 	subpatterns = {
-		DBG_NEW Ring(location, 120, 0.01f, 0, 0, 0, TextureManager::getTexture("CP1"))
+		DBG_NEW Ring(location, 360, 0.100f, 0, 0, 000, TextureManager::getTexture("CP1")),
+		DBG_NEW Ring(location, 120, 0.050f, 0, 0, 000, TextureManager::getTexture("DP1")),
+		DBG_NEW Ring(location, 120, 0.035f, 0, 0, 120, TextureManager::getTexture("DP1")),
+		DBG_NEW Ring(location, 120, 0.015f, 0, 0, 045, TextureManager::getTexture("CPG1"))
 	};
 }
 
 void DanmakuImp_1::update()
 {
-	//TODO Bridge Pattern Could be triggering external behaivour depending on the imp after a period of time
-	for (auto& it : subpatterns) it->update();
+	for (auto& it : subpatterns) {
+		it->update();
+	}
 }
 
 void DanmakuImp_1::render(SDL_Renderer* ren)
 {
-	for (auto& it : subpatterns) it->render(ren);
+	for (auto& it : subpatterns) {
+		it->render(ren);
+	}
 }
 
 void DanmakuImp_1::die()
 {
-	//TODO Bridge Pattern Could be triggering external behaivour depending on the imp on death
 	for (auto& it : subpatterns) {
 		delete it;
 		it = nullptr;

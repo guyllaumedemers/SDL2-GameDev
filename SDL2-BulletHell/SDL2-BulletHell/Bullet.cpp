@@ -7,9 +7,9 @@ const double Bullet::max_velocity = 20.0f;
 
 const double Bullet::mass = 10.0f;
 
-const int Bullet::sprite_width = 25;
+const int Bullet::sprite_width = 15;
 
-const int Bullet::sprite_height = 25;
+const int Bullet::sprite_height = 15;
 
 //CONSTRUCTOR
 
@@ -39,7 +39,8 @@ void Bullet::render(SDL_Renderer* ren)
 {
 	SDL_Texture* target = SDL_CreateTexture(ren, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, sprite_width, sprite_height);
 	SDL_SetRenderTarget(ren, target);
-	SDL_SetTextureBlendMode(target, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(ren, 0, 0, 0, 0);
+	SDL_RenderClear(ren);
 
 	SDL_Rect dest = {
 		location.X(),
@@ -48,6 +49,7 @@ void Bullet::render(SDL_Renderer* ren)
 		sprite_height
 	};
 
+	SDL_SetTextureBlendMode(target, SDL_BLENDMODE_BLEND);
 	SDL_RenderCopy(ren, ptr_shared_texture, NULL, NULL);
 
 	SDL_SetRenderTarget(ren, NULL);
@@ -61,13 +63,11 @@ void Bullet::render(SDL_Renderer* ren)
 
 void Bullet::add(Group*)
 {
-	//TODO Define what a leaf should do
 	return;
 }
 
 void Bullet::remove(Group*)
 {
-	//TODO Define what a leaf should do
 	return;
 }
 

@@ -1,6 +1,7 @@
 #pragma once
-#include "SubPattern.h"
+#define _USE_MATH_DEFINES
 #include <SDL.h>
+#include "SubPattern.h"
 
 class Ring : virtual public SubPattern
 {

@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "ThreadManager.h"
 #include "TextureManager.h"
 #include "SpawnerManager.h"
 #include "LevelManager.h"

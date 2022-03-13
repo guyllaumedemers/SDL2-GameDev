@@ -1,6 +1,5 @@
 #include "Ring.h"
 #include "Bullet.h"
-#include "TextureManager.h"
 
 const int Ring::min_bullet = 3;
 

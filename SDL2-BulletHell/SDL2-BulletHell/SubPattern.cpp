@@ -1,9 +1,15 @@
 #include "SubPattern.h"
-#include <iostream>
 
 //DESTRUCTOR
 
-SubPattern::~SubPattern() {}
+SubPattern::~SubPattern()
+{
+	for (auto& it : childrens) {
+		delete it;
+		it = nullptr;
+	}
+	childrens.clear();
+}
 
 //SUBPATTERN_LOGIC
 

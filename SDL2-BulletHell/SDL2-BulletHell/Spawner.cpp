@@ -15,7 +15,6 @@ void Spawner::create()
 
 void Spawner::update()
 {
-	//TODO Update Spawner Position if needed to make various pattern starting point
 	danmaku->update();
 }
 
