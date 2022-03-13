@@ -26,6 +26,7 @@ void SpawnerManager::create(Level* level)
 		spawners = level->create();
 		});
 	ThreadManager::workers->wait_for_tasks();
+
 	for (auto& it : spawners) {
 		it->create();
 	}

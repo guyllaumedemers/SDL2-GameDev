@@ -22,7 +22,7 @@ public:
 
 	//CONSTRUCTOR
 
-	Bullet(const Vector2d& location, const Vector2d& force, double angular_velocity, SDL_Texture* shared_texture);
+	Bullet(const Vector2d& location, const Vector2d& force, double orientation, double angular_velocity, SDL_Texture* shared_texture);
 
 	virtual ~Bullet();
 
@@ -32,7 +32,9 @@ private:
 
 	//FIELDS
 
-	double angular_velocity = 0;
+	double angular_velocity = 0.0f;
+
+	double orientation = 0.0f;
 
 	static const double min_velocity;
 
