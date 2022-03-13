@@ -2,7 +2,7 @@
 
 //CONSTRUCTOR
 
-Timer::Timer(std::chrono::milliseconds threshold) : last(std::chrono::high_resolution_clock::now()), threshold(threshold)
+Timer::Timer(milliseconds threshold) : last(high_resolution_clock::now()), threshold(threshold)
 {
 }
 
@@ -15,13 +15,23 @@ Timer::~Timer()
 bool Timer::hasFinished()
 {
 	if (getDeltaTime() >= threshold) {
-		last = std::chrono::high_resolution_clock::now();
+		last = high_resolution_clock::now();
 		return true;
 	}
 	return false;
 }
 
-std::chrono::milliseconds Timer::getDeltaTime()
+steady_clock::time_point Timer::setTimestamp()
 {
-	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - last);
+	return high_resolution_clock::now();
+}
+
+void Timer::printExecutionTime(steady_clock::time_point& start)
+{
+	cout << "Execution Time: " << duration_cast<microseconds>(high_resolution_clock::now() - start).count() << "us" << endl;
+}
+
+milliseconds Timer::getDeltaTime()
+{
+	return duration_cast<milliseconds>(high_resolution_clock::now() - last);
 }

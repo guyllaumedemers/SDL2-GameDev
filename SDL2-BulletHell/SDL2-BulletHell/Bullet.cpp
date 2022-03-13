@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "Timer.h"
 
 const double Bullet::min_velocity = 0.0f;
 
