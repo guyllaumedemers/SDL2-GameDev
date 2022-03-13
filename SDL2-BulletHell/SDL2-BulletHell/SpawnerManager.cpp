@@ -21,9 +21,11 @@ void SpawnerManager::discard()
 
 void SpawnerManager::create(Level* level)
 {
-	spawners.clear();
-	spawners = level->create();
-
+	ThreadManager::workers->push_task([&] {
+		spawners.clear();
+		spawners = level->create();
+		});
+	ThreadManager::workers->wait_for_tasks();
 	for (auto& it : spawners) {
 		it->create();
 	}
@@ -32,13 +34,15 @@ void SpawnerManager::create(Level* level)
 void SpawnerManager::update()
 {
 	for (auto& it : spawners) {
-		it->update();
+		ThreadManager::workers->push_task([&] {it->update(); });
 	}
+	ThreadManager::workers->wait_for_tasks();
 }
 
 void SpawnerManager::render(SDL_Renderer* ren)
 {
 	for (auto& it : spawners) {
-		it->render(ren);
+		ThreadManager::workers->push_task([&] {it->render(ren); });
 	}
+	ThreadManager::workers->wait_for_tasks();
 }
