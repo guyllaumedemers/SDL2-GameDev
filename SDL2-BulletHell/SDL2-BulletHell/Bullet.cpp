@@ -11,6 +11,8 @@ const int Bullet::sprite_width = 25;
 
 const int Bullet::sprite_height = 25;
 
+const double Bullet::sprite_rot = 90;
+
 //CONSTRUCTOR
 
 Bullet::Bullet(const Vector2d& location, const Vector2d& force, double orientation, double angular_velocity, SDL_Texture* shared_texture)
@@ -51,7 +53,7 @@ void Bullet::render(SDL_Renderer* ren)
 	};
 
 	SDL_SetTextureBlendMode(target, SDL_BLENDMODE_BLEND);
-	SDL_RenderCopyExF(ren, ptr_shared_texture, NULL, NULL, orientation, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyExF(ren, ptr_shared_texture, NULL, NULL, orientation - sprite_rot, NULL, SDL_FLIP_NONE);
 
 	SDL_SetRenderTarget(ren, NULL);
 	SDL_RenderCopy(ren, target, NULL, &dest);
