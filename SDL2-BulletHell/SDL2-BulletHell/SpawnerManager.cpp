@@ -47,3 +47,12 @@ void SpawnerManager::render(SDL_Renderer* ren)
 	}
 	ThreadManager::workers->wait_for_tasks();
 }
+
+void SpawnerManager::clear()
+{
+	for (auto& it : spawners) {
+		delete it;
+		it = nullptr;
+	}
+	spawners.clear();
+}

@@ -7,9 +7,9 @@ const double Bullet::max_velocity = 20.0f;
 
 const double Bullet::mass = 10.0f;
 
-const int Bullet::sprite_width = 25;
+const int Bullet::sprite_width = 20;
 
-const int Bullet::sprite_height = 25;
+const int Bullet::sprite_height = 20;
 
 const double Bullet::sprite_rot = 90;
 

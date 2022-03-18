@@ -27,5 +27,7 @@ public:
 	static void update();
 
 	static void render(SDL_Renderer*);
+
+	static void clear();
 };
 

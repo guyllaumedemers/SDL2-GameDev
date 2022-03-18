@@ -76,6 +76,7 @@ void GameManager::renderFrame()
 
 void GameManager::clear()
 {
+	SpawnerManager::clear();
 	delete window;
 	window = nullptr;
 	delete ren;
