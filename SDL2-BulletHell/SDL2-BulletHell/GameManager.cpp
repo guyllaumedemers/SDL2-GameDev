@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "SpawnerManager.h"
 #include "LevelManager.h"
+#include "Debugger.h"
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 400
@@ -12,6 +13,8 @@ bool GameManager::isRunning = true;
 Window* GameManager::window = nullptr;
 
 Rendering* GameManager::ren = nullptr;
+
+Timer* GameManager::timer = nullptr;
 
 int GameManager::onExecute()
 {
@@ -40,6 +43,7 @@ void GameManager::initialize()
 	LevelManager::create();
 	Level* level = LevelManager::getLevel(0);
 	SpawnerManager::create(level);
+	timer = DBG_NEW Timer(DBG_NEW SDLTimerImp());
 }
 
 void GameManager::getInputs()
@@ -59,7 +63,9 @@ void GameManager::getInputs()
 
 void GameManager::runGameLogic()
 {
-	SpawnerManager::update();
+	double dt = timer->deltaTime();
+	SpawnerManager::update(dt);
+	timer->ticks();
 }
 
 void GameManager::renderFrame()

@@ -15,7 +15,7 @@ public:
 
 	virtual void create(const Vector2d&) override;
 
-	virtual void update() override;
+	virtual void update(const double&) override;
 
 	virtual void render(SDL_Renderer*) override;
 

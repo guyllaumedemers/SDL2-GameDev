@@ -1,8 +1,5 @@
 #pragma once
-#include <vector>
 #include "Group.h"
-#include "Vector2d.h"
-#include "Debugger.h"
 
 using namespace std;
 class SubPattern : virtual public Group
@@ -21,7 +18,7 @@ public:
 
 	//SUBPATTERN_LOGIC
 
-	virtual void update() override;
+	virtual void update(const double&) override;
 
 	virtual void render(SDL_Renderer*) override;
 

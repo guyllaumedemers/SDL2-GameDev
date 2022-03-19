@@ -1,6 +1,14 @@
 #pragma once
+#define _USE_MATH_DEFINES
 #include <SDL.h>
+#include <vector>
+#include <chrono>
+#include "Debugger.h"
+#include "Vector2d.h"
+#include "Timer.h"
 
+using namespace std;
+using namespace chrono;
 class Group
 {
 public:
@@ -11,7 +19,7 @@ public:
 
 	//COMPONENT_LOGIC
 
-	virtual void update() = 0;
+	virtual void update(const double&) = 0;
 
 	virtual void render(SDL_Renderer*) = 0;
 

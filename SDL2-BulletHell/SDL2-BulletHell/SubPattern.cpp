@@ -13,9 +13,9 @@ SubPattern::~SubPattern()
 
 //SUBPATTERN_LOGIC
 
-void SubPattern::update()
+void SubPattern::update(const double& ms)
 {
-	for (auto& it : childrens) it->update();
+	for (auto& it : childrens) it->update(ms);
 }
 
 void SubPattern::render(SDL_Renderer* ren)

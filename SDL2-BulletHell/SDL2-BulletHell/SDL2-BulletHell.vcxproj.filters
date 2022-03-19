@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{e982a973-a646-4cbb-9ddd-5e4f63165fda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Tools\Composite">
+      <UniqueIdentifier>{6d48784e-514b-492b-bd27-6aceb5bd65da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tools\Composite">
+      <UniqueIdentifier>{d79b7b5f-a19c-4548-8e89-737738e1b057}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ring.cpp">
@@ -86,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Source Files\SDL</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Vector2d.cpp">
       <Filter>Source Files\Tools</Filter>
@@ -126,6 +129,15 @@
     <ClCompile Include="ThreadManager.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="SDLTimerImp.cpp">
+      <Filter>Source Files\Tools\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Tools\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="SClockTimerImp.cpp">
+      <Filter>Source Files\Tools\Composite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ring.h">
@@ -156,9 +168,6 @@
       <Filter>Header Files\Composite Pattern</Filter>
     </ClInclude>
     <ClInclude Include="Vector2d.h">
-      <Filter>Header Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Rendering.h">
@@ -211,6 +220,18 @@
     </ClInclude>
     <ClInclude Include="ThreadManager.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Tools\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="ITimerImp.h">
+      <Filter>Header Files\Tools\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLTimerImp.h">
+      <Filter>Header Files\Tools\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="SClockTimerImp.h">
+      <Filter>Header Files\Tools\Composite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

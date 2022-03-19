@@ -1,6 +1,5 @@
 #pragma once
 #include "Spawner.h"
-#include "Debugger.h"
 
 class ISpawnerFactory
 {

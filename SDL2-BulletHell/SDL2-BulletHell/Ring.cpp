@@ -5,7 +5,7 @@ const int Ring::min_bullet = 3;
 
 //CONSTRUCTOR
 
-Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, double center_offset, double seed_angle, double angular_velocity, SDL_Texture* shared_texture)
+Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, double center_offset, double seed_angle, double angular_acceleration, SDL_Texture* shared_texture)
 {
 	double angle = (360 / max(min_bullet, nb_bullets)) + seed_angle;
 	double rad = (M_PI / 180) * angle;
@@ -20,7 +20,7 @@ Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, do
 		Vector2d location_offset = Vector2d(x_offset, y_offset);
 		Vector2d force = Vector2d(cos(radian), sin(radian));
 		Vector2d::mul(force, force_multiplier);
-		Bullet* bullet = DBG_NEW Bullet(location_offset, force, angle_increment, angular_velocity, shared_texture);
+		Bullet* bullet = DBG_NEW Bullet(location_offset, force, angle_increment, angular_acceleration, force_multiplier, shared_texture);
 		add(bullet);
 
 		radian += rad;

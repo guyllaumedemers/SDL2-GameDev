@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include "ILevelFactory.h"
 
 class DefaultLevelFactory : virtual public ILevelFactory

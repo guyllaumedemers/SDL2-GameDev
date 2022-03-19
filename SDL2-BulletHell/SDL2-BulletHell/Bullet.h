@@ -1,14 +1,14 @@
 #pragma once
 #include "Group.h"
-#include "Vector2d.h"
 
+using namespace std;
 class Bullet : virtual public Group
 {
 public:
 
 	//BULLET_LOGIC
 
-	virtual void update() override;
+	virtual void update(const double&) override;
 
 	virtual void render(SDL_Renderer*) override;
 
@@ -22,19 +22,21 @@ public:
 
 	//CONSTRUCTOR
 
-	Bullet(const Vector2d& location, const Vector2d& force, double orientation, double angular_velocity, SDL_Texture* shared_texture);
+	Bullet(const Vector2d& location, const Vector2d& force, double angle, double angular_acceleration , double force_multiplier, SDL_Texture* shared_texture);
 
 	virtual ~Bullet();
-
-	Vector2d getForce() { return force; }
 
 private:
 
 	//FIELDS
 
+	double angular_acceleration = 0.0f;
+
 	double angular_velocity = 0.0f;
 
-	double orientation = 0.0f;
+	double angle = 0.0f;
+
+	double force_multiplier = 0.0f;
 
 	static const double min_velocity;
 
@@ -52,11 +54,13 @@ private:
 
 	//PHYSIC_LOGIC
 
-	void applyForce(const Vector2d&);
+	void applyForce();
 
 	void applyAcceleration();
 
-	void applyVelocity();
+	void applyVelocity(const double&);
+
+	void applyAngularVelocity(const double&);
 
 	//FIELDS
 

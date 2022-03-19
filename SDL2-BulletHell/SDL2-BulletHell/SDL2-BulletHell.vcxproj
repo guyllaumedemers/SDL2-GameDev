@@ -156,6 +156,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="Ring.cpp" />
+    <ClCompile Include="SClockTimerImp.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="SpawnerManager.cpp" />
     <ClCompile Include="Spread.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="SDLTimerImp.cpp" />
     <ClCompile Include="Vector2d.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -180,10 +182,12 @@
     <ClInclude Include="ILevelFactory.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="ISpawnerFactory.h" />
+    <ClInclude Include="ITimerImp.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Rendering.h" />
     <ClInclude Include="Ring.h" />
+    <ClInclude Include="SClockTimerImp.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="SpawnerManager.h" />
     <ClInclude Include="Spread.h" />
@@ -193,6 +197,7 @@
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="thread_pool.hpp" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="SDLTimerImp.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="Vector2d.h" />
     <ClInclude Include="Window.h" />

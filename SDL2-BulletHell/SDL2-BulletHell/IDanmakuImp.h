@@ -1,7 +1,5 @@
 #pragma once
-#include <vector>
 #include "Group.h"
-#include "Vector2d.h"
 
 using namespace std;
 class IDanmakuImp
@@ -12,9 +10,17 @@ protected:
 
 	vector<Group*> subpatterns;
 
+	//CONSTRUCTOR
+
+	IDanmakuImp() = default;
+
 public:
 
-	//DESTRUCTOR
+	//CONSTRUCTOR
+
+	IDanmakuImp(const IDanmakuImp&) = delete;
+
+	IDanmakuImp(IDanmakuImp&&) = delete;
 
 	virtual ~IDanmakuImp() {};
 
@@ -22,7 +28,7 @@ public:
 
 	virtual void create(const Vector2d&) = 0;
 
-	virtual void update() = 0;
+	virtual void update(const double&) = 0;
 
 	virtual void render(SDL_Renderer*) = 0;
 

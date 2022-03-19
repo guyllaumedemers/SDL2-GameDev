@@ -1,8 +1,5 @@
 #pragma once
-#include <SDL.h>
 #include "IDanmaku.h"
-#include "Timer.h"
-#include "Vector2d.h"
 
 class Spawner
 {
@@ -28,7 +25,7 @@ public:
 
 	void create();
 
-	void update();
+	void update(const double&);
 
 	void render(SDL_Renderer*);
 

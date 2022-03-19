@@ -13,9 +13,9 @@ void Spawner::create()
 	danmaku->create(location);
 }
 
-void Spawner::update()
+void Spawner::update(const double& ms)
 {
-	danmaku->update();
+	danmaku->update(ms);
 }
 
 void Spawner::render(SDL_Renderer* ren)

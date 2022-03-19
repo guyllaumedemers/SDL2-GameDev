@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include "Spawner.h"
 #include "Level.h"
 
@@ -24,7 +23,7 @@ public:
 
 	static void create(Level*);
 
-	static void update();
+	static void update(const double&);
 
 	static void render(SDL_Renderer*);
 

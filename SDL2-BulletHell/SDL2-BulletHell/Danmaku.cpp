@@ -16,9 +16,9 @@ void Danmaku::create(const Vector2d& location)
 	imp->create(location);
 }
 
-void Danmaku::update()
+void Danmaku::update(const double& ms)
 {
-	imp->update();
+	imp->update(ms);
 }
 
 void Danmaku::render(SDL_Renderer* ren)

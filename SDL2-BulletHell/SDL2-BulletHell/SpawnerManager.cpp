@@ -32,10 +32,10 @@ void SpawnerManager::create(Level* level)
 	}
 }
 
-void SpawnerManager::update()
+void SpawnerManager::update(const double& ms)
 {
 	for (auto& it : spawners) {
-		ThreadManager::workers->push_task([&] {it->update(); });
+		ThreadManager::workers->push_task([&] {it->update(ms); });
 	}
 	ThreadManager::workers->wait_for_tasks();
 }

@@ -1,7 +1,7 @@
 #pragma once
-#include "Debugger.h"
 #include "Window.h"
 #include "Rendering.h"
+#include "Timer.h"
 
 using namespace std;
 class GameManager
@@ -15,6 +15,8 @@ private:
 	static Window* window;
 
 	static Rendering* ren;
+
+	static Timer* timer;
 
 	//APP_LOGIC
 

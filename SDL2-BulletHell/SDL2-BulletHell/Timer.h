@@ -1,38 +1,28 @@
 #pragma once
-#include <iostream>
-#include <chrono>
+#include "ITimerImp.h"
+#include "SDLTimerImp.h"
+#include "SClockTimerImp.h"
 
-using namespace std;
-using namespace std::chrono;
-struct Timer
+class Timer
 {
 private:
 
-	//TIMER_LOGIC
-
-	milliseconds getDeltaTime();
-
 	//FIELDS
 
-	high_resolution_clock::time_point last;
-	milliseconds threshold;
+	ITimerImp* imp = nullptr;
 
 public:
 
 	//CONSTRUCTOR
 
-	Timer(milliseconds threshold);
+	Timer(ITimerImp*);
 
 	~Timer();
 
-	//TIMER_LOGIC
+	//TIMER LOGIC
 
-	bool hasFinished();
+	void ticks() const;
 
-	//PERFORMENCE_TESTING
-
-	static steady_clock::time_point setTimestamp();
-
-	static void printExecutionTime(steady_clock::time_point&);
+	double deltaTime() const;
 };
 

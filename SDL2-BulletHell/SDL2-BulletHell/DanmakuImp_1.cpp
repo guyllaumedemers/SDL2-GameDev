@@ -14,16 +14,14 @@ DanmakuImp_1::~DanmakuImp_1() {}
 void DanmakuImp_1::create(const Vector2d& location)
 {
 	subpatterns = {
-		DBG_NEW Ring(location, 120, 0.100f, 0, 0, 0, TextureManager::getTexture("CP1")),
-		DBG_NEW Ring(location, 120, 0.080f, 0, 0, 0, TextureManager::getTexture("DP1")),
-		DBG_NEW Ring(location, 120, 0.070f, 0, 0, 0, TextureManager::getTexture("CPG1"))
+		DBG_NEW Ring(location, 120, 10.0f, 0, 0, 0, TextureManager::getTexture("DP1"))
 	};
 }
 
-void DanmakuImp_1::update()
+void DanmakuImp_1::update(const double& ms)
 {
 	for (auto& it : subpatterns) {
-		it->update();
+		it->update(ms);
 	}
 }
 
