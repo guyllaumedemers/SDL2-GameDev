@@ -11,7 +11,7 @@ public:
 
 	//CONSTRUCTOR
 
-	Ring(const Vector2d&, int nb_bullets, double force_multiplier, double center_offset, double seed_angle, double angular_velocity, SDL_Texture*);
+	Ring(const Vector2d&, int nb_bullets, double force_magnitude, double center_offset, double seed_angle, double angular_velocity, SDL_Texture*);
 
 	virtual ~Ring();
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include "Group.h"
+#include "Bullet.h"
 
 using namespace std;
 class SubPattern : virtual public Group

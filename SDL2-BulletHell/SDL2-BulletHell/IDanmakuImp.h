@@ -1,5 +1,7 @@
 #pragma once
 #include "Group.h"
+#include "Ring.h"
+#include "Stack.h"
 
 using namespace std;
 class IDanmakuImp

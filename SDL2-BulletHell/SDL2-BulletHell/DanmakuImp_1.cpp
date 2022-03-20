@@ -1,5 +1,4 @@
 #include "DanmakuImp_1.h"
-#include "Ring.h"
 
 //CONSTRUCTOR
 
@@ -12,7 +11,8 @@ DanmakuImp_1::~DanmakuImp_1() {}
 void DanmakuImp_1::create(const Vector2d& location)
 {
 	subpatterns = {
-		DBG_NEW Ring(location, 120, 10.0f, 0, 0, 10.0f, TextureManager::getTexture("DP1"))
+		DBG_NEW Ring(location, 120, 10.0f, 0.0f, 0.0f, 10.0f, TextureManager::getTexture("DP1")),
+		DBG_NEW Stack(location, 10, 20.0f, 0.0f, 45.0f, 0.0f, 0.0f, TextureManager::getTexture("CP1")),
 	};
 }
 
