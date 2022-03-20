@@ -18,9 +18,8 @@ Ring::Ring(const Vector2d& location, int nb_bullets, double force_multiplier, do
 		double x_offset = location.X() + center_offset * cos(radian);
 		double y_offset = location.Y() + center_offset * sin(radian);
 		Vector2d location_offset = Vector2d(x_offset, y_offset);
-		Vector2d force = Vector2d(cos(radian), sin(radian));
-		Vector2d::mul(force, force_multiplier);
-		Bullet* bullet = DBG_NEW Bullet(location_offset, force, angle_increment, angular_acceleration, force_multiplier, shared_texture);
+		Vector2d force_dir = Vector2d(cos(radian), sin(radian));
+		Bullet* bullet = DBG_NEW Bullet(location_offset, force_dir, angle_increment, angular_acceleration, force_multiplier, shared_texture);
 		add(bullet);
 
 		radian += rad;

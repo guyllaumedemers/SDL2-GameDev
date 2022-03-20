@@ -10,9 +10,17 @@ protected:
 
 	vector<Group*> childrens;
 
+	//CONSTRUCTOR
+
+	SubPattern() = default;
+
 public:
 
-	//DESTRUCTOR
+	//CONSTRUCTOR
+
+	SubPattern(const SubPattern&) = delete;
+
+	SubPattern(SubPattern&&) = delete;
 
 	virtual ~SubPattern();
 

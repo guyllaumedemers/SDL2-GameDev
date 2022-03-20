@@ -12,9 +12,19 @@ using namespace std;
 using namespace chrono;
 class Group
 {
+protected:
+
+	//CONSTRUCTOR
+
+	Group() = default;
+
 public:
 
-	//DESTRUCTOR
+	//CONSTRUCTOR
+
+	Group(const Group&) = delete;
+
+	Group(Group&&) = delete;
 
 	virtual ~Group() {};
 

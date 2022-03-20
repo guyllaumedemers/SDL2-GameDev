@@ -26,6 +26,7 @@ Bullet::Bullet(const Vector2d& location, const Vector2d& force, double angle, do
 	this->acceleration = Vector2d(0, 0);
 	this->velocity = Vector2d(0, 0);
 	this->ptr_shared_texture = shared_texture;
+	Vector2d::mul(this->force, force_multiplier);
 }
 
 Bullet::~Bullet() {}
