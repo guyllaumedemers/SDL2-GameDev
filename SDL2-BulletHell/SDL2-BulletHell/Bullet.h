@@ -22,7 +22,7 @@ public:
 
 	//CONSTRUCTOR
 
-	Bullet(const Vector2d& location, const Vector2d& force, double angle, double angular_acceleration , double force_multiplier, SDL_Texture* shared_texture);
+	Bullet(const Vector2d& location, double angle, double angular_acceleration , double force_multiplier, SDL_Texture* shared_texture);
 
 	virtual ~Bullet();
 
@@ -36,15 +36,13 @@ private:
 
 	double angle = 0.0f;
 
-	double force_multiplier = 0.0f;
+	double magnitude = 0.0f;
 
 	static const double min_velocity;
 
 	static const double max_velocity;
 
 	static const double mass;
-
-	Vector2d force;
 
 	Vector2d acceleration;
 

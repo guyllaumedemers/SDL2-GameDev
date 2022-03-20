@@ -15,18 +15,16 @@ const double Bullet::sprite_rot = 90;
 
 //CONSTRUCTOR
 
-Bullet::Bullet(const Vector2d& location, const Vector2d& force, double angle, double angular_acceleration, double force_multiplier, SDL_Texture* shared_texture)
+Bullet::Bullet(const Vector2d& location, double angle, double angular_acceleration, double force_multiplier, SDL_Texture* shared_texture)
 {
 	this->location = location;
-	this->force = force;
 	this->angle = angle;
 	this->angular_acceleration = angular_acceleration;
 	this->angular_velocity = 0.0f;
-	this->force_multiplier = force_multiplier;
+	this->magnitude = force_multiplier;
 	this->acceleration = Vector2d(0, 0);
 	this->velocity = Vector2d(0, 0);
 	this->ptr_shared_texture = shared_texture;
-	Vector2d::mul(this->force, force_multiplier);
 }
 
 Bullet::~Bullet() {}
@@ -87,10 +85,12 @@ bool Bullet::isComposite()
 
 void Bullet::applyForce()
 {
-	Vector2d temp = force;
+	double rad = (M_PI / 180) * angle;
+	Vector2d force = Vector2d(cos(rad), sin(rad));
 
-	Vector2d::div(temp, mass);
-	Vector2d::add(acceleration, temp);
+	Vector2d::mul(force, magnitude);
+	Vector2d::div(force, mass);
+	Vector2d::add(acceleration, force);
 }
 
 void Bullet::applyAcceleration()
@@ -109,8 +109,4 @@ void Bullet::applyAngularVelocity(const double& ms)
 	angular_velocity += angular_acceleration;
 	angular_velocity = clamp(angular_velocity, -1.0, 1.0);
 	angle += (angular_velocity * ms);
-
-	double radian = (M_PI / 180) * angle;
-	force = Vector2d(cos(radian), sin(radian));
-	Vector2d::mul(force, force_multiplier);
 }
