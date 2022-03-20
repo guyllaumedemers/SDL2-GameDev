@@ -71,5 +71,7 @@ private:
 	static const int sprite_height;
 
 	static const double sprite_rot;
+
+	Timer* t;
 };
 

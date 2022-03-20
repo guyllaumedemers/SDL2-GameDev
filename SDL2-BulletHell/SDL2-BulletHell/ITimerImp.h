@@ -36,4 +36,6 @@ public:
 	virtual void ticks() = 0;
 
 	virtual double deltaTime() = 0;
+
+	virtual void print() = 0;
 };

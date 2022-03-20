@@ -1,9 +1,9 @@
 #include "Bullet.h"
 #include <algorithm>
 
-const double Bullet::min_velocity = -20.0f;
+const double Bullet::min_velocity = -10.0f;
 
-const double Bullet::max_velocity = 20.0f;
+const double Bullet::max_velocity = 10.0f;
 
 const double Bullet::mass = 10.0f;
 
@@ -26,6 +26,8 @@ Bullet::Bullet(const Vector2d& displacement, double angle, double angular_accele
 	this->acceleration = Vector2d(0, 0);
 	this->velocity = Vector2d(0, 0);
 	this->ptr_shared_texture = shared_texture;
+
+	t = new Timer(new SDLTimerImp());
 }
 
 Bullet::~Bullet() {}
@@ -34,11 +36,11 @@ Bullet::~Bullet() {}
 
 void Bullet::update(const double& ms)
 {
+	t->print();
 	applyForce(ms);
 	applyAcceleration(ms);
 	applyVelocity(ms);
 	//applyAngularVelocity(ms);
-	Vector2d::mul(acceleration, 0);
 }
 
 void Bullet::render(SDL_Renderer* ren)
@@ -91,33 +93,22 @@ void Bullet::applyForce(const double& ms)
 
 	Vector2d::mul(force, force_magnitude);
 	Vector2d::div(force, mass);
-	Vector2d::mul(force, ms);
 	Vector2d::add(acceleration, force);
 }
 
 void Bullet::applyAcceleration(const double& ms)
 {
-	if (velocity.X() > min_velocity &&
-		velocity.X() < max_velocity &&
-		velocity.Y() > min_velocity &&
-		velocity.Y() < max_velocity) {
-		Vector2d::add(velocity, acceleration);
-	}
+	Vector2d::mul(velocity, ms);
+	Vector2d::mul(acceleration, 0.5f * ms * ms);
+	Vector2d::add(velocity, acceleration);
 	Vector2d::mul(acceleration, 0);
 }
 
 void Bullet::applyVelocity(const double& ms)
 {
-	Vector2d::mul(velocity, ms);
 	Vector2d::add(displacement, velocity);
 }
 
 void Bullet::applyAngularVelocity(const double& ms)
 {
-	angular_velocity += angular_acceleration;
-	angle += angular_velocity;
-
-	//TODO Issue #3 -- I want to be able to increment my bullet angle orientation so it curves over time without resolving on itself. Force is being recalculated above to handle the new direction. A solution could simply
-
-	//be to clamp the angle of the bullet 
 }

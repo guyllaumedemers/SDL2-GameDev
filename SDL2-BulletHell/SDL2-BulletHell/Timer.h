@@ -24,5 +24,7 @@ public:
 	void ticks() const;
 
 	double deltaTime() const;
+
+	void print() const;
 };
 

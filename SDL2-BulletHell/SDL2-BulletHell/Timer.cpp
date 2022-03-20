@@ -21,3 +21,7 @@ double Timer::deltaTime() const
 {
 	return imp->deltaTime();
 }
+
+void Timer::print() const {
+	imp->print();
+}

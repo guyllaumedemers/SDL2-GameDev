@@ -2,7 +2,7 @@
 
 //CONSTRUCTOR
 
-SDLTimerImp::SDLTimerImp() : previous(SDL_GetTicks64()) {}
+SDLTimerImp::SDLTimerImp() : previous(SDL_GetTicks64()), start(SDL_GetTicks64()) {}
 
 SDLTimerImp::~SDLTimerImp() {}
 
@@ -18,4 +18,13 @@ void SDLTimerImp::ticks()
 double SDLTimerImp::deltaTime()
 {
 	return delta;
+}
+
+void SDLTimerImp::print()
+{
+	if ((SDL_GetTicks64() - start) > 1000) {
+		++nb_second_passed;
+		cout << nb_second_passed << " sec" << endl;
+		start = SDL_GetTicks64();
+	}
 }

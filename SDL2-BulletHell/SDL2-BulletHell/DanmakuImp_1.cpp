@@ -11,7 +11,7 @@ DanmakuImp_1::~DanmakuImp_1() {}
 void DanmakuImp_1::create(const Vector2d& displacement)
 {
 	subpatterns = {
-		DBG_NEW Stack(displacement, 10, 100.0f, 0.0f, 0.0f, 00.0f, 0.0f, TextureManager::getTexture("CPG1"))
+		DBG_NEW Stack(displacement, 1, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, TextureManager::getTexture("CPG1"))
 	};
 }
 
