@@ -6,6 +6,7 @@
 #include "Debugger.h"
 #include "Vector2d.h"
 #include "Timer.h"
+#include "TextureManager.h"
 
 using namespace std;
 using namespace chrono;

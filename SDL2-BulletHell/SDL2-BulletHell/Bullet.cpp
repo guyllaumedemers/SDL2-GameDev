@@ -108,4 +108,8 @@ void Bullet::applyAngularVelocity(const double& ms)
 	angular_velocity += angular_acceleration;
 	angular_velocity = clamp(angular_velocity, -1.0, 1.0);
 	angle += (angular_velocity * ms);
+
+	double radian = (M_PI / 180) * angle;
+	force = Vector2d(cos(radian), sin(radian));
+	Vector2d::mul(force, force_multiplier);
 }

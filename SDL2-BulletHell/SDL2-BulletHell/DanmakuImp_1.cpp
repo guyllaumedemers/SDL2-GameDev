@@ -1,7 +1,5 @@
 #include "DanmakuImp_1.h"
 #include "Ring.h"
-#include "TextureManager.h"
-#include "ThreadManager.h"
 
 //CONSTRUCTOR
 
