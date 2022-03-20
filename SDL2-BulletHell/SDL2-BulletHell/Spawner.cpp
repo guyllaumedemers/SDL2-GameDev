@@ -2,7 +2,7 @@
 
 //CONSTRUCTOR
 
-Spawner::Spawner(IDanmaku* danmaku, Timer* spawnRate, const Vector2d& location) : danmaku(danmaku), spawnRate(spawnRate), location(location) {}
+Spawner::Spawner(IDanmaku* danmaku, Timer* spawnRate, const Vector2d& displacement) : danmaku(danmaku), spawnRate(spawnRate), displacement(displacement) {}
 
 Spawner::~Spawner() {}
 
@@ -10,7 +10,7 @@ Spawner::~Spawner() {}
 
 void Spawner::create()
 {
-	danmaku->create(location);
+	danmaku->create(displacement);
 }
 
 void Spawner::update(const double& ms)

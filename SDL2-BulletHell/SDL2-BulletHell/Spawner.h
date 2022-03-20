@@ -11,7 +11,7 @@ private:
 
 	Timer* spawnRate = nullptr;
 
-	Vector2d location;
+	Vector2d displacement;
 
 public:
 

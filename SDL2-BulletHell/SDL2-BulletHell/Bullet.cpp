@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include <algorithm>
 
-const double Bullet::min_velocity = 1.0f;
+const double Bullet::min_velocity = -20.0f;
 
 const double Bullet::max_velocity = 20.0f;
 
@@ -15,13 +15,14 @@ const double Bullet::sprite_rot = 90;
 
 //CONSTRUCTOR
 
-Bullet::Bullet(const Vector2d& location, double angle, double angular_acceleration, double force_multiplier, SDL_Texture* shared_texture)
+Bullet::Bullet(const Vector2d& displacement, double angle, double angular_acceleration, double force_magnitude, double force_spread, SDL_Texture* shared_texture)
 {
-	this->location = location;
+	this->displacement = displacement;
 	this->angle = angle;
 	this->angular_acceleration = angular_acceleration;
 	this->angular_velocity = 0.0f;
-	this->magnitude = force_multiplier;
+	this->force_magnitude = force_magnitude;
+	this->force_spread = force_spread;
 	this->acceleration = Vector2d(0, 0);
 	this->velocity = Vector2d(0, 0);
 	this->ptr_shared_texture = shared_texture;
@@ -33,10 +34,10 @@ Bullet::~Bullet() {}
 
 void Bullet::update(const double& ms)
 {
-	applyForce();
-	applyAcceleration();
+	applyForce(ms);
+	applyAcceleration(ms);
 	applyVelocity(ms);
-	applyAngularVelocity(ms);
+	//applyAngularVelocity(ms);
 	Vector2d::mul(acceleration, 0);
 }
 
@@ -48,8 +49,8 @@ void Bullet::render(SDL_Renderer* ren)
 	SDL_RenderClear(ren);
 
 	SDL_Rect dest = {
-		location.X(),
-		location.Y(),
+		displacement.X(),
+		displacement.Y(),
 		sprite_width,
 		sprite_height
 	};
@@ -83,36 +84,38 @@ bool Bullet::isComposite()
 
 //PHYSIC_LOGIC
 
-void Bullet::applyForce()
+void Bullet::applyForce(const double& ms)
 {
 	double rad = (M_PI / 180) * angle;
 	Vector2d force = Vector2d(cos(rad), sin(rad));
 
-	//TODO Issue #1 -- I want my stack of bullets to increase its magnitude over time and clamp to the max bullet velocity declared above so bullets have proper spacing and have proper displacement
-
-	//TODO Issue #2 -- It only applies to Stack so incrementing magnitude for Ring would not make sense. How do we make this flexible so it doesnt affect the behaviour of other subpattern
-
-	Vector2d::mul(force, magnitude);
+	Vector2d::mul(force, force_magnitude);
 	Vector2d::div(force, mass);
+	Vector2d::mul(force, ms);
 	Vector2d::add(acceleration, force);
 }
 
-void Bullet::applyAcceleration()
+void Bullet::applyAcceleration(const double& ms)
 {
-	Vector2d::add(velocity, acceleration);
+	if (velocity.X() > min_velocity &&
+		velocity.X() < max_velocity &&
+		velocity.Y() > min_velocity &&
+		velocity.Y() < max_velocity) {
+		Vector2d::add(velocity, acceleration);
+	}
+	Vector2d::mul(acceleration, 0);
 }
 
 void Bullet::applyVelocity(const double& ms)
 {
 	Vector2d::mul(velocity, ms);
-	Vector2d::add(location, velocity);
+	Vector2d::add(displacement, velocity);
 }
 
 void Bullet::applyAngularVelocity(const double& ms)
 {
 	angular_velocity += angular_acceleration;
-	angular_velocity = clamp(angular_velocity, -1.0, 1.0);
-	angle += (angular_velocity * ms);
+	angle += angular_velocity;
 
 	//TODO Issue #3 -- I want to be able to increment my bullet angle orientation so it curves over time without resolving on itself. Force is being recalculated above to handle the new direction. A solution could simply
 

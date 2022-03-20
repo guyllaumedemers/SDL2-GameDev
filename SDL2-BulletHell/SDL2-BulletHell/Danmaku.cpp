@@ -11,9 +11,9 @@ Danmaku::~Danmaku() {}
 
 //DANMAKU_LOGIC
 
-void Danmaku::create(const Vector2d& location)
+void Danmaku::create(const Vector2d& displacement)
 {
-	imp->create(location);
+	imp->create(displacement);
 }
 
 void Danmaku::update(const double& ms)
