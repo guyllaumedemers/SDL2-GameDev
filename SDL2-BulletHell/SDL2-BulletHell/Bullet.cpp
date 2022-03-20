@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include <algorithm>
 
-const double Bullet::min_velocity = 0.0f;
+const double Bullet::min_velocity = 1.0f;
 
 const double Bullet::max_velocity = 20.0f;
 
@@ -88,6 +88,10 @@ void Bullet::applyForce()
 	double rad = (M_PI / 180) * angle;
 	Vector2d force = Vector2d(cos(rad), sin(rad));
 
+	//TODO Issue #1 -- I want my stack of bullets to increase its magnitude over time and clamp to the max bullet velocity declared above so bullets have proper spacing and have proper displacement
+
+	//TODO Issue #2 -- It only applies to Stack so incrementing magnitude for Ring would not make sense. How do we make this flexible so it doesnt affect the behaviour of other subpattern
+
 	Vector2d::mul(force, magnitude);
 	Vector2d::div(force, mass);
 	Vector2d::add(acceleration, force);
@@ -109,4 +113,8 @@ void Bullet::applyAngularVelocity(const double& ms)
 	angular_velocity += angular_acceleration;
 	angular_velocity = clamp(angular_velocity, -1.0, 1.0);
 	angle += (angular_velocity * ms);
+
+	//TODO Issue #3 -- I want to be able to increment my bullet angle orientation so it curves over time without resolving on itself. Force is being recalculated above to handle the new direction. A solution could simply
+
+	//be to clamp the angle of the bullet 
 }
