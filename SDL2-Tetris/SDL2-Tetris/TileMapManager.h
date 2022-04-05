@@ -16,6 +16,8 @@ private:
 
 	//INTERNAL_LOGIC
 
+	static bool checkRowState(const int&);
+
 	static Tetrominoe* spawn();
 
 public:
@@ -24,9 +26,9 @@ public:
 
 	static void create(const int&, const int&);
 
-	static void update();
+	static void update(const int&, const int&);
 
-	static void render(SDL_Renderer*);
+	static void render(SDL_Renderer*, const int&, const int&);
 
 	static void clear(const int&);
 };

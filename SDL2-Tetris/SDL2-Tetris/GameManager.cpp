@@ -4,8 +4,6 @@
 #include "TileMapManager.h"
 
 #define TILE_SIZE 20
-#define ROWS 24
-#define COLS 10
 
 //FIELDS
 
@@ -14,6 +12,8 @@ bool GameManager::isRunning = true;
 Window* GameManager::window = nullptr;
 
 Renderer* GameManager::ren = nullptr;
+
+Difficulty* GameManager::mode = nullptr;
 
 //APP_LOGIC
 
@@ -26,12 +26,11 @@ void GameManager::initialize()
 		exit(EXIT_FAILURE);
 	}
 
-	int width = TILE_SIZE * COLS;
-	int height = TILE_SIZE * ROWS;
+	mode = new Difficulty(Mode::hard);
 
-	window = DBG_NEW Window(height, width);
+	window = DBG_NEW Window(mode->getHeight() * TILE_SIZE, mode->getWidth() * TILE_SIZE);
 	ren = DBG_NEW Renderer(window);
-	TileMapManager::create(ROWS, COLS);
+	TileMapManager::create(mode->getHeight(), mode->getWidth());
 }
 
 void GameManager::getInputs()
@@ -42,7 +41,7 @@ void GameManager::getInputs()
 
 void GameManager::runGameLogic()
 {
-	TileMapManager::update();
+	TileMapManager::update(mode->getHeight(), mode->getWidth());
 }
 
 void GameManager::renderFrame()
@@ -52,21 +51,23 @@ void GameManager::renderFrame()
 	SDL_RenderClear(temp);
 	SDL_SetRenderDrawColor(temp, 0, 0, 0, 255);
 
-	TileMapManager::render(temp);
+	TileMapManager::render(temp, mode->getHeight(), mode->getWidth());
 
 	SDL_RenderPresent(temp);
 }
 
 void GameManager::clear()
 {
-	TileMapManager::clear(ROWS);
+	TileMapManager::clear(mode->getHeight());
+	delete mode;
+	mode = nullptr;
 	delete window;
 	window = nullptr;
 	delete ren;
 	ren = nullptr;
 }
 
-//GAME_LOGIC
+//APP_LOGIC
 
 int GameManager::onExecute()
 {

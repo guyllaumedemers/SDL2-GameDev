@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "Renderer.h"
+#include "Difficulty.h"
 
 class GameManager
 {
@@ -13,6 +14,8 @@ private:
 	static Window* window;
 
 	static Renderer* ren;
+
+	static Difficulty* mode;
 
 	//APP_LOGIC
 
@@ -28,7 +31,7 @@ private:
 
 public:
 
-	//GAME_LOGIC
+	//APP_LOGIC
 
 	static int onExecute();
 

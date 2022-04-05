@@ -54,6 +54,9 @@
     <ClCompile Include="TetrominoeImp.cpp">
       <Filter>Source Files\Bridge Pattern\Imp</Filter>
     </ClCompile>
+    <ClCompile Include="Difficulty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
@@ -82,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="TetrominoeImp.h">
       <Filter>Header Files\Bridge Pattern\Imp</Filter>
+    </ClInclude>
+    <ClInclude Include="Difficulty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

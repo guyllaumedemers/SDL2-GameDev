@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Difficulty.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -155,9 +156,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debugger.h" />
+    <ClInclude Include="Difficulty.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Mode.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Tetrominoe.h" />
     <ClInclude Include="TetrominoeImp.h" />

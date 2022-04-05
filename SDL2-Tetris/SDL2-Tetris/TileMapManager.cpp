@@ -17,13 +17,13 @@ void TileMapManager::create(const int& row, const int& col)
 	}
 }
 
-void TileMapManager::update()
+void TileMapManager::update(const int& row, const int& col)
 {
 	//TODO Update the tilemap, check for available slot
 	//TODO Update tetrominoes position
 }
 
-void TileMapManager::render(SDL_Renderer* ren)
+void TileMapManager::render(SDL_Renderer* ren, const int& row, const int& col)
 {
 	//TODO Render tetrominoes at position
 }
@@ -43,6 +43,11 @@ void TileMapManager::clear(const int& row)
 }
 
 //INTERNAL_LOGIC
+
+bool TileMapManager::checkRowState(const int& pos)
+{
+	return false;
+}
 
 Tetrominoe* TileMapManager::spawn()
 {
