@@ -1,36 +1,29 @@
 #include "InputManager.h"
+#include "GameManager.h"
 
-void InputManager::getInputs()
+void InputManager::processEvent(SDL_Event& myEvent)
 {
-	SDL_Event myEvent;
-	while (SDL_PollEvent(&myEvent) > 0) {
-		switch (myEvent.type)
+	switch (myEvent.type)
+	{
+	case SDL_QUIT:
+		GameManager::setIsRunning(false);
+		break;
+	case SDL_KEYUP:
+		switch (myEvent.key.keysym.scancode)
 		{
-		case SDL_QUIT:
-			GameManager::setIsRunning(false);
+		case SDL_SCANCODE_W:
 			break;
-		case SDLK_SPACE:
-			/// <summary>
-			/// flip shape
-			/// </summary>
+		case SDL_SCANCODE_A:
 			break;
-		case SDLK_a:
-			/// <summary>
-			/// move left
-			/// </summary>
+		case SDL_SCANCODE_S:
 			break;
-		case SDLK_s:
-			/// <summary>
-			/// drop down
-			/// </summary>
-			break;
-		case SDLK_d:
-			/// <summary>
-			/// move right
-			/// </summary>
+		case SDL_SCANCODE_D:
 			break;
 		default:
 			break;
 		}
+		break;
+	default:
+		break;
 	}
 }

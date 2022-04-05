@@ -1,29 +1,33 @@
 #pragma once
 #include <vector>
 #include "Tetrominoe.h"
+#include "Renderer.h"
 
+using namespace std;
 class TileMapManager
 {
+private:
+
+	//FIELDS
+
+	static bool** tilemap;
+
+	static vector<Tetrominoe*> tetrominoes;
+
+	//INTERNAL_LOGIC
+
+	static Tetrominoe* spawn();
+
 public:
-
-	~TileMapManager();
-
-	static TileMapManager* getInstance(const int& row, const int col);
-
-	void operator=(const TileMapManager&) = delete;
 
 	//GAME_LOGIC
 
-	Tetrominoe* create();
+	static void create(const int&, const int&);
 
-private:
+	static void update();
 
-	TileMapManager(const int& row, const int col);
+	static void render(SDL_Renderer*);
 
-	static TileMapManager* instance;
-
-	bool** tilemap = nullptr;
-
-	std::vector<Tetrominoe*> tetrominoes;
+	static void clear(const int&);
 };
 

@@ -1,30 +1,33 @@
 #include "Window.h"
 #include <iostream>
 
-Window* Window::instance = nullptr;
+//CONSTRUCTOR
 
-Window::Window(const int& w, const int& h)
+Window::Window(const int& rows, const int& cols)
 {
-	sdl_window = SDL_CreateWindow("Tetris", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_RESIZABLE);
-	if (sdl_window == nullptr) {
-		std::cout << "ERROR::SDL_WINDOW::CREATION_FAILED" << std::endl;
-		exit(0);
-	}
+    window = SDL_CreateWindow(
+        "Bullet Hell",
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        cols,
+        rows,
+        0);
+
+    if (window == nullptr) {
+        std::cout << "ERROR::WINDOW_CREATION_FAILED" << std::endl;
+        exit(EXIT_FAILURE);
+    }
 }
 
 Window::~Window()
 {
-	SDL_DestroyWindow(sdl_window);
-	sdl_window = nullptr;
+    SDL_DestroyWindow(window);
+    window = nullptr;
 }
 
-Window* Window::getInstance(const int& w, const int& h)
-{
-	if (instance == nullptr) return instance = new Window(w, h);
-	else return instance;
-}
+//GETTER
 
 SDL_Window* Window::getWindow()
 {
-	return sdl_window;
+    return window;
 }

@@ -1,9 +1,10 @@
 #include "Panel.h"
 #include <iostream>
+#include "Debugger.h"
 
 Panel::Panel(const int& x, const int& y, const int& w, const int& h)
 {
-	m_Rect = new SDL_Rect{
+	m_Rect = DBG_NEW SDL_Rect{
 		x,
 		y,
 		w,
@@ -14,9 +15,14 @@ Panel::Panel(const int& x, const int& y, const int& w, const int& h)
 
 Panel::~Panel()
 {
-	m_Texture = nullptr;
+	for (auto& p : m_Panels) {
+		delete p;
+		p = nullptr;
+	}
+	m_Panels.clear();
 	delete m_Rect;
 	m_Rect = nullptr;
+	m_Texture = nullptr;
 }
 
 void Panel::draw(SDL_Renderer* renderer, SDL_Color color)
@@ -39,17 +45,6 @@ void Panel::draw(SDL_Renderer* renderer, SDL_Color color)
 
 	SDL_DestroyTexture(target);
 	target = nullptr;
-}
-
-void Panel::reset()
-{
-	for (auto& it : m_Panels) {
-		(*it).reset();
-	}
-	for (auto& p : m_Panels) {
-		delete p;
-	}
-	m_Panels.clear();
 }
 
 void Panel::addPanel(Panel* panel)

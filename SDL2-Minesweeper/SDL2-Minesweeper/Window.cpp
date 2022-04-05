@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Debugger.h"
 
 SDL_Window* Window::m_Window = nullptr;
 
@@ -32,6 +33,13 @@ void Window::setWindowSize(const int& width, const int& height)
 	resetPanels();
 	SDL_Rect* rect = initializeContentArea(width, height);
 	SDL_SetWindowSize(m_Window, (*rect).w, getNextPanelHeightPosition(rect));
+}
+
+void Window::clear()
+{
+	resetPanels();
+	SDL_DestroyWindow(m_Window);
+	m_Window = nullptr;
 }
 
 SDL_Rect* Window::initializeContentArea(const int& width, const int& height)
@@ -126,10 +134,8 @@ SDL_Rect* Window::buildSubPanel(Panel* panel, const int& x, const int& y, const 
 void Window::resetPanels()
 {
 	for (auto& it : m_Panels) {
-		(*it).reset();
-	}
-	for (auto& it : m_Panels) {
 		delete it;
+		it = nullptr;
 	}
 	m_Panels.clear();
 }

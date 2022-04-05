@@ -1,63 +1,72 @@
 #include "GameManager.h"
-#include "Window.h"
-#include "Rendering.h"
+#include "Debugger.h"
 #include "InputManager.h"
+#include "TileMapManager.h"
+
+#define TILE_SIZE 20
+#define ROWS 24
+#define COLS 10
+
+//FIELDS
 
 bool GameManager::isRunning = true;
 
-SDL_Window* GameManager::window = nullptr;
+Window* GameManager::window = nullptr;
 
-SDL_Renderer* GameManager::renderer = nullptr;
+Renderer* GameManager::ren = nullptr;
 
-#define BOARD_HEIGHT 24
-#define BOARD_WIDTH 10
-
-#define TILE_SIZE 30
+//APP_LOGIC
 
 void GameManager::initialize()
 {
-	SDL_SetMainReady();
-
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-
-		SDL_Log("Cannot initialize SDL_lib : %s", SDL_GetError());
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	{
+		SDL_Log("ERROR::SDL_INIT::FAILED : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 
-	window = Window::getInstance(BOARD_WIDTH * TILE_SIZE, BOARD_HEIGHT * TILE_SIZE)->getWindow();
-	renderer = Rendering::getInstance(window)->getRenderer();
+	int width = TILE_SIZE * COLS;
+	int height = TILE_SIZE * ROWS;
+
+	window = DBG_NEW Window(height, width);
+	ren = DBG_NEW Renderer(window);
+	TileMapManager::create(ROWS, COLS);
 }
 
 void GameManager::getInputs()
 {
-	InputManager::getInputs();
+	SDL_Event _event;
+	while (SDL_PollEvent(&_event) > 0) { InputManager::processEvent(_event); }
 }
 
 void GameManager::runGameLogic()
 {
-	//check for collision
-	//update tetrominoe position in the tilemap
-	//check for a complete row
+	TileMapManager::update();
 }
 
 void GameManager::renderFrame()
 {
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	SDL_RenderClear(renderer);
+	SDL_Renderer* temp = ren->getRenderer();
+	
+	SDL_RenderClear(temp);
+	SDL_SetRenderDrawColor(temp, 0, 0, 0, 255);
 
-	//render frame here
+	TileMapManager::render(temp);
 
-	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(temp);
 }
 
 void GameManager::clear()
 {
+	TileMapManager::clear(ROWS);
+	delete window;
+	window = nullptr;
+	delete ren;
+	ren = nullptr;
 }
 
-void GameManager::setIsRunning(const bool& value)
-{
-	isRunning = value;
-}
+//GAME_LOGIC
 
 int GameManager::onExecute()
 {
@@ -69,4 +78,9 @@ int GameManager::onExecute()
 	}
 	clear();
 	return 0;
+}
+
+void GameManager::setIsRunning(bool value)
+{
+	isRunning = value;
 }

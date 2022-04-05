@@ -1,8 +1,9 @@
 #include "MainPanelBuilder.h"
+#include "Debugger.h"
 
 MainPanelBuilder::MainPanelBuilder(const int& x, const int& y, const int& w, const int& h, SDL_Texture* texture)
 {
-	m_Rect = new SDL_Rect{
+	m_Rect = DBG_NEW SDL_Rect{
 		x,
 		y,
 		w,
@@ -13,14 +14,14 @@ MainPanelBuilder::MainPanelBuilder(const int& x, const int& y, const int& w, con
 
 MainPanelBuilder::~MainPanelBuilder()
 {
-	m_Texture = nullptr;
 	delete m_Rect;
 	m_Rect = nullptr;
+	m_Texture = nullptr;
 }
 
 Panel* MainPanelBuilder::buildPanel()
 {
-	return new Panel(
+	return DBG_NEW Panel(
 		(*m_Rect).x,
 		(*m_Rect).y,
 		(*m_Rect).w,

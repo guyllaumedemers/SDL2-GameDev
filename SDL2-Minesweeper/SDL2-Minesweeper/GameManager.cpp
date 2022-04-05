@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "Debugger.h"
 
 bool GameManager::m_IsRunning = true;
 
@@ -48,6 +49,7 @@ void GameManager::renderFrame()
 void GameManager::clear()
 {
 	TileMapGenerator::clear((*m_Difficulty).m_Height);
+	Window::clear();
 	Rendering::clear();
 	delete m_Difficulty;
 	m_Difficulty = nullptr;
@@ -124,7 +126,7 @@ void GameManager::startNewSession(const Mode& mode)
 {
 	clearGame();
 
-	if ((m_Difficulty = new Difficulty(mode)) == nullptr) {
+	if ((m_Difficulty = DBG_NEW Difficulty(mode)) == nullptr) {
 		SDL_Log("Difficulty was not initialize : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}

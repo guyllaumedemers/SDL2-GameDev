@@ -1,28 +1,51 @@
 #include "TileMapManager.h"
-#include "TetrominoeFactory.h"
 
-TileMapManager::TileMapManager(const int& row, const int col)
+bool** TileMapManager::tilemap = nullptr;
+
+vector<Tetrominoe*> TileMapManager::tetrominoes;
+
+//GAME_LOGIC
+
+void TileMapManager::create(const int& row, const int& col)
 {
-	tilemap = new bool* [row];
+	tilemap = DBG_NEW bool* [row];
 	for (int i = 0; i < row; ++i) {
-		tilemap[i] = new bool[col];
+		tilemap[i] = DBG_NEW bool[col];
 		for (int j = 0; j < col; ++j) {
 			tilemap[i][j] = false;
 		}
 	}
 }
 
-TileMapManager::~TileMapManager()
+void TileMapManager::update()
 {
+	//TODO Update the tilemap, check for available slot
+	//TODO Update tetrominoes position
 }
 
-TileMapManager* TileMapManager::getInstance(const int& row, const int col)
+void TileMapManager::render(SDL_Renderer* ren)
 {
-	if (instance == nullptr) return instance = new TileMapManager(row, col);
-	else return instance;
+	//TODO Render tetrominoes at position
 }
 
-Tetrominoe* TileMapManager::create()
+void TileMapManager::clear(const int& row)
 {
-	return TetrominoeFactory::createTetrominoe(static_cast<TetrominoeType>(rand() % (int)TetrominoeType::T));
+	for (auto& it : tetrominoes) {
+		delete it;
+		it = nullptr;
+	}
+	for (int i = 0; i < row; ++i) {
+		delete[] tilemap[i];
+		tilemap[i] = nullptr;
+	}
+	delete[] tilemap;
+	tilemap = nullptr;
+}
+
+//INTERNAL_LOGIC
+
+Tetrominoe* TileMapManager::spawn()
+{
+	//TODO Create a randomized function for creating tetrominoes pattern
+	return nullptr;
 }

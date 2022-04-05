@@ -1,21 +1,26 @@
 #include "Tetrominoe.h"
 
-Tetrominoe::Tetrominoe(TetrominoeType type, SDL_Texture* texture)
+//CONSTRUCTOR
+
+Tetrominoe::Tetrominoe(TetrominoeImp* imp)
 {
-	this->shape = new Shape(type);
-	this->texture = texture;
+	this->imp = imp;
 }
 
 Tetrominoe::~Tetrominoe()
 {
-	SDL_DestroyTexture(texture);
-	texture = nullptr;
+	delete imp;
+	imp = nullptr;
 }
 
-void Tetrominoe::update()
+//TETROMINOE_LOGIC
+
+void Tetrominoe::flip() const
 {
+	imp->flip();
 }
 
-void Tetrominoe::draw()
+void Tetrominoe::move() const
 {
+	imp->move();
 }

@@ -3,22 +3,28 @@
 
 class Window
 {
+private:
+
+	//FIELDS
+
+	SDL_Window* window = nullptr;
+
+	//CONSTRUCTOR
+
+	Window(const Window&) = delete;
+
+	Window(Window&&) = delete;
+
 public:
+
+	//CONSTRUCTOR
+
+	Window(const int&, const int&);
 
 	~Window();
 
-	static Window* getInstance(const int& w, const int& h);
-
-	void operator=(const Window&) = delete;
+	//GETTER
 
 	SDL_Window* getWindow();
-
-private:
-
-	Window(const int& w, const int& h);
-
-	static Window* instance;
-
-	SDL_Window* sdl_window = nullptr;
 };
 

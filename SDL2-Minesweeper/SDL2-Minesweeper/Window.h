@@ -65,6 +65,8 @@ public:
 
 	static void setWindowSize(const int& width, const int& height);
 
+	static void clear();
+
 	static SDL_Window* getWindow();
 
 	static std::vector<Panel*> getPanels();

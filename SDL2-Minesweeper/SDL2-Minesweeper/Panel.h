@@ -20,8 +20,6 @@ public:
 
 	void draw(SDL_Renderer* renderer, SDL_Color color);
 
-	void reset();
-
 	void addPanel(Panel* panel);
 
 	void removePanel(Panel* panel);

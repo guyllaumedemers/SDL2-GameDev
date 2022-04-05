@@ -1,24 +1,33 @@
 #pragma once
-#include <SDL.h>
-#include "TetrominoeType.h"
-#include "Shape.h"
+#include "TetrominoeImp.h"
 
-struct Tetrominoe
+using namespace std;
+class Tetrominoe
 {
+private:
+
+	//FIELDS
+
+	TetrominoeImp* imp = nullptr;
+
+	//CONSTRUCTOR
+
+	Tetrominoe(const Tetrominoe&) = delete;
+
+	Tetrominoe(Tetrominoe&&) = delete;
+
 public:
 
-	Tetrominoe(TetrominoeType type, SDL_Texture* texture);
+	//CONSTRUCTOR
+
+	Tetrominoe(TetrominoeImp*);
 
 	~Tetrominoe();
 
-	void update();
+	//TETROMINOE_LOGIC
 
-	void draw();
+	void flip() const;
 
-private:
-
-	Shape* shape = nullptr;
-
-	SDL_Texture* texture = nullptr;
+	void move() const;
 };
 

@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Bridge Pattern">
+      <UniqueIdentifier>{712d8b2c-77b9-41a4-9235-e12986134ab4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bridge Pattern">
+      <UniqueIdentifier>{0480d0be-0780-4743-9388-5101a8082b1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bridge Pattern\Imp">
+      <UniqueIdentifier>{ed63d69d-f66b-41e0-8057-8f27a9fe4e0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Bridge Pattern\Imp">
+      <UniqueIdentifier>{15816276-68d5-4177-88ee-5abff130b36f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -21,75 +33,55 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering.cpp">
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TetrominoeFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tetrominoe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ImageLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TileMapManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shape.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Tetrominoe.cpp">
+      <Filter>Source Files\Bridge Pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="TetrominoeImp.cpp">
+      <Filter>Source Files\Bridge Pattern\Imp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering.h">
+    <ClInclude Include="Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TetrominoeFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tetrominoe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TetrominoeType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ImageLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TileMapManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Tetrominoe.h">
+      <Filter>Header Files\Bridge Pattern</Filter>
     </ClInclude>
-    <ClInclude Include="Shape.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="TetrominoeImp.h">
+      <Filter>Header Files\Bridge Pattern\Imp</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SDL2-Tetris.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>
