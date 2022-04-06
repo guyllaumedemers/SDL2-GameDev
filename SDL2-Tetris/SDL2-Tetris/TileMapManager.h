@@ -10,15 +10,9 @@ private:
 
 	//FIELDS
 
-	static bool** tilemap;
+	static bool* map;
 
 	static vector<Tetrominoe*> tetrominoes;
-
-	//INTERNAL_LOGIC
-
-	static bool checkRowState(const int&);
-
-	static Tetrominoe* spawn();
 
 public:
 

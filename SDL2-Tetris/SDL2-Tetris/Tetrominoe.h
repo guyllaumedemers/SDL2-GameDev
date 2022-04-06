@@ -1,5 +1,5 @@
 #pragma once
-#include "TetrominoeImp.h"
+#include <SDL.h>
 
 using namespace std;
 class Tetrominoe
@@ -8,7 +8,9 @@ private:
 
 	//FIELDS
 
-	TetrominoeImp* imp = nullptr;
+	SDL_Texture* texture = nullptr;
+
+	int* map = nullptr;
 
 	//CONSTRUCTOR
 
@@ -20,14 +22,14 @@ public:
 
 	//CONSTRUCTOR
 
-	Tetrominoe(TetrominoeImp*);
+	Tetrominoe(int*);
 
 	~Tetrominoe();
 
 	//TETROMINOE_LOGIC
 
-	void flip() const;
+	void flip();
 
-	void move() const;
+	void move();
 };
 

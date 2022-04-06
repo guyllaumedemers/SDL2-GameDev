@@ -2,25 +2,26 @@
 
 //CONSTRUCTOR
 
-Tetrominoe::Tetrominoe(TetrominoeImp* imp)
+Tetrominoe::Tetrominoe(int* map)
 {
-	this->imp = imp;
+	this->map = map;
 }
 
 Tetrominoe::~Tetrominoe()
 {
-	delete imp;
-	imp = nullptr;
+	texture = nullptr;
+	delete[] map;
+	map = nullptr;
 }
 
 //TETROMINOE_LOGIC
 
-void Tetrominoe::flip() const
+void Tetrominoe::flip()
 {
-	imp->flip();
+	//TODO Do logic for shifting array indexes
 }
 
-void Tetrominoe::move() const
+void Tetrominoe::move()
 {
-	imp->move();
+	//TODO Do logic for shifting array indexes
 }

@@ -13,18 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Bridge Pattern">
-      <UniqueIdentifier>{712d8b2c-77b9-41a4-9235-e12986134ab4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Bridge Pattern">
-      <UniqueIdentifier>{0480d0be-0780-4743-9388-5101a8082b1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Bridge Pattern\Imp">
-      <UniqueIdentifier>{ed63d69d-f66b-41e0-8057-8f27a9fe4e0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Bridge Pattern\Imp">
-      <UniqueIdentifier>{15816276-68d5-4177-88ee-5abff130b36f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tools">
       <UniqueIdentifier>{5d574da2-c975-4f2b-a1a0-2bc7c763aee6}</UniqueIdentifier>
     </Filter>
@@ -41,12 +29,6 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tetrominoe.cpp">
-      <Filter>Source Files\Bridge Pattern</Filter>
-    </ClCompile>
-    <ClCompile Include="TetrominoeImp.cpp">
-      <Filter>Source Files\Bridge Pattern\Imp</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Source Files\Tools</Filter>
@@ -72,32 +54,11 @@
     <ClCompile Include="Difficulty.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="LShapeImp.cpp">
-      <Filter>Source Files\Bridge Pattern\Imp</Filter>
-    </ClCompile>
-    <ClCompile Include="InverseLShapeImp.cpp">
-      <Filter>Source Files\Bridge Pattern\Imp</Filter>
-    </ClCompile>
-    <ClCompile Include="ZShapeImp.cpp">
-      <Filter>Source Files\Bridge Pattern\Imp</Filter>
-    </ClCompile>
-    <ClCompile Include="InverseZShapeImp.cpp">
-      <Filter>Source Files\Bridge Pattern\Imp</Filter>
-    </ClCompile>
-    <ClCompile Include="TShapeImp.cpp">
-      <Filter>Source Files\Bridge Pattern\Imp</Filter>
-    </ClCompile>
-    <ClCompile Include="OShapeImp.cpp">
-      <Filter>Source Files\Bridge Pattern\Imp</Filter>
+    <ClCompile Include="Tetrominoe.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tetrominoe.h">
-      <Filter>Header Files\Bridge Pattern</Filter>
-    </ClInclude>
-    <ClInclude Include="TetrominoeImp.h">
-      <Filter>Header Files\Bridge Pattern\Imp</Filter>
-    </ClInclude>
     <ClInclude Include="Debugger.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
@@ -131,23 +92,8 @@
     <ClInclude Include="TextureManager.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="LShapeImp.h">
-      <Filter>Header Files\Bridge Pattern\Imp</Filter>
-    </ClInclude>
-    <ClInclude Include="InverseLShapeImp.h">
-      <Filter>Header Files\Bridge Pattern\Imp</Filter>
-    </ClInclude>
-    <ClInclude Include="ZShapeImp.h">
-      <Filter>Header Files\Bridge Pattern\Imp</Filter>
-    </ClInclude>
-    <ClInclude Include="InverseZShapeImp.h">
-      <Filter>Header Files\Bridge Pattern\Imp</Filter>
-    </ClInclude>
-    <ClInclude Include="TShapeImp.h">
-      <Filter>Header Files\Bridge Pattern\Imp</Filter>
-    </ClInclude>
-    <ClInclude Include="OShapeImp.h">
-      <Filter>Header Files\Bridge Pattern\Imp</Filter>
+    <ClInclude Include="Tetrominoe.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
