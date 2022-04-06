@@ -58,6 +58,7 @@ void GameManager::renderFrame()
 void GameManager::clear()
 {
 	TileMapManager::clear(mode->getHeight());
+	TextureManager::destroy();
 	delete mode;
 	mode = nullptr;
 	delete window;
