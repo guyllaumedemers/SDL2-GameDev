@@ -1,5 +1,5 @@
 #include "InverseLShapeImp.h"
-#include "TextureManager.cpp"
+#include "TextureManager.h"
 
 //CONSTRUCTOR
 

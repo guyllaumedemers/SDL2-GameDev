@@ -1,6 +1,5 @@
 #include "LShapeImp.h"
 #include "TextureManager.h"
-#include "Debugger.h"
 
 //CONSTRUCTOR
 

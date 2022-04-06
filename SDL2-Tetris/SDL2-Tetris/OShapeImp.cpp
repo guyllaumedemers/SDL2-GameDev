@@ -1,5 +1,5 @@
 #include "OShapeImp.h"
-#include "TextureManager.cpp"
+#include "TextureManager.h"
 
 //CONSTRUCTOR
 
