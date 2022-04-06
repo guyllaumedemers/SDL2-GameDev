@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "Debugger.h"
 #include "InputManager.h"
+#include "TextureManager.h"
 #include "TileMapManager.h"
 
 #define TILE_SIZE 20
@@ -30,6 +31,7 @@ void GameManager::initialize()
 
 	window = DBG_NEW Window(mode->getHeight() * TILE_SIZE, mode->getWidth() * TILE_SIZE);
 	ren = DBG_NEW Renderer(window);
+	TextureManager::create(ren->getRenderer());
 	TileMapManager::create(mode->getHeight(), mode->getWidth());
 }
 
@@ -47,12 +49,9 @@ void GameManager::runGameLogic()
 void GameManager::renderFrame()
 {
 	SDL_Renderer* temp = ren->getRenderer();
-	
-	SDL_RenderClear(temp);
 	SDL_SetRenderDrawColor(temp, 0, 0, 0, 255);
-
-	TileMapManager::render(temp, mode->getHeight(), mode->getWidth());
-
+	SDL_RenderClear(temp);
+	TileMapManager::render(temp, mode->getHeight(), mode->getWidth(), TILE_SIZE);
 	SDL_RenderPresent(temp);
 }
 

@@ -28,7 +28,7 @@ public:
 
 	static void update(const int&, const int&);
 
-	static void render(SDL_Renderer*, const int&, const int&);
+	static void render(SDL_Renderer*, const int&, const int&, const int&);
 
 	static void clear(const int&);
 };
