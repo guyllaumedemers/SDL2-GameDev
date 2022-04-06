@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL.h>
 #include "Debugger.h"
 
 class TetrominoeImp
@@ -7,17 +8,19 @@ protected:
 
 	//FIELDS
 
-	bool** tiles = nullptr;
+	SDL_Texture* texture = nullptr;
 
-	//CONSTRUCTOR
+	bool** tiles = nullptr;		//I should probably only keep track of the anchor position and flip/move according to that point and do proper checks
 
-	TetrominoeImp(const TetrominoeImp&) = delete;
+	static int cols;
 
-	TetrominoeImp(TetrominoeImp&&) = delete;
+	static int rows;
 
 public:
 
-	//DESTRUCTOR
+	//CONSTRUCTOR
+
+	TetrominoeImp();
 
 	virtual ~TetrominoeImp();
 
@@ -26,11 +29,5 @@ public:
 	virtual void flip() = 0;
 
 	virtual void move() = 0;
-
-	//FIELDS
-
-	static int cols;
-
-	static int rows;
 };
 
