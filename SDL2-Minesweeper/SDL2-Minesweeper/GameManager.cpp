@@ -39,8 +39,6 @@ void GameManager::renderFrame()
 {
 	Rendering::draw(
 		TileMapGenerator::getMap(),
-		Window::getPanels(),
-		Window::getPlayAreaPanel(),
 		(*m_Difficulty).m_Height,
 		(*m_Difficulty).m_Width
 	);
@@ -63,12 +61,10 @@ void GameManager::setIsRunning(const bool& value)
 
 Tile* GameManager::getTileAtPositionClicked(Tile** map, const int& screenPosX, const int& screenPosY)
 {
-	int x = (*(*Window::getPlayAreaPanel()).getRect()).x;
-	int y = (*(*Window::getPlayAreaPanel()).getRect()).y;
-	if ((screenPosY - y) < 0 || (screenPosX - x) < 0) {
+	if (screenPosY < 0 || screenPosX < 0) {
 		return nullptr;
 	}
-	return &map[(screenPosY - y) / Tile::height][(screenPosX - x) / Tile::width];
+	return &map[screenPosY / Tile::height][screenPosX / Tile::width];
 }
 
 Tile* GameManager::updateTileAtPositionClicked(Tile** map, Tile* clicked)

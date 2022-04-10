@@ -53,14 +53,11 @@ void Rendering::initializeIMG()
 	}
 }
 
-void Rendering::draw(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY)
+void Rendering::draw(Tile** map, const int& arrX, const int& arrY)
 {
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_Renderer);
-	for (const auto& it : panels) {
-		(*it).draw(m_Renderer, SDL_Color{ 192,192,192,255 });
-	}
-	drawTileMap(map, contentArea, arrX, arrY);
+	drawTileMap(map, arrX, arrY);
 	SDL_RenderPresent(m_Renderer);
 }
 
@@ -71,7 +68,7 @@ void Rendering::clear()
 	IMG_Quit();
 }
 
-void Rendering::drawTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY)
+void Rendering::drawTileMap(Tile** map, const int& arrX, const int& arrY)
 {
 	for (int i = 0; i < arrX; ++i) {
 		for (int j = 0; j < arrY; ++j) {
@@ -80,8 +77,8 @@ void Rendering::drawTileMap(Tile** map, Panel* contentArea, const int& arrX, con
 			int y = i * Tile::height;
 
 			SDL_Rect dest{
-				x + (*(*contentArea).getRect()).x,
-				y + (*(*contentArea).getRect()).y,
+				x,
+				y,
 				Tile::width,
 				Tile::height
 			};

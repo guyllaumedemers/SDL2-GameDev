@@ -1,7 +1,6 @@
 #pragma once
 #include <unordered_map>
 #include "Util.h"
-#include "Panel.h"
 #include "ImageLoader.h"
 #include "TileMapGenerator.h"
 
@@ -15,7 +14,7 @@ private:
 
 	//GAME_LOGIC
 
-	static void drawTileMap(Tile** map, Panel* contentArea, const int& arrX, const int& arrY);
+	static void drawTileMap(Tile** map, const int& arrX, const int& arrY);
 
 public:
 
@@ -27,7 +26,7 @@ public:
 
 	static void initializeIMG();
 
-	static void draw(Tile** map, const std::vector<Panel*>& panels, Panel* contentArea, const int& arrX, const int& arrY);
+	static void draw(Tile** map, const int& arrX, const int& arrY);
 
 	static void clear();
 

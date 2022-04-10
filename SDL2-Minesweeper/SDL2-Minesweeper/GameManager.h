@@ -11,7 +11,6 @@
 #include "Window.h"
 #include "Rendering.h"
 #include "InputManager.h"
-#include "ISubject.h"
 
 class GameManager
 {
