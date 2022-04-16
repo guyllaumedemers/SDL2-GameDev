@@ -151,6 +151,7 @@
     <ClInclude Include="EmptyTileBuilder.h" />
     <ClInclude Include="Mode.h" />
     <ClInclude Include="Rendering.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileBitMask.h" />
     <ClInclude Include="TileBuilder.h" />
     <ClInclude Include="GameManager.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Rendering.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMapGenerator.cpp" />
     <ClCompile Include="Window.cpp" />

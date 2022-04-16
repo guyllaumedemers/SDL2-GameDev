@@ -7,9 +7,6 @@
 class Rendering
 {
 private:
-
-	static std::unordered_map<std::string, SDL_Texture*> m_Textures;
-
 	static SDL_Renderer* m_Renderer;
 
 	//GAME_LOGIC
@@ -22,14 +19,10 @@ public:
 
 	static void initializeRendering(SDL_Window* window);
 
-	static void initializeTextures();
-
-	static void initializeIMG();
-
 	static void draw(Tile** map, const int& arrX, const int& arrY);
 
 	static void clear();
 
-	static SDL_Texture* getTextureFromKey(std::string key);
+	static SDL_Renderer* getRenderer();
 };
 

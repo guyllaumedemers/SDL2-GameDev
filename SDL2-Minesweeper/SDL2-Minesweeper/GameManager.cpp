@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Debugger.h"
+#include "TextureManager.h"
 
 bool GameManager::m_IsRunning = true;
 
@@ -14,21 +15,18 @@ Difficulty* GameManager::m_Difficulty = nullptr;
 void GameManager::initializeGame()
 {
 	SDL_SetMainReady();
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	{
 		SDL_Log("Cannot initalize SDL : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
-
 	startNewSession(Mode::hard);
 }
 
 void GameManager::getInputEvents()
 {
 	SDL_Event myEvent;
-	while (SDL_PollEvent(&myEvent) > 0) {
-
-		InputManager::getInputEvent(myEvent, TileMapGenerator::getMap());
-	}
+	while (SDL_PollEvent(&myEvent) > 0) { InputManager::getInputEvent(myEvent, TileMapGenerator::getMap()); }
 }
 
 void GameManager::runGameLogic()
@@ -137,17 +135,14 @@ void GameManager::startNewSession(const Mode& mode)
 	if (m_IsFirstInitialize) {
 		Window::initializeWindow(0, 0, width * Tile::width, height * Tile::height);
 		Rendering::initializeRendering(Window::getWindow());
-		Rendering::initializeTextures();
-		Rendering::initializeIMG();
-
 		m_IsFirstInitialize = false;
 	}
 	Window::setWindowSize(width * Tile::width, height * Tile::height);
 
-	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(Rendering::getTextureFromKey("Covered")));
+	TileMapGenerator::setBuilder(DBG_NEW EmptyTileBuilder(TextureManager::getTexture("CoveredTile")));
 	TileMapGenerator::createEmptyMap(height, width);
 
-	TileMapGenerator::setBuilder(DBG_NEW BombTileBuilder(Rendering::getTextureFromKey("Covered")));
+	TileMapGenerator::setBuilder(DBG_NEW BombTileBuilder(TextureManager::getTexture("CoveredTile")));
 	TileMapGenerator::createBombMap(height, width, bombs);
 
 	TileMapGenerator::destroyBuilder();
@@ -180,7 +175,7 @@ bool GameManager::isBomb(Tile* tile, const int& isInvalid)
 
 void GameManager::resetFirstMove()
 {
-	TileMapGenerator::updateBombOnFirstMove(Rendering::getTextureFromKey("Covered"), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
+	TileMapGenerator::updateBombOnFirstMove(TextureManager::getTexture("CoveredTile"), (*m_Difficulty).m_Height, (*m_Difficulty).m_Width, 1);
 }
 
 void GameManager::processInvalidMove(Tile** map, Tile* clicked, const int& isInvalid)
@@ -193,7 +188,7 @@ void GameManager::processInvalidMove(Tile** map, Tile* clicked, const int& isInv
 	}
 	else if (!m_IsFirstMove && isBomb(clicked, isInvalid)) {
 		processAllTiles(map, clicked);
-		updateProcessedTileGraphic(clicked, "Hit");
+		updateProcessedTileGraphic(clicked, "TileHit");
 	}
 }
 
@@ -222,7 +217,7 @@ void GameManager::processValidMoveInsideBoundaries(Tile** map, Tile* clicked)
 		int nbBombsNearBy = checkAllNeighbors(map, clicked, neighbors, memoizationMap);
 
 		processValidMoveResult(clicked, nbBombsNearBy, edgeLookup, true);
-		updateProcessedTileGraphic(clicked, "Uncovered");
+		updateProcessedTileGraphic(clicked, "UncoveredTile");
 
 		if (edgeLookup.empty()) {
 			break;
@@ -338,7 +333,7 @@ void GameManager::processValidMoveResult(Tile* current, const int& result, std::
 
 void GameManager::updateProcessedTileGraphic(Tile* current, std::string key)
 {
-	(*current).setGraphics(Rendering::getTextureFromKey(key));
+	(*current).setGraphics(TextureManager::getTexture(key));
 }
 
 void GameManager::processAllTiles(Tile** map, Tile* clicked)
@@ -363,7 +358,7 @@ void GameManager::processAllTiles(Tile** map, Tile* clicked)
 		int value = checkAllNeighborsWithoutConstraint(map, clicked, neighbors, memoizationMap);
 		processValidMoveResult(clicked, value, placeholder, false);
 
-		updateProcessedTileGraphic(clicked, "Uncovered");
+		updateProcessedTileGraphic(clicked, "UncoveredTile");
 		neighbors.pop();
 	}
 	memoizationMap.clear();
@@ -402,7 +397,7 @@ int GameManager::checkNeighborWithoutConstraint(Tile** map, const int& x, const 
 
 		if (Util::checkBitMaskEquality(temp, TileBitMask::Bomb)) {
 
-			updateProcessedTileGraphic(temp, "Uncovered");
+			updateProcessedTileGraphic(temp, "UncoveredTile");
 			(*temp).removeBitMaskValue(TileBitMask::Covered | TileBitMask::Flag);
 			(*temp).addBitMaskValue(TileBitMask::Uncovered);
 			return 1;

@@ -1,8 +1,7 @@
 #include "Rendering.h"
+#include "TextureManager.h"
 
 SDL_Renderer* Rendering::m_Renderer = nullptr;
-
-std::unordered_map<std::string, SDL_Texture*> Rendering::m_Textures;
 
 void Rendering::initializeRendering(SDL_Window* window)
 {
@@ -12,45 +11,7 @@ void Rendering::initializeRendering(SDL_Window* window)
 		SDL_Log("Cannot initalize SDL_Renderer : %s", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
-}
-
-void Rendering::initializeTextures()
-{
-	m_Textures.insert(std::make_pair("Flag", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Flag.png")));
-	m_Textures.insert(std::make_pair("Bomb", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Bomb.png")));
-
-	char buffer[50];
-	for (int i = 1; i <= 8; ++i) {
-		sprintf_s(buffer, "../SDL2-Minesweeper/Assets/%d.png", i);
-		m_Textures.insert(std::make_pair("Number_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, buffer)));
-	}
-
-	for (int i = 0; i < 10; ++i) {
-		sprintf_s(buffer, "../SDL2-Minesweeper/Assets/Time_%d.png", i);
-		m_Textures.insert(std::make_pair("Time_" + std::to_string(i), ImageLoader::loadGPURendering(m_Renderer, buffer)));
-	}
-
-	m_Textures.insert(std::make_pair("Covered", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/CoveredTile.png")));
-	m_Textures.insert(std::make_pair("Uncovered", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/UncoveredTile.png")));
-	m_Textures.insert(std::make_pair("Hit", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/TileHit.png")));
-
-	m_Textures.insert(std::make_pair("OnHooverEnter", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/OnHooverEnter.png")));
-	m_Textures.insert(std::make_pair("OnButtonSelect", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/OnButtonSelect.png")));
-
-	m_Textures.insert(std::make_pair("Game", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Game.png")));
-	m_Textures.insert(std::make_pair("Help", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/Help.png")));
-
-	m_Textures.insert(std::make_pair("SadFace", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/SadFace.png")));
-	m_Textures.insert(std::make_pair("HappyFace", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/SmileyFace.png")));
-	m_Textures.insert(std::make_pair("GlassFace", ImageLoader::loadGPURendering(m_Renderer, "../SDL2-Minesweeper/Assets/SmileyFaceWithGlasses.png")));
-}
-
-void Rendering::initializeIMG()
-{
-	if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_WEBP) == 0) {
-		SDL_Log("Cannot initalize SDL_image : %s", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
+	TextureManager::create(m_Renderer);
 }
 
 void Rendering::draw(Tile** map, const int& arrX, const int& arrY)
@@ -65,7 +26,12 @@ void Rendering::clear()
 {
 	SDL_DestroyRenderer(m_Renderer);
 	m_Renderer = nullptr;
-	IMG_Quit();
+	TextureManager::destroy();
+}
+
+SDL_Renderer* Rendering::getRenderer()
+{
+	return m_Renderer;
 }
 
 void Rendering::drawTileMap(Tile** map, const int& arrX, const int& arrY)
@@ -92,22 +58,22 @@ void Rendering::drawTileMap(Tile** map, const int& arrX, const int& arrY)
 
 			if (Util::checkBitMaskEquality(tile, TileBitMask::Flag)) {
 
-				SDL_SetTextureBlendMode(m_Textures["Flag"], SDL_BLENDMODE_BLEND);
-				SDL_RenderCopy(m_Renderer, m_Textures["Flag"], NULL, NULL);
+				SDL_SetTextureBlendMode(TextureManager::getTexture("Flag"), SDL_BLENDMODE_BLEND);
+				SDL_RenderCopy(m_Renderer, TextureManager::getTexture("Flag"), NULL, NULL);
 			}
 			else if (Util::checkBitMaskEquality(tile, TileBitMask::Numbered)) {
 
 				char buffer[50];
-				sprintf_s(buffer, "Number_%d", (*tile).getValue());
+				sprintf_s(buffer, "%d", (*tile).getValue());
 
-				SDL_SetTextureBlendMode(m_Textures[buffer], SDL_BLENDMODE_BLEND);
-				SDL_RenderCopy(m_Renderer, m_Textures[buffer], NULL, NULL);
+				SDL_SetTextureBlendMode(TextureManager::getTexture(buffer), SDL_BLENDMODE_BLEND);
+				SDL_RenderCopy(m_Renderer, TextureManager::getTexture(buffer), NULL, NULL);
 			}
 
 			if (Util::checkBitMaskEquality(tile, TileBitMask::Uncovered | TileBitMask::Bomb)) {
 
-				SDL_SetTextureBlendMode(m_Textures["Bomb"], SDL_BLENDMODE_BLEND);
-				SDL_RenderCopy(m_Renderer, m_Textures["Bomb"], NULL, NULL);
+				SDL_SetTextureBlendMode(TextureManager::getTexture("Bomb"), SDL_BLENDMODE_BLEND);
+				SDL_RenderCopy(m_Renderer, TextureManager::getTexture("Bomb"), NULL, NULL);
 			}
 
 			SDL_SetRenderTarget(m_Renderer, NULL);
@@ -117,12 +83,4 @@ void Rendering::drawTileMap(Tile** map, const int& arrX, const int& arrY)
 			target = nullptr;
 		}
 	}
-}
-
-SDL_Texture* Rendering::getTextureFromKey(std::string key)
-{
-	if (m_Textures.find(key) != m_Textures.end()) {
-		return m_Textures[key];
-	}
-	return nullptr;
 }
