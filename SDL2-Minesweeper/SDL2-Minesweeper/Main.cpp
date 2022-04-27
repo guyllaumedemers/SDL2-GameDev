@@ -2,6 +2,7 @@
 #define SDL_MAIN_HANDLED
 #include "GameManager.h"
 #include "Debugger.h"
+#include "MinesweeperConfig.h"
 
 int main(int argc, char* argv[]) {
 	srand(time(NULL));
