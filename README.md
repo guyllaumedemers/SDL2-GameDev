@@ -5,7 +5,7 @@ Useful scripts are located in SDL2-GameDev/..
 
 ## Getting Started
 
-👾 Fun Repository
+👾 Fun Repository // Currently being refactored to include CMakefiles and keep libraries updated using Git submodules on a seperate repo. Projects will be self-contained instead and a Subtree may OR may not be created to handle the individual project structure.
 
 ```
 NOTE : This project is broken down into multiples folders, each representing a step in the learning process of Game Development using SDL2 lib
